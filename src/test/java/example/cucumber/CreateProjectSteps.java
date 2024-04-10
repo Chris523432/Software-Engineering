@@ -13,7 +13,7 @@ public class CreateProjectSteps {
 
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-    private MockDateHolder dateHolder;
+    private MockDateHolder dateHolder; //lidt i tvivl om den hr SKAL bruges til at få datoen
     private DateServer dateServer;
     private String tempName;
     public CreateProjectSteps(Application application, ErrorMessageHolder errorMessageHolder, MockDateHolder dateHolder, DateServer dateServer) {
