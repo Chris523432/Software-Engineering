@@ -15,6 +15,6 @@ Feature: Create Activity
 
   Scenario: Activity without name can not be added
     Given project with name "project1" is in the system
-    When an activity with epmty name (string is empty or only spaces) is added to "project1"
+    When an activity with empty name (string is empty or only spaces) is added to "project1"
     Then the error message "Activity can not be added without a name" is given
     And activity with empty name is not in "project1"

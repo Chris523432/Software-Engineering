@@ -10,7 +10,7 @@ import java.util.List;
 public class Application {
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
-    private DateServer dateServer;
+    private DateServer dateServer = new DateServer();
 
     public void registerUser(String initials) {
         Employee employee = new Employee(initials);
@@ -59,15 +59,26 @@ public class Application {
         }
         throw new Exception("Employee does not exist");
     }
-    public Activity getActivity(String activityIdentifier) {
+    public Activity getActivityById(int activityId) throws Exception{
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
-                if (a.getName().equals(activityIdentifier) || a.getId().equals(activityIdentifier)) {
+                if (a.getId() == activityId) {
                     return a;
                 }
             }
         }
-        return null;
+        throw new Exception("Activity does not exist");
+    }
+
+    public Activity getActivityByName(String activityName) throws Exception{
+        for (Project p : projects) {
+            for (Activity a : p.getActivities()) {
+                if (a.getName().equals(activityName)) {
+                    return a;
+                }
+            }
+        }
+        throw new Exception("Activity does not exist");
     }
     public List<Employee> getEmployees() {
         return employees;
@@ -75,8 +86,8 @@ public class Application {
     public List<Project> getProjects() {
         return projects;
     }
-    public void setAllocatedTime(String activityIdentifier, int hours) {
-        getActivity(activityIdentifier).setAllocatedTime(hours);
+    public void setAllocatedTime(int activityId, int hours) throws Exception {
+        getActivityById(activityId).setAllocatedTime(hours);
     }
     public void setDateServer(DateServer dateServer) {
         this.dateServer = dateServer;

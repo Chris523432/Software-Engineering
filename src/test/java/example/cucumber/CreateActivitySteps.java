@@ -13,6 +13,7 @@ public class CreateActivitySteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
     private String tempName;
+    private Activity tempActivity;
 
     public CreateActivitySteps(Application application, ErrorMessageHolder errorMessageHolder, MockDateHolder dateHolder) {
         this.application = application;
@@ -36,12 +37,17 @@ public class CreateActivitySteps {
         tempName = activityName;
     }
     @When("the budgeted time is {int} hours")
-    public void theBudgetedTimeIsHours(int hours) {
-        application.setAllocatedTime(tempName, hours);
+    public void theBudgetedTimeIsHours(int hours) throws Exception {
+        try {
+            tempActivity = application.getActivityByName(tempName);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+        application.setAllocatedTime(tempActivity.getId(), hours);
     }
     @Then("the activity {string} with budgeted time {int} is in {string}")
     public void theActivityWithBudgetedTimeIsIn(String activityName, int hours, String projectName) throws Exception {
-        Activity a = application.getActivity(activityName);
+        Activity a = application.getActivityByName(activityName);
         assertTrue(application.getProject(projectName).getActivities().contains(a));
         assertEquals(hours, a.getBudgetedHours());
     }
@@ -50,8 +56,8 @@ public class CreateActivitySteps {
         assertFalse(application.getProjects().stream().anyMatch(proj -> proj.getName().equals(name)));
     }
 
-    @When("an activity with epmty name \\(string is empty or only spaces) is added to {string}")
-    public void anActivityWithEpmtyNameStringIsEmptyOrOnlySpacesIsAddedTo(String projectName) {
+    @When("an activity with empty name \\(string is empty or only spaces) is added to {string}")
+    public void anActivityWithEmptyNameStringIsEmptyOrOnlySpacesIsAddedTo(String projectName) {
         try {
             application.createActivity(projectName, "  ");
         } catch (Exception e) {
