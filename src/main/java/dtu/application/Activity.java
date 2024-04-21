@@ -15,11 +15,14 @@ public class Activity {
         this.id = idGenerator.generateActivityId();
     }
 
-    public Activity(String name, int budgetedHours) {
+    public Activity(String name, int budgetedHours) throws Exception {
         new Activity(name);
         setAllocatedTime(budgetedHours);
     }
-    public void setAllocatedTime(int budgetedHours) {
+    public void setAllocatedTime(int budgetedHours) throws Exception {
+        if (budgetedHours < 0) {
+            throw new OperationNotAllowedException("Invalid value");
+        }
         this.budgetedHours = budgetedHours;
     }
     public void assignEmployee(Employee employee) {

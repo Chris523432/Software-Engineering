@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -57,6 +58,15 @@ public class SetActivityTimesSteps {
     @Then("the activity with id {string} has allocated time {int} hours")
     public void the_activity_with_id_has_allocated_time_hours(String int1, Integer int2) {
         assertTrue(a.getBudgetedHours() == int2);
+    }
+
+    @Given("there does not exist an activity with id {string}")
+    public void thereDoesNotExistAnActivityWithId(String activityIdentifier) throws Exception {
+        try {
+            application.getActivity(activityIdentifier);
+        } catch (Exception e) {
+            assertFalse(false);
+        }
     }
 
 }

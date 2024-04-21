@@ -10,6 +10,13 @@ Feature: Set activity times
 
   Scenario: set allocated time to nonexisting activity
     Given employee "barc" is logged in
-    #And there does not exist an activity with id 111
-    When the allocated time 72 hours is set on activity with id "333"
+    And there does not exist an activity with id "111"
+    When the allocated time 72 hours is set on activity with id "111"
     Then the error message "Activity does not exist" is given
+
+  Scenario: set invalid allocated time value
+    Given employee "barc" is logged in
+    And there exists an activity with id "1"
+    When the allocated time -10 hours is set on activity with id "1"
+    Then the error message "Invalid value" is given
+
