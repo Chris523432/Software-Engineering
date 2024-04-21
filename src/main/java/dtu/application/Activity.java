@@ -8,6 +8,7 @@ public class Activity {
     private String id;
     private Project parentProject;
     private int budgetedHours;
+    private boolean status = false;
     private IdGenerator idGenerator = new IdGenerator();
     private List<Employee> assignedEmployees = new ArrayList<>();
     public Activity(String name) {
@@ -33,6 +34,15 @@ public class Activity {
     }
     public boolean isAssigned(Employee employee) {
         return assignedEmployees.contains(employee);
+    }
+    public void inComplete() {
+        status = false;
+    }
+    public void complete() {
+        status = true;
+    }
+    public boolean getStatus() {
+        return status;
     }
     public String getName() {
         return name;
