@@ -8,6 +8,7 @@ public class Project {
     private String id;
     private List<Activity> activities = new ArrayList<>();
     private IdGenerator idGenerator = new IdGenerator();
+    private Employee projectLeader;
 
     public Project(String name, int year) {
         this.name = name;
@@ -68,6 +69,14 @@ public class Project {
             }
         }
         return "Project is complete";
+    }
+
+    public void assignProjectLeader(Employee projectLeader) {
+        this.projectLeader = projectLeader;
+    }
+
+    public Employee getProjectLeader() {
+        return projectLeader;
     }
 
 }
