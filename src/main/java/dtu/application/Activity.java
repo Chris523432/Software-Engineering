@@ -94,5 +94,13 @@ public class Activity {
         return endweek;
     }
 
+    public int getEndYear() {
+        return endyear;
+    }
+
+    public int getStartYear() {
+        return startyear;
+    }
+
 
 }
