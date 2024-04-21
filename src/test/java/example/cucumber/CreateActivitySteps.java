@@ -2,22 +2,25 @@ package example.cucumber;
 
 import dtu.application.Activity;
 import dtu.application.Application;
-import dtu.application.DateServer;
+import dtu.application.IdGenerator;
 import dtu.application.Project;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
+
 public class CreateActivitySteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
     private String tempName;
     private Activity tempActivity;
+    private IdGenerator idGenerator = new IdGenerator();
 
     public CreateActivitySteps(Application application, ErrorMessageHolder errorMessageHolder, MockDateHolder dateHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
+        idGenerator.resetIds();
     }
     @Given("project with name {string} is in the system")
     public void projectWithNameIsInTheSystem(String name) {
@@ -38,16 +41,11 @@ public class CreateActivitySteps {
     }
     @When("the budgeted time is {int} hours")
     public void theBudgetedTimeIsHours(int hours) throws Exception {
-        try {
-            tempActivity = application.getActivityByName(tempName);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
-        application.setAllocatedTime(tempActivity.getId(), hours);
+        application.setAllocatedTime(tempName, hours);
     }
     @Then("the activity {string} with budgeted time {int} is in {string}")
     public void theActivityWithBudgetedTimeIsIn(String activityName, int hours, String projectName) throws Exception {
-        Activity a = application.getActivityByName(activityName);
+        Activity a = application.getActivity(activityName);
         assertTrue(application.getProject(projectName).getActivities().contains(a));
         assertEquals(hours, a.getBudgetedHours());
     }
