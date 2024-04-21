@@ -10,6 +10,10 @@ public class Activity {
     private int budgetedHours;
     private IdGenerator idGenerator = new IdGenerator();
     private List<Employee> assignedEmployees = new ArrayList<>();
+    private int startweek;
+    private int endweek;
+    private int startyear;
+    private int endyear;
     public Activity(String name) {
         this.name = name;
         this.id = idGenerator.generateActivityId();
@@ -49,4 +53,36 @@ public class Activity {
     public Project getParentProject() {
         return parentProject;
     }
+
+    public void setStartWeek(int startweek, int startyear) throws Exception{
+        if (startweek > endweek && startyear <= endyear) {
+            throw new OperationNotAllowedException("start week cannot be after end week");
+        }
+        if (startweek < 0 || startweek > 52) {
+            throw new OperationNotAllowedException("Please enter a valid week");
+        }
+        this.startweek = startweek;
+        this.startyear = startyear;
+    }
+
+    public void setEndWeek(int endWeek, int endyear) throws OperationNotAllowedException {
+        if (startweek > endweek && startyear <= endyear) {
+            throw new OperationNotAllowedException("End week cannot be before start week");
+        }
+        if (endWeek < 0 || endWeek > 52) {
+            throw new OperationNotAllowedException("Please enter a valid week");
+        }
+        this.endweek = endWeek;
+        this.endyear = endyear;
+    }
+
+    public int getStartWeek() {
+        return startweek;
+    }
+
+    public int getEndWeek() {
+        return endweek;
+    }
+
+
 }

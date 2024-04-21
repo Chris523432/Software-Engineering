@@ -8,8 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class SetActivityTimesSteps {
@@ -67,6 +66,46 @@ public class SetActivityTimesSteps {
         } catch (Exception e) {
             assertFalse(false);
         }
+    }
+
+    @When("the start week is set to Week {int} on activity with id {string}")
+    public void the_start_week_is_set_to_week_on_activity_with_id(Integer int1, String string) throws Exception {
+        try {
+            application.getActivity(string).setStartWeek(int1, 2024);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("the activity with id {string} has start week Week {int}")
+    public void the_activity_with_id_has_start_week_week(String string, Integer int1) throws Exception {
+        assertEquals(application.getActivity(string).getStartWeek(), (int) int1);
+    }
+
+
+    @Given("the activity id {string} has end week Week {int}")
+    public void the_activity_id_has_end_week_week(String string, Integer int1) throws Exception {
+        application.getActivity(string).setEndWeek(int1, 2024);
+        assertEquals(application.getActivity(string).getEndWeek(), (int) int1);
+    }
+
+    @When("the end week is set to Week {int} on activity with id {string}")
+    public void the_end_week_is_set_to_week_on_activity_with_id(Integer int1, String string) throws Exception {
+        try {
+            application.getActivity(string).setEndWeek(int1, 2024);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("the activity with id {string} has end week Week {int}")
+    public void the_activity_with_id_has_end_week_week(String string, Integer int1) throws Exception {
+        assertEquals(application.getActivity(string).getEndWeek(), (int) int1);
+    }
+
+    @Given("the activity has start week Week {int}")
+    public void the_activity_has_start_week_week(Integer int1) throws Exception {
+        application.getActivity("1").setStartWeek(int1, 2024);
     }
 
 }
