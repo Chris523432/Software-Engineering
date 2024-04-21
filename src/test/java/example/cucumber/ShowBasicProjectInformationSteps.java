@@ -109,11 +109,25 @@ public class ShowBasicProjectInformationSteps {
 
     @When("the employee requests the status of {string}")
     public void the_employee_requests_the_status_of(String string) throws Exception {
-        application.getProject("project1").getProjectStatus();
+        try {
+            application.getProject("project1").getProjectStatus();
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
     }
 
     @Then("the message {string} will be given")
     public void theMessageWillBeGiven(String status) throws Exception {
         assertEquals(status, application.getProject("project1").getProjectStatus());
+    }
+
+    @Given("the project with name {string} does not exists")
+    public void the_project_with_name_does_not_exists(String string) throws Exception {
+        try {
+            application.getProject(string);
+        } catch (Exception e) {
+            assertFalse(false);
+        }
+
     }
 }

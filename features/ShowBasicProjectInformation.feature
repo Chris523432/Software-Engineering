@@ -53,3 +53,9 @@ Feature: Show basic project information
     And "project1" is incomplete
     When the employee requests the status of "project1"
     Then the message "Project is incomplete" will be given
+
+  Scenario: Show project status of project that does not exist
+    Given employee "barc" is logged in
+    And the project with name "project1" does not exists
+    When the employee requests the status of "project1"
+    Then the error message "Project is not in the system" is given
