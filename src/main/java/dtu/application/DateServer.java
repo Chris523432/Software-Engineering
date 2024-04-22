@@ -16,7 +16,7 @@ public class DateServer {
         Calendar calendar = new GregorianCalendar();
         return calendar.get(Calendar.YEAR);
     }
-    public String getYearString() {
-        return String.valueOf(getYear() % 100); //returns the last to digits as string
+    public int getYearDigits() {
+        return getYear() % 100; //returns the last to digits as string
     }
 }
