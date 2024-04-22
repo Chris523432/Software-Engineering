@@ -27,7 +27,7 @@ public class AssignProjectLeaderSteps {
     @When("the employee assigns {string} as project leader in {string}")
     public void the_employee_assigns_as_project_leader_in(String string, String string2) throws Exception {
         try {
-            application.getProject(string2).assignProjectLeader(application.getEmployee("baba"));
+            application.assignProjectLeader(string2, string);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }

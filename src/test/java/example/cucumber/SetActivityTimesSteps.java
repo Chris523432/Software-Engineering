@@ -56,7 +56,7 @@ public class SetActivityTimesSteps {
     }
     @Then("the activity with id {string} has allocated time {int} hours")
     public void the_activity_with_id_has_allocated_time_hours(String int1, Integer int2) {
-        assertTrue(a.getBudgetedHours() == int2);
+        assertEquals(a.getBudgetedHours(), (int) int2);
     }
 
     @Given("there does not exist an activity with id {string}")
@@ -69,43 +69,43 @@ public class SetActivityTimesSteps {
     }
 
     @When("the start week is set to Week {int} on activity with id {string}")
-    public void the_start_week_is_set_to_week_on_activity_with_id(Integer int1, String string) throws Exception {
+    public void the_start_week_is_set_to_week_on_activity_with_id(Integer int1, String activity) throws Exception {
         try {
-            application.getActivity(string).setStartWeek(int1, 2024);
+            application.setStartWeekToActivity(activity, int1, 2024);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
     @Then("the activity with id {string} has start week Week {int}")
-    public void the_activity_with_id_has_start_week_week(String string, Integer int1) throws Exception {
-        assertEquals(application.getActivity(string).getStartWeek(), (int) int1);
+    public void the_activity_with_id_has_start_week_week(String activityidentifier, Integer int1) throws Exception {
+        assertEquals(application.getStartWeekForActivity(activityidentifier), (int) int1);
     }
 
 
     @Given("the activity id {string} has end week Week {int}")
-    public void the_activity_id_has_end_week_week(String string, Integer int1) throws Exception {
-        application.getActivity(string).setEndWeek(int1, 2024);
-        assertEquals(application.getActivity(string).getEndWeek(), (int) int1);
+    public void the_activity_id_has_end_week_week(String activityidentifier, Integer int1) throws Exception {
+        application.setEndWeekToActivity(activityidentifier, int1, 2024);
+        assertEquals(application.getEndWeekForActivity(activityidentifier), (int) int1);
     }
 
     @When("the end week is set to Week {int} on activity with id {string}")
     public void the_end_week_is_set_to_week_on_activity_with_id(Integer int1, String string) throws Exception {
         try {
-            application.getActivity(string).setEndWeek(int1, 2024);
+            application.setEndWeekToActivity(string, int1, 2024);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
     @Then("the activity with id {string} has end week Week {int}")
-    public void the_activity_with_id_has_end_week_week(String string, Integer int1) throws Exception {
-        assertEquals(application.getActivity(string).getEndWeek(), (int) int1);
+    public void the_activity_with_id_has_end_week_week(String activityidentifier, Integer int1) throws Exception {
+        assertEquals(application.getEndWeekForActivity(activityidentifier), (int) int1);
     }
 
     @Given("the activity has start week Week {int}")
     public void the_activity_has_start_week_week(Integer int1) throws Exception {
-        application.getActivity("1").setStartWeek(int1, 2024);
+        application.setStartWeekToActivity("1", int1, 2024);
     }
 
 }

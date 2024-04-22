@@ -116,4 +116,46 @@ public class Application {
     public void setDateServer(DateServer dateServer) {
         this.dateServer = dateServer;
     }
+
+    public void assignProjectLeader (String project, String employee) throws Exception {
+        getProject(project).assignProjectLeader(getEmployee(employee));
+    }
+
+    public List<Employee> getProjectLeaders() {
+        List<Employee> projectleaders = new ArrayList<>();
+        for (Project p : projects) {
+            if (p.getProjectLeader() != null && !projectleaders.contains(p.getProjectLeader())) {
+                projectleaders.add(p.getProjectLeader());
+            }
+        }
+        return projectleaders;
+    }
+
+    public void setStartWeekToActivity(String activity, int week, int year) throws Exception {
+        getActivity(activity).setStartWeek(week, year);
+    }
+
+    public void setEndWeekToActivity(String activity, int week, int year) throws Exception {
+        getActivity(activity).setEndWeek(week, year);
+    }
+
+    public int getEndWeekForActivity(String activity) throws Exception {
+        return getActivity(activity).getEndWeek();
+    }
+
+    public int getStartWeekForActivity(String activity) throws Exception {
+        return getActivity(activity).getStartWeek();
+    }
+
+    public String getStartWeekForProject(String project) throws Exception {
+        return getProject(project).getStartWeek();
+    }
+
+    public String getEndWeekForProject(String project) throws Exception {
+        return getProject(project).getEndWeek();
+    }
+
+    public String getProjectStatus(String project) throws Exception {
+        return getProject(project).getProjectStatus();
+    }
 }
