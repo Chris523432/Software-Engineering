@@ -14,10 +14,7 @@ public class ShowBasicProjectInformationSteps {
 
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-
-    private Project parentProject;
     private IdGenerator idGenerator = new IdGenerator();
-    private Activity a;
     public ShowBasicProjectInformationSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
@@ -45,7 +42,7 @@ public class ShowBasicProjectInformationSteps {
     @When("the employee requests the start week of project with name {string}")
     public void the_employee_requests_the_start_week_of_project_with_name(String string) throws Exception {
         try {
-            application.getProject(string).getStartWeek();
+            application.getStartWeekForProject(string);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }

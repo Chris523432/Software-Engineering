@@ -41,6 +41,9 @@ public class Project {
                 year = a.getStartYear();
             }
         }
+        if (year  == 0 || week == 0) {
+            throw new Exception("Project does not have a start week");
+        }
         return "Week: " + week + "Year: " + year;
     }
 
@@ -55,6 +58,9 @@ public class Project {
                 week = a.getEndWeek();
                 year = a.getEndYear();
             }
+        }
+        if (year  == 0 || week == 0) {
+            throw new Exception("Project does not have an end week");
         }
         return "Week: " + week + "Year: " + year;
     }
