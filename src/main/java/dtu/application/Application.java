@@ -18,7 +18,8 @@ public class Application {
         if (name.trim().isEmpty()) {
             throw new Exception("Project can not be created without a name");
         }
-        Project project = new Project(name, dateServer.getYearDigits());
+        int year = dateServer.getDate().get(Calendar.YEAR) % 100;
+        Project project = new Project(name, year);
         projects.add(project);
     }
     public void createActivity(String projectIdentifier, String activityName) throws Exception {
