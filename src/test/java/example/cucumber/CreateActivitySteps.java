@@ -1,12 +1,11 @@
 package example.cucumber;
 
-import dtu.application.Activity;
-import dtu.application.Application;
-import dtu.application.IdGenerator;
-import dtu.application.Project;
+import dtu.application.*;
+import example.junit.MockDateHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.mockito.Mock;
 
 import static org.junit.Assert.*;
 
@@ -16,11 +15,14 @@ public class CreateActivitySteps {
     private String tempName;
     private Activity tempActivity;
     private IdGenerator idGenerator = new IdGenerator();
+    private MockDateHolder mockDateHolder;
 
-    public CreateActivitySteps(Application application, ErrorMessageHolder errorMessageHolder, MockDateHolder dateHolder) {
+    public CreateActivitySteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
         idGenerator.resetIds();
+        mockDateHolder = new MockDateHolder(application);
+        mockDateHolder.setYear2024();
     }
     @Given("project with name {string} is in the system")
     public void projectWithNameIsInTheSystem(String name) {
@@ -40,11 +42,11 @@ public class CreateActivitySteps {
         tempName = activityName;
     }
     @When("the budgeted time is {int} hours")
-    public void theBudgetedTimeIsHours(int hours) throws Exception {
+    public void theBudgetedTimeIsHours(int hours) throws DoesNotExistErrorException, OperationNotAllowedException {
         application.setAllocatedTime(tempName, hours);
     }
     @Then("the activity {string} with budgeted time {int} is in {string}")
-    public void theActivityWithBudgetedTimeIsIn(String activityName, int hours, String projectName) throws Exception {
+    public void theActivityWithBudgetedTimeIsIn(String activityName, int hours, String projectName) throws DoesNotExistErrorException {
         Activity a = application.getActivity(activityName);
         assertTrue(application.getProject(projectName).getActivities().contains(a));
         assertEquals(hours, a.getBudgetedHours());
@@ -63,7 +65,7 @@ public class CreateActivitySteps {
         }
     }
     @Then("activity with empty name is not in {string}")
-    public void activityWithEmptyNameIsNotIn(String projectName) throws Exception {
+    public void activityWithEmptyNameIsNotIn(String projectName) throws DoesNotExistErrorException {
         Project p = application.getProject(projectName);
         assertFalse(p.getActivities().stream().anyMatch(a -> a.getName().trim().isEmpty()));
     }

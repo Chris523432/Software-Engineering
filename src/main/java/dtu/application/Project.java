@@ -1,6 +1,8 @@
 package dtu.application;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Project {
@@ -30,48 +32,30 @@ public class Project {
         return id;
     }
 
-    public String getStartWeek() throws Exception {
-        //pls indfør date objekt eller noget
-        if (activities.isEmpty()) {
-            throw new Exception("Project does not have a start week");
-        }
-        int week = 53;
-        int year = 10000;
+    public Calendar getStartDate() {
+        Calendar date = null;
         for (Activity a : activities) {
-            if (a.getStartYear() <= year || a.getStartWeek() < week && a.getStartYear() <= year) {
-                week = a.getStartWeek();
-                year = a.getStartYear();
+            if (date == null || a.getStartDate().before(date)) {
+                date = a.getStartDate();
             }
         }
-        if (year  == 0 || week == 0) {
-            throw new Exception("Project does not have a start week");
-        }
-        return "Week: " + week + "Year: " + year;
+        return date;
     }
 
-    public String getEndWeek() throws Exception {
-        //pls indfør date objekt eller noget
-        if (activities.isEmpty()) {
-            throw new Exception("Project does not have an end week");
-        }
-        int week = 0;
-        int year = 0;
+    public Calendar getEndDate() {
+        Calendar date = null;
         for (Activity a : activities) {
-            if (a.getEndYear() >= year || a.getEndWeek() > week && a.getEndYear() >= year) {
-                week = a.getEndWeek();
-                year = a.getEndYear();
+            if (date == null || a.getEndDate().after(date)) {
+                date = a.getEndDate();
             }
         }
-        if (year  == 0 || week == 0) {
-            throw new Exception("Project does not have an end week");
-        }
-        return "Week: " + week + "Year: " + year;
+        return date;
     }
 
-    public String getProjectStatus() throws Exception {
+    public String getProjectStatus() {
         //bør vel bare være en attribut i project?
         if (activities.isEmpty()) {
-            throw new Exception("Project does not have a status");
+            return("Project is incomplete");
         }
         for (Activity a : activities) {
             if (!a.isComplete()) {
