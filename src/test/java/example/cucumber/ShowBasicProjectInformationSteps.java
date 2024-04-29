@@ -1,9 +1,7 @@
 package example.cucumber;
 
-import dtu.application.Activity;
 import dtu.application.Application;
 import dtu.application.IdGenerator;
-import dtu.application.Project;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -33,8 +31,8 @@ public class ShowBasicProjectInformationSteps {
 
     @Given("the activity with id {string} has the earliest start week {int}")
     public void the_activity_with_id_has_the_earliest_start_week(String activityidentifier, Integer int1) throws Exception {
-        application.getProject("project1").addProject("Test");
-        application.getProject("project1").addProject("Test2");
+        application.getProject("project1").addActivity("Test");
+        application.getProject("project1").addActivity("Test2");
         application.setStartWeekToActivity(activityidentifier, int1, 2024);
         application.getActivity("2").setStartWeek(1, 2025);
     }

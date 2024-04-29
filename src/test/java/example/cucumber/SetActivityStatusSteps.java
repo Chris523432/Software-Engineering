@@ -5,7 +5,6 @@ import dtu.application.Application;
 import dtu.application.IdGenerator;
 import dtu.application.Project;
 
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -35,7 +34,7 @@ public class SetActivityStatusSteps {
     }
     @Then("the activity with id {string} is complete")
     public void theActivityWithIdIsComplete(String activityIdentifier) {
-        assertTrue(a.getStatus());
+        assertTrue(a.isComplete());
     }
     @When("the activity with id {string} is marked as incomplete")
     public void theActivityWithIdIsMarkedAsIncomplete(String activityIdentifier) {
@@ -48,6 +47,6 @@ public class SetActivityStatusSteps {
     }
     @Then("the activity with id {string} is incomplete")
     public void theActivityWithIdIsIncomplete(String activityIdentifier) {
-        assertFalse(a.getStatus());
+        assertFalse(a.isComplete());
     }
 }

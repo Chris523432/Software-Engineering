@@ -6,17 +6,18 @@ import java.util.List;
 public class Project {
     private String name;
     private String id;
-    private List<Activity> activities = new ArrayList<>();
+    private List<Activity> activities;
     private IdGenerator idGenerator = new IdGenerator();
     private Employee projectLeader;
 
     public Project(String name, int year) {
         this.name = name;
         this.id = idGenerator.generateProjectId(year);
+        this.activities = new ArrayList<>();
     }
-    public void addProject(String name) {
+    public void addActivity(String name) {
         Activity a = new Activity(name);
-        a.setParentProject(this);
+        a.setProject(this);
         activities.add(a);
     }
     public List<Activity> getActivities() {
@@ -30,6 +31,7 @@ public class Project {
     }
 
     public String getStartWeek() throws Exception {
+        //pls indfør date objekt eller noget
         if (activities.isEmpty()) {
             throw new Exception("Project does not have a start week");
         }
@@ -48,6 +50,7 @@ public class Project {
     }
 
     public String getEndWeek() throws Exception {
+        //pls indfør date objekt eller noget
         if (activities.isEmpty()) {
             throw new Exception("Project does not have an end week");
         }
@@ -66,11 +69,12 @@ public class Project {
     }
 
     public String getProjectStatus() throws Exception {
+        //bør vel bare være en attribut i project?
         if (activities.isEmpty()) {
             throw new Exception("Project does not have a status");
         }
         for (Activity a : activities) {
-            if (!a.getStatus()) {
+            if (!a.isComplete()) {
                 return "Project is incomplete";
             }
         }

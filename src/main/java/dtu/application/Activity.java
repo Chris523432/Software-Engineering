@@ -6,11 +6,11 @@ import java.util.List;
 public class Activity {
     private String name;
     private String id;
-    private Project parentProject;
+    private Project project;
     private int budgetedHours;
-    private boolean status = false;
+    private boolean complete = false;
     private IdGenerator idGenerator = new IdGenerator();
-    private List<Employee> assignedEmployees = new ArrayList<>();
+    private List<Employee> assignedEmployees;
     private int startweek;
     private int endweek;
     private int startyear;
@@ -18,13 +18,14 @@ public class Activity {
     public Activity(String name) {
         this.name = name;
         this.id = idGenerator.generateActivityId();
+        this.assignedEmployees = new ArrayList<>();
     }
 
-    public Activity(String name, int budgetedHours) throws Exception {
+    public Activity(String name, int budgetedHours) throws OperationNotAllowedException {
         new Activity(name);
         setAllocatedTime(budgetedHours);
     }
-    public void setAllocatedTime(int budgetedHours) throws Exception {
+    public void setAllocatedTime(int budgetedHours) throws OperationNotAllowedException {
         if (budgetedHours < 0) {
             throw new OperationNotAllowedException("Invalid value");
         }
@@ -40,13 +41,13 @@ public class Activity {
         return assignedEmployees.contains(employee);
     }
     public void inComplete() {
-        status = false;
+        complete = false;
     }
     public void complete() {
-        status = true;
+        complete = true;
     }
-    public boolean getStatus() {
-        return status;
+    public boolean isComplete() {
+        return complete;
     }
     public String getName() {
         return name;
@@ -57,11 +58,12 @@ public class Activity {
     public int getBudgetedHours() {
         return budgetedHours;
     }
-    public void setParentProject(Project project) {
-        this.parentProject = project;
+    //kan man have en activity uden et projekt???? bør denne ikke bare ligge i constructor????
+    public void setProject(Project project) {
+        this.project = project;
     }
-    public Project getParentProject() {
-        return parentProject;
+    public Project getProject() {
+        return project;
     }
 
     public void setStartWeek(int startweek, int startyear) throws Exception{

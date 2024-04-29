@@ -8,6 +8,7 @@ public class Application {
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
     private DateServer dateServer = new DateServer();
+    //giver det mening, at employees har et isloggedIn, når det er denne vi bruger??
     private String currentUser;
     public void registerUser(String initials) {
         Employee employee = new Employee(initials);
@@ -25,8 +26,9 @@ public class Application {
             throw new Exception("Activity can not be added without a name");
         }
         Project p = getProject(projectIdentifier);
-        p.addProject(activityName);
+        p.addActivity(activityName);
     }
+    //kan vi ikke bare tjekke om de er currentUser?
     public boolean isLoggedIn(String initials) throws Exception {
         return getEmployee(initials).isLoggedIn();
     }
@@ -39,6 +41,8 @@ public class Application {
         currentUser = null;
         getEmployee(initials).logout();
     }
+
+    //tror vores testing liv bliver nemmere, hvis det kun er id. Men vi må lige se
     public Project getProject(String projectIdentifier) throws Exception {
         for (Project p : projects) {
             if (p.getName().equals(projectIdentifier) || p.getId().equals(projectIdentifier)) {
@@ -47,6 +51,10 @@ public class Application {
         }
         throw new Exception("Project is not in the system");
     }
+
+    //Der skal returneres EmployeeInfo, hvis den er public.
+    //for en privat metode er dette fint.
+    //det samme gælder med getActivity osv.
     public Employee getEmployee(String initials) throws Exception {
         for (Employee e : employees) {
             if (e.getInitials().equals(initials)) {
