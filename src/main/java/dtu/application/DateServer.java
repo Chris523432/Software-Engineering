@@ -8,15 +8,16 @@ import java.util.GregorianCalendar;
 public class DateServer {
 
     public Calendar getDate() {
+        //kan den linje jeg har udkommenteret bare fjernes??? før blev c returneret.
         Calendar calendar = new GregorianCalendar();
-        Calendar c = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
-        return c;
+        //Calendar c = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        return calendar;
     }
     public int getYear() {
         Calendar calendar = new GregorianCalendar();
         return calendar.get(Calendar.YEAR);
     }
-    public String getYearString() {
-        return String.valueOf(getYear() % 100); //returns the last to digits as string
+    public int getYearDigits() {
+        return getYear() % 100; //returns the last to digits as string
     }
 }
