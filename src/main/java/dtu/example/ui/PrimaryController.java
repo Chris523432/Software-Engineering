@@ -29,4 +29,25 @@ public class PrimaryController {
     public void showLogInScreenBTN(ActionEvent event) {
         view.showLoginScreen();
     }
+
+    public void login(ActionEvent event) {
+        String initials = view.getLogin();
+        try {
+            application.login(initials);
+            view.showMainScreen();
+        } catch(Exception e) {
+            //TODO: show error message
+        }
+    }
+    public void addProject(ActionEvent event) {
+        String projectName = view.getNewProjectName();
+        try {
+            application.createProject(projectName);
+        } catch (Exception e) {
+            //TODO: show error message
+        }
+    }
+    public void mainAddProject(ActionEvent event) {
+        view.showAddProjectScreen();
+    }
 }

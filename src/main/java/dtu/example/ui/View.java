@@ -21,6 +21,9 @@ public class View extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        this.application = new dtu.application.Application();
+        application.addEmployee("buba");
+        this.controller = new PrimaryController(this,application);
         this.primaryStage = primaryStage;
         sceneMenu = new InitiateScenes(this, application);
         initiateButtons();
@@ -48,15 +51,9 @@ public class View extends Application {
     }
 
     public void initiateButtons() {
-        sceneMenu.getLogInBTN().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                showMainScreen();
-                System.out.println(sceneMenu.getUsername());
-            }
-        });
+        sceneMenu.getLogInBTN().setOnAction(controller::login);
         //sceneMenu.getAddProjectBTN().setOnAction(controller::);
-        sceneMenu.getAddProjectBTN().setOnAction(new EventHandler<ActionEvent>() {
+        sceneMenu.getMainAddProject().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 showAddProjectScreen();
@@ -65,6 +62,7 @@ public class View extends Application {
         sceneMenu.getViewProjectsBTN().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                sceneMenu.updateProjectNames();
                 showViewProjectsScreen();
             }
         });
@@ -86,5 +84,13 @@ public class View extends Application {
                 showMainScreen();
             }
         });
+        sceneMenu.getAddProjectAddProject().setOnAction(controller::addProject);
+    }
+    public String getLogin() {
+        return sceneMenu.getLogin();
+    }
+
+    public String getNewProjectName() {
+        return sceneMenu.getProjectName();
     }
 }
