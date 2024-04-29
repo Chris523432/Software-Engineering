@@ -140,6 +140,10 @@ public class Application {
         return projectleaders;
     }
 
+    public void addEmployee(String initials) {
+        employees.add(new Employee(initials));
+    }
+
     public void setStartWeekToActivity(String activity, int week, int year) throws Exception {
         getActivity(activity).setStartWeek(week, year);
     }
@@ -147,6 +151,7 @@ public class Application {
     public void setEndWeekToActivity(String activity, int week, int year) throws Exception {
         getActivity(activity).setEndWeek(week, year);
     }
+
 
     public int getEndWeekForActivity(String activity) throws Exception {
         return getActivity(activity).getEndWeek();
@@ -166,5 +171,9 @@ public class Application {
 
     public String getProjectStatus(String project) throws Exception {
         return getProject(project).getProjectStatus();
+    }
+
+    public String getCurrentUser() {
+        return currentUser;
     }
 }

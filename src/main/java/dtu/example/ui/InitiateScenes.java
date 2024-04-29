@@ -13,6 +13,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.List;
+
 public class InitiateScenes {
     private Scene loginScreen;
     private Scene mainScreen;
@@ -24,14 +26,17 @@ public class InitiateScenes {
     private int YDim = 300;
     private Button logIn;
     private Button logOut;
-    private Button addProject;
+    private Button mainAddProject;
     private Button viewProjects;
     private Button viewProject;
     private Button addActivity;
     private Button addProjectBack;
     private Button viewProjectsBack;
-    private String username;
+    private Button addProjectAddProject;
     private Application application;
+    private TextField userLoginField;
+    private TextField newProjectName;
+    private ObservableList<String> projectNames;
 
     public InitiateScenes(View view, Application application) {
         this.view = view;
@@ -56,9 +61,8 @@ public class InitiateScenes {
         Label userName = new Label("User Name:");
         grid.add(userName,0,1);
 
-        TextField userTextField = new TextField();
-        grid.add(userTextField,1,1);
-        username = userTextField.getText();
+        userLoginField = new TextField();
+        grid.add(userLoginField,1,1);
 
         logIn = new Button("Log in");
         HBox hbBtn = new HBox(10);
@@ -77,19 +81,19 @@ public class InitiateScenes {
 
         BorderPane bpTitle = new BorderPane();
         bpTitle.setPadding(new Insets(25,25,25,25));
-        Text sceneTitle = new Text("User: ");
+        Text sceneTitle = new Text("User");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         BorderPane.setAlignment(sceneTitle, Pos.CENTER);
 
-        addProject = new Button("Add Project");
-        addProject.setMinWidth(200);
+        mainAddProject = new Button("Add Project");
+        mainAddProject.setMinWidth(200);
         viewProjects = new Button("View your current projects");
         viewProjects.setMinWidth(200);
         logOut = new Button("Log out");
 
         VBox vbBtn = new VBox(10);
         vbBtn.setAlignment(Pos.CENTER);
-        vbBtn.getChildren().addAll(addProject, viewProjects);
+        vbBtn.getChildren().addAll(mainAddProject, viewProjects);
         BP.setCenter(vbBtn);
         BP.setTop(logOut);
         bpTitle.setTop(sceneTitle);
@@ -111,6 +115,16 @@ public class InitiateScenes {
         addProjectBack = new Button("Back to main menu");
         BP.setTop(addProjectBack);
 
+        addProjectAddProject = new Button("Add Project");
+        newProjectName = new TextField();
+
+        HBox hbAddProject = new HBox();
+        hbAddProject.setAlignment(Pos.CENTER);
+        hbAddProject.getChildren().addAll(newProjectName, addProjectAddProject);
+
+        BP.setCenter(hbAddProject);
+
+
         addProjectScreen = new Scene(new StackPane(bpTitle, BP), XDim, YDim);
 
     }
@@ -124,13 +138,11 @@ public class InitiateScenes {
         Text sceneTitle = new Text("(user's) projects");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         BorderPane.setAlignment(sceneTitle, Pos.CENTER);
-        TableView<Project> table = new TableView<Project>();
 
-        ObservableList<String> projects = FXCollections.observableArrayList(
-                "project 1",
-                "project 2",
-                "project 3");
-        final ComboBox comboBox = new ComboBox(projects);
+        projectNames = FXCollections.observableArrayList();
+        updateProjectNames();
+
+        final ComboBox comboBox = new ComboBox(projectNames);
         comboBox.setVisibleRowCount(5);
 
         comboBox.setPromptText("Project");
@@ -147,6 +159,16 @@ public class InitiateScenes {
         viewProjectsScreen = new Scene(new StackPane(bpTitle, BP), XDim,YDim);
     }
 
+    //public void initiateExamineProject()
+
+    public void updateProjectNames() {
+        projectNames.clear();
+        List<Project> projects = application.getProjects();
+        for (Project p : projects) {
+            projectNames.add(p.getName());
+        }
+        projectNames.add("project1231243d");
+    }
     public void initiateActivitiesScreen() {
 
     }
@@ -168,8 +190,11 @@ public class InitiateScenes {
     public Button getLogInBTN() {
         return logIn;
     }
-    public Button getAddProjectBTN() {
-        return addProject;
+    public Button getMainAddProject() {
+        return mainAddProject;
+    }
+    public Button getAddProjectAddProject() {
+        return addProjectAddProject;
     }
     public Button getViewProjectsBTN() {
         return viewProjects;
@@ -183,11 +208,14 @@ public class InitiateScenes {
     public Button getViewProjectsBackBTN() {
         return viewProjectsBack;
     }
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return userLoginField.getText();
     }
     public Button getAddProjectBackBTN() {
         return addProjectBack;
+    }
+    public String getProjectName() {
+        return newProjectName.getText();
     }
 
 }
