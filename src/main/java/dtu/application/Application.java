@@ -88,31 +88,7 @@ public class Application {
     public boolean isAssignedSearch(String activityIdentifier, String initials) throws DoesNotExistErrorException { //easier for tests
         return getActivity(activityIdentifier).isAssigned(getEmployee(initials));
     }
-    public void registerIllness(String initials) throws OperationNotAllowedException, DoesNotExistErrorException {
-        Employee e = getEmployee(initials);
-        Calendar c = dateServer.getDate();
-        if (e.isIll(c)) {
-            throw new OperationNotAllowedException("Can't add absence to already existing absence");
-        }
-        e.registerIllness(dateServer.getDate());
-    }
-    public void registerIllnessSelf() throws Exception {
-        registerIllness(currentUser);
-    }
-    public void registerVacation(String initials, Calendar startDate, Calendar endDate) throws OperationNotAllowedException, DoesNotExistErrorException {
-        Employee e = getEmployee(initials);
-        Calendar c = dateServer.getDate();
-        if (startDate.before(c) || endDate.before(startDate)) {
-            throw new OperationNotAllowedException("Invalid dates");
-        }
-        if (e.isAbsent(c, startDate, endDate)) {
-            throw new OperationNotAllowedException("Can't add absence to already existing absence");
-        }
-        e.registerVacation(startDate, endDate);
-    }
-    public void registerVacationSelf(Calendar startDate, Calendar endDate) throws Exception {
-        registerVacation(currentUser, startDate, endDate);
-    }
+
     public List<Employee> getEmployees() {
         return employees;
     }
