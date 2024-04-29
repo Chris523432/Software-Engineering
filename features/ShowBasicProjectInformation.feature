@@ -5,7 +5,7 @@ Feature: Show basic project information
   Scenario: Show start week when project has start week registered
     Given employee "barc" is logged in
     And the project with name "project1" exists
-    And the activity with id "1" has the earliest start week 1
+    And the activity with id "1" has the earliest start week 1 in year 2024
     When the employee requests the start week of project with name "project1"
     Then the found start week is week 1
 
@@ -13,7 +13,7 @@ Feature: Show basic project information
     Given employee "barc" is logged in
     And the project with name "project1" exists
     When the employee requests the start week of project with name "project1"
-    Then the error message "Project does not have a start week" is given
+    Then no date is given
 
   Scenario: Show start week when project does not exist
     Given employee "barc" is logged in
@@ -24,7 +24,7 @@ Feature: Show basic project information
   Scenario: Show end week when project has end week registered
     Given employee "barc" is logged in
     And the project with name "project1" exists
-    And the activity with id "1" has the latest end week 10
+    And the activity with id "1" has the latest end week 10 in year 2024
     When the employee requests the end week of project with name "project1"
     Then the found end week is week 10
 
@@ -32,7 +32,7 @@ Feature: Show basic project information
     Given employee "barc" is logged in
     And the project with name "project1" exists
     When the employee requests the end week of project with name "project1"
-    Then the error message "Project does not have an end week" is given
+    Then no date is given
 
   Scenario: Show end week when project does not exist
     Given employee "barc" is logged in

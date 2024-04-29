@@ -14,17 +14,17 @@ public class Application {
         Employee employee = new Employee(initials);
         employees.add(employee);
     }
-    public void createProject(String name) throws Exception {
+    public void createProject(String name) throws OperationNotAllowedException {
         if (name.trim().isEmpty()) {
-            throw new Exception("Project can not be created without a name");
+            throw new OperationNotAllowedException("Project can not be created without a name");
         }
         int year = dateServer.getDate().get(Calendar.YEAR) % 100;
         Project project = new Project(name, year);
         projects.add(project);
     }
-    public void createActivity(String projectIdentifier, String activityName) throws Exception {
+    public void createActivity(String projectIdentifier, String activityName) throws OperationNotAllowedException, DoesNotExistErrorException {
         if (activityName.trim().isEmpty()) {
-            throw new Exception("Activity can not be added without a name");
+            throw new OperationNotAllowedException("Activity can not be added without a name");
         }
         Project p = getProject(projectIdentifier);
         p.addActivity(activityName);
@@ -44,27 +44,27 @@ public class Application {
     }
 
     //tror vores testing liv bliver nemmere, hvis det kun er id. Men vi må lige se
-    public Project getProject(String projectIdentifier) throws Exception {
+    public Project getProject(String projectIdentifier) throws DoesNotExistErrorException {
         for (Project p : projects) {
             if (p.getName().equals(projectIdentifier) || p.getId().equals(projectIdentifier)) {
                 return p;
             }
         }
-        throw new Exception("Project is not in the system");
+        throw new DoesNotExistErrorException("Project is not in the system");
     }
 
     //Der skal returneres EmployeeInfo, hvis den er public.
     //for en privat metode er dette fint.
     //det samme gælder med getActivity osv.
-    public Employee getEmployee(String initials) throws Exception {
+    public Employee getEmployee(String initials) throws DoesNotExistErrorException {
         for (Employee e : employees) {
             if (e.getInitials().equals(initials)) {
                 return e;
             }
         }
-        throw new Exception("Employee does not exist");
+        throw new DoesNotExistErrorException("Employee does not exist");
     }
-    public Activity getActivity(String activityIdentifier) throws Exception {
+    public Activity getActivity(String activityIdentifier) throws DoesNotExistErrorException {
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
                 if (a.getId().equals(activityIdentifier) || a.getName().equals(activityIdentifier)) {
@@ -72,23 +72,23 @@ public class Application {
                 }
             }
         }
-        throw new Exception("Activity does not exist");
+        throw new DoesNotExistErrorException("Activity does not exist");
     }
-    public void assignEmployee(String aIdentifier, String initials) throws Exception {
+    public void assignEmployee(String aIdentifier, String initials) throws OperationNotAllowedException, DoesNotExistErrorException {
         Activity a = getActivity(aIdentifier);
         Employee e = getEmployee(initials);
         if (isAssigned(a, e)) {
-            throw new Exception("Employee is already assigned to activity");
+            throw new OperationNotAllowedException("Employee is already assigned to activity");
         }
         a.assignEmployee(e);
     }
     public boolean isAssigned(Activity activity, Employee employee) {
         return activity.isAssigned(employee);
     }
-    public boolean isAssignedSearch(String activityIdentifier, String initials) throws Exception { //easier for tests
+    public boolean isAssignedSearch(String activityIdentifier, String initials) throws DoesNotExistErrorException { //easier for tests
         return getActivity(activityIdentifier).isAssigned(getEmployee(initials));
     }
-    public void registerIllness(String initials) throws Exception {
+    public void registerIllness(String initials) throws OperationNotAllowedException, DoesNotExistErrorException {
         Employee e = getEmployee(initials);
         Calendar c = dateServer.getDate();
         if (e.isIll(c)) {
@@ -99,7 +99,7 @@ public class Application {
     public void registerIllnessSelf() throws Exception {
         registerIllness(currentUser);
     }
-    public void registerVacation(String initials, Calendar startDate, Calendar endDate) throws Exception {
+    public void registerVacation(String initials, Calendar startDate, Calendar endDate) throws OperationNotAllowedException, DoesNotExistErrorException {
         Employee e = getEmployee(initials);
         Calendar c = dateServer.getDate();
         if (startDate.before(c) || endDate.before(startDate)) {
@@ -119,7 +119,7 @@ public class Application {
     public List<Project> getProjects() {
         return projects;
     }
-    public void setAllocatedTime(String activityIdentifier, int hours) throws Exception {
+    public void setAllocatedTime(String activityIdentifier, int hours) throws OperationNotAllowedException, DoesNotExistErrorException {
         getActivity(activityIdentifier).setAllocatedTime(hours);
     }
     public void setDateServer(DateServer dateServer) {
@@ -140,31 +140,32 @@ public class Application {
         return projectleaders;
     }
 
-    public void setStartWeekToActivity(String activity, int week, int year) throws Exception {
+    public void setStartWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistErrorException {
         getActivity(activity).setStartWeek(week, year);
     }
 
-    public void setEndWeekToActivity(String activity, int week, int year) throws Exception {
+    public void setEndWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistErrorException {
         getActivity(activity).setEndWeek(week, year);
     }
 
-    public int getEndWeekForActivity(String activity) throws Exception {
-        return getActivity(activity).getEndWeek();
+    public Calendar getStartDateForActivity(String activity) throws DoesNotExistErrorException {
+        return getActivity(activity).getStartDate();
     }
 
-    public int getStartWeekForActivity(String activity) throws Exception {
-        return getActivity(activity).getStartWeek();
+    public Calendar getEndDateForActivity(String activity) throws DoesNotExistErrorException {
+        return getActivity(activity).getEndDate();
     }
 
-    public String getStartWeekForProject(String project) throws Exception {
-        return getProject(project).getStartWeek();
+
+    public Calendar getStartDateForProject(String project) throws DoesNotExistErrorException {
+        return getProject(project).getStartDate();
     }
 
-    public String getEndWeekForProject(String project) throws Exception {
-        return getProject(project).getEndWeek();
+    public Calendar getEndDateForProject(String project) throws DoesNotExistErrorException {
+        return getProject(project).getEndDate();
     }
 
-    public String getProjectStatus(String project) throws Exception {
+    public String getProjectStatus(String project) throws DoesNotExistErrorException {
         return getProject(project).getProjectStatus();
     }
 }
