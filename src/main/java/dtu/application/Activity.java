@@ -1,6 +1,7 @@
 package dtu.application;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Activity {
@@ -11,10 +12,9 @@ public class Activity {
     private boolean complete = false;
     private IdGenerator idGenerator = new IdGenerator();
     private List<Employee> assignedEmployees;
-    private int startweek;
-    private int endweek;
-    private int startyear;
-    private int endyear;
+    private Calendar startDate;
+    private Calendar endDate;
+    private DateServer dateServer = new DateServer();
     public Activity(String name) {
         this.name = name;
         this.id = idGenerator.generateActivityId();
@@ -65,44 +65,37 @@ public class Activity {
     public Project getProject() {
         return project;
     }
-
-    public void setStartWeek(int startweek, int startyear) throws OperationNotAllowedException{
-        if (startweek > endweek && startyear <= endyear) {
-            throw new OperationNotAllowedException("start week cannot be after end week");
-        }
-        if (startweek < 0 || startweek > 52) {
+    public void setStartWeek(int startWeek, int startYear) throws OperationNotAllowedException {
+        if (startWeek < 0 || startWeek > 52 || startYear < 0) {
             throw new OperationNotAllowedException("Please enter a valid week");
         }
-        this.startweek = startweek;
-        this.startyear = startyear;
+        Calendar date = dateServer.createDate(startWeek, startYear);
+        if (endDate != null) {
+            if (date.after(endDate)) {
+                throw new OperationNotAllowedException("start week cannot be after end week");
+            }
+        }
+        this.startDate = date;
     }
 
-    public void setEndWeek(int endWeek, int endyear) throws OperationNotAllowedException {
-        if (startweek > endweek && startyear <= endyear) {
-            throw new OperationNotAllowedException("End week cannot be before start week");
-        }
-        if (endWeek < 0 || endWeek > 52) {
+    public void setEndWeek(int endWeek, int endYear) throws OperationNotAllowedException {
+        if (endWeek < 0 || endWeek > 52 || endYear < 0) {
             throw new OperationNotAllowedException("Please enter a valid week");
         }
-        this.endweek = endWeek;
-        this.endyear = endyear;
+        Calendar date = dateServer.createDate(endWeek, endYear);
+        if (startDate != null) {
+            if (date.before(startDate)) {
+                throw new OperationNotAllowedException("End week cannot be before start week");
+            }
+        }
+        this.endDate = date;
     }
 
-    public int getStartWeek() {
-        return startweek;
+    public Calendar getStartDate() {
+        return startDate;
     }
 
-    public int getEndWeek() {
-        return endweek;
+    public Calendar getEndDate() {
+        return endDate;
     }
-
-    public int getEndYear() {
-        return endyear;
-    }
-
-    public int getStartYear() {
-        return startyear;
-    }
-
-
 }

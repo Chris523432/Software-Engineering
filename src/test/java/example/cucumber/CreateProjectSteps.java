@@ -2,6 +2,7 @@ package example.cucumber;
 
 import dtu.application.Application;
 import dtu.application.DateServer;
+import example.junit.MockDateHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,13 +14,15 @@ public class CreateProjectSteps {
 
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-    private MockDateHolder dateHolder; //lidt i tvivl om den hr SKAL bruges til at få datoen
+    private MockDateHolder mockDateHolder; //lidt i tvivl om den hr SKAL bruges til at få datoen
     private DateServer dateServer;
     private String tempName;
-    public CreateProjectSteps(Application application, ErrorMessageHolder errorMessageHolder, MockDateHolder dateHolder, DateServer dateServer) {
+    public CreateProjectSteps(Application application, ErrorMessageHolder errorMessageHolder, DateServer dateServer) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
         this.dateServer = dateServer;
+        mockDateHolder = new MockDateHolder(application);
+        mockDateHolder.setYear2024();
     }
     @Given("there is not a project with the name {string}")
     public void there_is_not_a_project_with_the_name(String name) {

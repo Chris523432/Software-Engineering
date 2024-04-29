@@ -1,12 +1,11 @@
 package example.cucumber;
 
-import dtu.application.Activity;
-import dtu.application.Application;
-import dtu.application.IdGenerator;
-import dtu.application.Project;
+import dtu.application.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.Calendar;
 
 import static org.junit.Assert.*;
 
@@ -35,11 +34,11 @@ public class SetActivityTimesSteps {
         }
     }
     @Given("there exists an activity with id {string}")
-    public void there_exists_an_activity_with_id(String activityIdentifier) throws Exception {
+    public void there_exists_an_activity_with_id(String activityIdentifier) throws DoesNotExistErrorException {
         try {
             application.createProject("ProjectTest");
             application.createActivity("ProjectTest", "ActivityTest");
-            a = application.getActivity("ActivityTest");
+            a = application.getActivity(activityIdentifier);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -60,7 +59,7 @@ public class SetActivityTimesSteps {
     }
 
     @Given("there does not exist an activity with id {string}")
-    public void thereDoesNotExistAnActivityWithId(String activityIdentifier) throws Exception {
+    public void thereDoesNotExistAnActivityWithId(String activityIdentifier) {
         try {
             application.getActivity(activityIdentifier);
         } catch (Exception e) {
@@ -68,44 +67,47 @@ public class SetActivityTimesSteps {
         }
     }
 
-    @When("the start week is set to Week {int} on activity with id {string}")
-    public void the_start_week_is_set_to_week_on_activity_with_id(Integer int1, String activity) throws Exception {
+    @When("the start week is set to Week {int} and start year {int} on activity with id {string}")
+    public void the_start_week_is_set_to_week_and_start_year_on_activity_with_id(Integer week, Integer year ,String activity) {
         try {
-            application.setStartWeekToActivity(activity, int1, 2024);
+            application.setStartWeekToActivity(activity, week, year);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
-    @Then("the activity with id {string} has start week Week {int}")
-    public void the_activity_with_id_has_start_week_week(String activityidentifier, Integer int1) throws Exception {
-        assertEquals(application.getStartWeekForActivity(activityidentifier), (int) int1);
+    @Then("the activity with id {string} has start week Week {int} and start year {int}")
+    public void the_activity_with_id_has_start_week_week_and_start_year(String activityidentifier, int week, int year) throws DoesNotExistErrorException {
+        assertEquals(application.getStartDateForActivity(activityidentifier).get(Calendar.WEEK_OF_YEAR), week);
+        assertEquals(application.getStartDateForActivity(activityidentifier).get(Calendar.YEAR), year);
     }
 
 
-    @Given("the activity id {string} has end week Week {int}")
-    public void the_activity_id_has_end_week_week(String activityidentifier, Integer int1) throws Exception {
-        application.setEndWeekToActivity(activityidentifier, int1, 2024);
-        assertEquals(application.getEndWeekForActivity(activityidentifier), (int) int1);
+    @Given("the activity id {string} has end week {int} and end year {int}")
+    public void the_activity_id_has_end_week_week_and_end_year(String activityidentifier, int week, int year) throws DoesNotExistErrorException, OperationNotAllowedException {
+        application.setEndWeekToActivity(activityidentifier, week, year);
+        assertEquals(application.getEndDateForActivity(activityidentifier).get(Calendar.WEEK_OF_YEAR),  week);
+        assertEquals(application.getEndDateForActivity(activityidentifier).get(Calendar.YEAR), year);
     }
 
-    @When("the end week is set to Week {int} on activity with id {string}")
-    public void the_end_week_is_set_to_week_on_activity_with_id(Integer int1, String string) throws Exception {
+    @When("the end week is set to Week {int} and end year is set to {int} on activity with id {string}")
+    public void the_end_week_is_set_to_week_and_end_year_is_set_to_on_activity_with_id(Integer week, Integer year, String string) {
         try {
-            application.setEndWeekToActivity(string, int1, 2024);
+            application.setEndWeekToActivity(string, week, year);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
-    @Then("the activity with id {string} has end week Week {int}")
-    public void the_activity_with_id_has_end_week_week(String activityidentifier, Integer int1) throws Exception {
-        assertEquals(application.getEndWeekForActivity(activityidentifier), (int) int1);
+    @Then("the activity with id {string} has end week {int} and end year {int}")
+    public void the_activity_with_id_has_end_week_and_end_year(String activityidentifier, int week, int year) throws DoesNotExistErrorException {
+        assertEquals(application.getEndDateForActivity(activityidentifier).get(Calendar.WEEK_OF_YEAR), week);
+        assertEquals(application.getEndDateForActivity(activityidentifier).get(Calendar.YEAR), year);
     }
 
-    @Given("the activity has start week Week {int}")
-    public void the_activity_has_start_week_week(Integer int1) throws Exception {
-        application.setStartWeekToActivity("1", int1, 2024);
+    @Given("the activity has start week {int} and start year {int}")
+    public void the_activity_has_start_week_(int week, int year) throws DoesNotExistErrorException, OperationNotAllowedException {
+        application.setStartWeekToActivity("1", week, year);
     }
 
 }
