@@ -49,10 +49,10 @@ public class Project {
         return "Week: " + week + "Year: " + year;
     }
 
-    public String getEndWeek() throws Exception {
+    public String getEndWeek() {
         //pls indfør date objekt eller noget
         if (activities.isEmpty()) {
-            throw new Exception("Project does not have an end week");
+            return("Project does not have an end week");
         }
         int week = 0;
         int year = 0;
@@ -63,7 +63,7 @@ public class Project {
             }
         }
         if (year  == 0 || week == 0) {
-            throw new Exception("Project does not have an end week");
+            return("Project does not have an end week");
         }
         return "Week: " + week + "Year: " + year;
     }

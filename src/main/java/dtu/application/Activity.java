@@ -66,7 +66,7 @@ public class Activity {
         return project;
     }
 
-    public void setStartWeek(int startweek, int startyear) throws Exception{
+    public void setStartWeek(int startweek, int startyear) throws OperationNotAllowedException{
         if (startweek > endweek && startyear <= endyear) {
             throw new OperationNotAllowedException("start week cannot be after end week");
         }

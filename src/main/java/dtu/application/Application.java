@@ -44,27 +44,27 @@ public class Application {
     }
 
     //tror vores testing liv bliver nemmere, hvis det kun er id. Men vi må lige se
-    public Project getProject(String projectIdentifier) throws Exception {
+    public Project getProject(String projectIdentifier) throws OperationNotAllowedException {
         for (Project p : projects) {
             if (p.getName().equals(projectIdentifier) || p.getId().equals(projectIdentifier)) {
                 return p;
             }
         }
-        throw new Exception("Project is not in the system");
+        throw new OperationNotAllowedException("Project is not in the system");
     }
 
     //Der skal returneres EmployeeInfo, hvis den er public.
     //for en privat metode er dette fint.
     //det samme gælder med getActivity osv.
-    public Employee getEmployee(String initials) throws Exception {
+    public Employee getEmployee(String initials) throws OperationNotAllowedException {
         for (Employee e : employees) {
             if (e.getInitials().equals(initials)) {
                 return e;
             }
         }
-        throw new Exception("Employee does not exist");
+        throw new OperationNotAllowedException("Employee does not exist");
     }
-    public Activity getActivity(String activityIdentifier) throws Exception {
+    public Activity getActivity(String activityIdentifier) throws OperationNotAllowedException {
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
                 if (a.getId().equals(activityIdentifier) || a.getName().equals(activityIdentifier)) {
@@ -72,13 +72,13 @@ public class Application {
                 }
             }
         }
-        throw new Exception("Activity does not exist");
+        throw new OperationNotAllowedException("Activity does not exist");
     }
-    public void assignEmployee(String aIdentifier, String initials) throws Exception {
+    public void assignEmployee(String aIdentifier, String initials) throws OperationNotAllowedException {
         Activity a = getActivity(aIdentifier);
         Employee e = getEmployee(initials);
         if (isAssigned(a, e)) {
-            throw new Exception("Employee is already assigned to activity");
+            throw new OperationNotAllowedException("Employee is already assigned to activity");
         }
         a.assignEmployee(e);
     }
@@ -88,7 +88,7 @@ public class Application {
     public boolean isAssignedSearch(String activityIdentifier, String initials) throws Exception { //easier for tests
         return getActivity(activityIdentifier).isAssigned(getEmployee(initials));
     }
-    public void registerIllness(String initials) throws Exception {
+    public void registerIllness(String initials) throws OperationNotAllowedException {
         Employee e = getEmployee(initials);
         Calendar c = dateServer.getDate();
         if (e.isIll(c)) {
@@ -96,10 +96,10 @@ public class Application {
         }
         e.registerIllness(dateServer.getDate());
     }
-    public void registerIllnessSelf() throws Exception {
+    public void registerIllnessSelf() throws OperationNotAllowedException {
         registerIllness(currentUser);
     }
-    public void registerVacation(String initials, Calendar startDate, Calendar endDate) throws Exception {
+    public void registerVacation(String initials, Calendar startDate, Calendar endDate) throws OperationNotAllowedException {
         Employee e = getEmployee(initials);
         Calendar c = dateServer.getDate();
         if (startDate.before(c) || endDate.before(startDate)) {
@@ -110,7 +110,7 @@ public class Application {
         }
         e.registerVacation(startDate, endDate);
     }
-    public void registerVacationSelf(Calendar startDate, Calendar endDate) throws Exception {
+    public void registerVacationSelf(Calendar startDate, Calendar endDate) throws OperationNotAllowedException {
         registerVacation(currentUser, startDate, endDate);
     }
     public List<Employee> getEmployees() {
@@ -119,14 +119,14 @@ public class Application {
     public List<Project> getProjects() {
         return projects;
     }
-    public void setAllocatedTime(String activityIdentifier, int hours) throws Exception {
+    public void setAllocatedTime(String activityIdentifier, int hours) throws OperationNotAllowedException {
         getActivity(activityIdentifier).setAllocatedTime(hours);
     }
     public void setDateServer(DateServer dateServer) {
         this.dateServer = dateServer;
     }
 
-    public void assignProjectLeader (String project, String employee) throws Exception {
+    public void assignProjectLeader (String project, String employee) throws OperationNotAllowedException {
         getProject(project).assignProjectLeader(getEmployee(employee));
     }
 
@@ -140,31 +140,31 @@ public class Application {
         return projectleaders;
     }
 
-    public void setStartWeekToActivity(String activity, int week, int year) throws Exception {
+    public void setStartWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException {
         getActivity(activity).setStartWeek(week, year);
     }
 
-    public void setEndWeekToActivity(String activity, int week, int year) throws Exception {
+    public void setEndWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException {
         getActivity(activity).setEndWeek(week, year);
     }
 
-    public int getEndWeekForActivity(String activity) throws Exception {
+    public int getEndWeekForActivity(String activity) throws OperationNotAllowedException {
         return getActivity(activity).getEndWeek();
     }
 
-    public int getStartWeekForActivity(String activity) throws Exception {
+    public int getStartWeekForActivity(String activity) throws OperationNotAllowedException {
         return getActivity(activity).getStartWeek();
     }
 
-    public String getStartWeekForProject(String project) throws Exception {
+    public String getStartWeekForProject(String project) throws OperationNotAllowedException {
         return getProject(project).getStartWeek();
     }
 
-    public String getEndWeekForProject(String project) throws Exception {
+    public String getEndWeekForProject(String project) throws OperationNotAllowedException {
         return getProject(project).getEndWeek();
     }
 
-    public String getProjectStatus(String project) throws Exception {
+    public String getProjectStatus(String project) throws OperationNotAllowedException {
         return getProject(project).getProjectStatus();
     }
 }
