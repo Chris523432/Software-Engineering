@@ -140,6 +140,11 @@ public class Application {
         return projectleaders;
     }
 
+    public void addEmployee(String initials) {
+        employees.add(new Employee(initials));
+    }
+
+
     public void setStartWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistErrorException {
         getActivity(activity).setStartWeek(week, year);
     }
@@ -147,6 +152,7 @@ public class Application {
     public void setEndWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistErrorException {
         getActivity(activity).setEndWeek(week, year);
     }
+
 
     public Calendar getStartDateForActivity(String activity) throws DoesNotExistErrorException {
         return getActivity(activity).getStartDate();
@@ -167,5 +173,9 @@ public class Application {
 
     public String getProjectStatus(String project) throws DoesNotExistErrorException {
         return getProject(project).getProjectStatus();
+    }
+
+    public String getCurrentUser() {
+        return currentUser;
     }
 }
