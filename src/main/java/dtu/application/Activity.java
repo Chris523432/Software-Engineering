@@ -66,7 +66,7 @@ public class Activity {
         return project;
     }
     public void setStartWeek(int startWeek, int startYear) throws OperationNotAllowedException {
-        if (startWeek < 0 || startWeek > 52 || startYear < 0) {
+        if (startWeek <= 0 || startWeek > 52 || startYear <= 0) {
             throw new OperationNotAllowedException("Please enter a valid week");
         }
         Calendar date = dateServer.createDate(startWeek, startYear);
@@ -79,7 +79,7 @@ public class Activity {
     }
 
     public void setEndWeek(int endWeek, int endYear) throws OperationNotAllowedException {
-        if (endWeek < 0 || endWeek > 52 || endYear < 0) {
+        if (endWeek <= 0 || endWeek > 52 || endYear <= 0) {
             throw new OperationNotAllowedException("Please enter a valid week");
         }
         Calendar date = dateServer.createDate(endWeek, endYear);
