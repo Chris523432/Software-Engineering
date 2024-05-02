@@ -68,7 +68,6 @@ public class Project {
     public void assignProjectLeader(Employee projectLeader) {
         this.projectLeader = projectLeader;
     }
-
     public Employee getProjectLeader() {
         return projectLeader;
     }

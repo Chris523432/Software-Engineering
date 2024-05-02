@@ -103,7 +103,19 @@ public class Application {
     }
 
     public void assignProjectLeader (String project, String employee) throws Exception {
-        getProject(project).assignProjectLeader(getEmployee(employee));
+        Project p = getProject(project);
+        Employee e1 = getEmployee(employee);
+        Employee e2 = p.getProjectLeader();
+        if (e1 != e2) {
+            swapProjectLeader(e1, e2, p);
+        }
+        p.assignProjectLeader(e1);
+    }
+    public void swapProjectLeader(Employee newLeader, Employee currentLeader, Project p) {
+        if (currentLeader != null) {
+            currentLeader.removeProject(p);
+        }
+        newLeader.addProject(p);
     }
 
     public List<Employee> getProjectLeaders() {

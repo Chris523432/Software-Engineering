@@ -6,10 +6,12 @@ import java.util.List;
 
 public class Employee {
     private String initials;
+    private List<Project> leadingProjects;
     private boolean isLoggedIn;
 
     public Employee(String initials) {
         this.initials = initials;
+        this.leadingProjects = new ArrayList<>();
     }
 
     public String getInitials() {
@@ -26,5 +28,17 @@ public class Employee {
 
     public boolean isLoggedIn() {
         return isLoggedIn;
+    }
+
+    public void removeProject(Project p) {
+        leadingProjects.remove(p);
+    }
+
+    public void addProject(Project p) {
+        leadingProjects.add(p);
+    }
+
+    public List<Project> getLeadingProjects() {
+        return leadingProjects;
     }
 }

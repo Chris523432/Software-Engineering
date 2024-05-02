@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class SetActivityStatusSteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-
     private Project parentProject;
     private IdGenerator idGenerator = new IdGenerator();
     private Activity a;
