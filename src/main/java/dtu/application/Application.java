@@ -199,4 +199,7 @@ public class Application {
     public String getCurrentUser() {
         return currentUser;
     }
+    public int getCurrentYear() {
+        return dateServer.getYear();
+    }
 }
