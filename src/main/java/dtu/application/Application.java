@@ -107,6 +107,7 @@ public class Application {
         Employee e1 = getEmployee(employee);
         Employee e2 = p.getProjectLeader();
         if (e1 != e2) {
+
             swapProjectLeader(e1, e2, p);
         }
         p.assignProjectLeader(e1);

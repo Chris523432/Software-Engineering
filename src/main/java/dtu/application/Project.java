@@ -19,7 +19,6 @@ public class Project {
     }
     public void addActivity(String name) {
         Activity a = new Activity(name);
-        a.setProject(this);
         activities.add(a);
     }
     public List<Activity> getActivities() {
