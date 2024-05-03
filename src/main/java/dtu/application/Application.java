@@ -27,7 +27,10 @@ public class Application {
             throw new OperationNotAllowedException("Activity can not be added without a name");
         }
         Project p = getProject(projectIdentifier);
+        assert activityName != null && !activityName.trim().isEmpty() && projectIdentifier != null
+                && !projectIdentifier.trim().isEmpty() && doesProjectExist(projectIdentifier): "Pre-condition createActivity";
         p.addActivity(activityName);
+        //assert p.getActivities().contains(getActivity(activityName)): "Post condition createActivity";
     }
     //kan vi ikke bare tjekke om de er currentUser?
     public boolean isLoggedIn(String initials) throws Exception {
@@ -64,6 +67,16 @@ public class Application {
         }
         throw new DoesNotExistErrorException("Employee does not exist");
     }
+
+    public Boolean doesEmployeeExist(String initials) {
+        for (Employee e : employees) {
+            if (e.getInitials().equals(initials)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Activity getActivity(String activityIdentifier) throws DoesNotExistErrorException {
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
@@ -74,13 +87,28 @@ public class Application {
         }
         throw new DoesNotExistErrorException("Activity does not exist");
     }
+
+    public boolean doesActivityExist(String activityIdentifier) throws DoesNotExistErrorException {
+        for (Project p : projects) {
+            for (Activity a : p.getActivities()) {
+                if (a.getId().equals(activityIdentifier) || a.getName().equals(activityIdentifier)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public void assignEmployee(String aIdentifier, String initials) throws OperationNotAllowedException, DoesNotExistErrorException {
         Activity a = getActivity(aIdentifier);
         Employee e = getEmployee(initials);
         if (isAssigned(a, e)) {
             throw new OperationNotAllowedException("Employee is already assigned to activity");
         }
+        assert aIdentifier != null && !aIdentifier.trim().isEmpty() && doesActivityExist(aIdentifier)
+                && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials)
+                && !isAssignedSearch(aIdentifier, initials): "Pre-condition assignEmployee";
         a.assignEmployee(e);
+        assert a.isAssigned(e): "Post condition assignEmployee";
     }
     public boolean isAssigned(Activity activity, Employee employee) {
         return activity.isAssigned(employee);
@@ -102,31 +130,30 @@ public class Application {
         this.dateServer = dateServer;
     }
 
-    public void assignProjectLeader (String project, String employee) throws Exception {
+    public void assignProjectLeader (String project, String initials) throws DoesNotExistErrorException {
         Project p = getProject(project);
-        Employee e1 = getEmployee(employee);
+        Employee e1 = getEmployee(initials);
         Employee e2 = p.getProjectLeader();
+        assert project != null && !project.trim().isEmpty() && doesProjectExist(project)
+                && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials): "Pre-condition assignProjectLeader";
         if (e1 != e2) {
 
-            swapProjectLeader(e1, e2, p);
+            if (e2 != null) {
+                e2.removeProject(p);
+            }
+            e1.addProject(p);
         }
         p.assignProjectLeader(e1);
-    }
-    public void swapProjectLeader(Employee newLeader, Employee currentLeader, Project p) {
-        if (currentLeader != null) {
-            currentLeader.removeProject(p);
-        }
-        newLeader.addProject(p);
+        assert p.getProjectLeader().equals(e1): "Post condition assignProjectLeader";
     }
 
-    public List<Employee> getProjectLeaders() {
-        List<Employee> projectleaders = new ArrayList<>();
+    public boolean doesProjectExist(String projectidentifier) {
         for (Project p : projects) {
-            if (p.getProjectLeader() != null && !projectleaders.contains(p.getProjectLeader())) {
-                projectleaders.add(p.getProjectLeader());
-            }
+           if(p.getName().equals(projectidentifier) || p.getId().equals(projectidentifier)) {
+               return true;
+           }
         }
-        return projectleaders;
+        return false;
     }
 
     public void addEmployee(String initials) {

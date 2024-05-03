@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class SetActivityTimesTest {
     private Activity activityTest;
     @Before
-    public void setUp() throws OperationNotAllowedException {
+    public void setUp() {
          activityTest = new Activity("Test");
     }
 
