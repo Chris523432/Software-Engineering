@@ -45,14 +45,14 @@ Feature: Show basic project information
     And the project with name "project1" exists
     And "project1" is complete
     When the employee requests the status of "project1"
-    Then the message "Project is complete" will be given
+    Then the project is complete
 
   Scenario: Show project status of not completed project
     Given employee "barc" is logged in
     And the project with name "project1" exists
     And "project1" is incomplete
     When the employee requests the status of "project1"
-    Then the message "Project is incomplete" will be given
+    Then the project is incomplete
 
   Scenario: Show project status of project that does not exist
     Given employee "barc" is logged in

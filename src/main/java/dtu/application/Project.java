@@ -2,19 +2,19 @@ package dtu.application;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Project {
     private String name;
     private String id;
     private List<Activity> activities;
-    private IdGenerator idGenerator = new IdGenerator();
+    private ProjectIdGenerator idGenerator = new ProjectIdGenerator();
     private Employee projectLeader;
 
     public Project(String name, int year) {
         this.name = name;
-        this.id = idGenerator.generateProjectId(year);
+        idGenerator.setYear(year);
+        this.id = idGenerator.generateId();
         this.activities = new ArrayList<>();
     }
     public void addActivity(String name) {
@@ -52,17 +52,16 @@ public class Project {
         return date;
     }
 
-    public String getProjectStatus() {
-        //bør vel bare være en attribut i project?
+    public boolean isComplete() {
         if (activities.isEmpty()) {
-            return("Project is incomplete");
+            return false;
         }
         for (Activity a : activities) {
             if (!a.isComplete()) {
-                return "Project is incomplete";
+                return false;
             }
         }
-        return "Project is complete";
+        return true;
     }
 
     public void assignProjectLeader(Employee projectLeader) {

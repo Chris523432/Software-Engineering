@@ -2,7 +2,6 @@ package example.cucumber;
 
 import dtu.application.Activity;
 import dtu.application.Application;
-import dtu.application.IdGenerator;
 import dtu.application.Project;
 
 import io.cucumber.java.en.Then;
@@ -15,12 +14,11 @@ public class SetActivityStatusSteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
     private Project parentProject;
-    private IdGenerator idGenerator = new IdGenerator();
     private Activity a;
     public SetActivityStatusSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
     }
     @When("the activity with id {string} is marked as complete")
     public void theActivityWithIdIsMarkedAsComplete(String activityIdentifier) {

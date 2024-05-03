@@ -15,12 +15,11 @@ public class SetActivityTimesSteps {
     private ErrorMessageHolder errorMessageHolder;
 
     private Project parentProject;
-    private IdGenerator idGenerator = new IdGenerator();
     private Activity a;
     public SetActivityTimesSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
     }
 
     @Given("employee {string} is logged in")

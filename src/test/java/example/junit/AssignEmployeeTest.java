@@ -13,26 +13,27 @@ public class AssignEmployeeTest {
     @Before
     public void setUp() throws OperationNotAllowedException {
         application = new Application();
+        application.resetAllIds();
         application.createProject("p");
     }
     @Test
     public void inputSetA() throws DoesNotExistErrorException {
         try {
-            application.createActivity("p", "a");
+            application.createActivity("24001", "a");
             application.registerUser("barc");
-            application.assignEmployee("a", "barc");
+            application.assignEmployee("1", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
-        assertTrue(application.isAssignedSearch("a", "barc"));
+        assertTrue(application.isAssignedSearch("1", "barc"));
     }
     @Test
     public void inputSetB() {
         try {
-            application.createActivity("p", "a");
+            application.createActivity("24001", "a");
             application.registerUser("barc");
-            application.assignEmployee("a", "barc");
-            application.assignEmployee("a", "barc");
+            application.assignEmployee("1", "barc");
+            application.assignEmployee("1", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -41,8 +42,8 @@ public class AssignEmployeeTest {
     @Test
     public void inputSetC() {
         try {
-            application.createActivity("p", "a");
-            application.assignEmployee("a", "barc");
+            application.createActivity("24001", "a");
+            application.assignEmployee("1", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -52,7 +53,7 @@ public class AssignEmployeeTest {
     @Test
     public void inputSetD() {
         try {
-            application.assignEmployee("a", "barc");
+            application.assignEmployee("1", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }

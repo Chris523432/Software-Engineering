@@ -5,7 +5,6 @@ import example.junit.MockDateHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.mockito.Mock;
 
 import static org.junit.Assert.*;
 
@@ -14,13 +13,12 @@ public class CreateActivitySteps {
     private ErrorMessageHolder errorMessageHolder;
     private String tempName;
     private Activity tempActivity;
-    private IdGenerator idGenerator = new IdGenerator();
     private MockDateHolder mockDateHolder;
 
     public CreateActivitySteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
         mockDateHolder = new MockDateHolder(application);
         mockDateHolder.setYear2024();
     }

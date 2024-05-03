@@ -2,7 +2,6 @@ package example.cucumber;
 
 import dtu.application.*;
 import example.junit.MockDateHolder;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -14,13 +13,12 @@ public class AssignProjectLeaderSteps {
     private ErrorMessageHolder errorMessageHolder;
 
     private Project parentProject;
-    private IdGenerator idGenerator = new IdGenerator();
     private MockDateHolder mockDateHolder;
     private Activity a;
     public AssignProjectLeaderSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
         mockDateHolder = new MockDateHolder(application);
         mockDateHolder.setYear2024();
     }

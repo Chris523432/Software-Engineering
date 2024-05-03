@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 public class Activity {
     private String name;
     private String id;
     private Project project;
     private int budgetedHours;
     private boolean complete = false;
-    private IdGenerator idGenerator = new IdGenerator();
+    private ActivityIdGenerator idGenerator = new ActivityIdGenerator();
     private List<Employee> assignedEmployees;
     private Calendar startDate;
     private Calendar endDate;
     private DateServer dateServer = new DateServer();
     public Activity(String name) {
         this.name = name;
-        this.id = idGenerator.generateActivityId();
+        this.id = idGenerator.generateId();
         this.assignedEmployees = new ArrayList<>();
     }
 

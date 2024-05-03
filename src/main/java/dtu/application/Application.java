@@ -159,8 +159,13 @@ public class Application {
         return getProject(project).getEndDate();
     }
 
-    public String getProjectStatus(String project) throws DoesNotExistErrorException {
-        return getProject(project).getProjectStatus();
+    public boolean getProjectStatus(String project) throws DoesNotExistErrorException {
+        return getProject(project).isComplete();
+    }
+
+    public void resetAllIds() {
+        new ActivityIdGenerator().resetId();
+        new ProjectIdGenerator().resetId();
     }
 
     public String getCurrentUser() {

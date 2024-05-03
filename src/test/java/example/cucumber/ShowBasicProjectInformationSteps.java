@@ -2,7 +2,6 @@ package example.cucumber;
 
 import dtu.application.Application;
 import dtu.application.DoesNotExistErrorException;
-import dtu.application.IdGenerator;
 import dtu.application.OperationNotAllowedException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,12 +15,12 @@ public class ShowBasicProjectInformationSteps {
 
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-    private IdGenerator idGenerator = new IdGenerator();
     private Calendar tempDate;
+    private Boolean isComplete;
     public ShowBasicProjectInformationSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
     }
 
 
@@ -108,15 +107,20 @@ public class ShowBasicProjectInformationSteps {
     @When("the employee requests the status of {string}")
     public void the_employee_requests_the_status_of(String project) {
         try {
-            application.getProjectStatus(project);
+            isComplete = application.getProjectStatus(project);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
-    @Then("the message {string} will be given")
-    public void theMessageWillBeGiven(String status) throws DoesNotExistErrorException {
-        assertEquals(status, application.getProjectStatus("project1"));
+    @Then("the project is complete")
+    public void theProjectIsComplete() {
+        assertTrue(isComplete);
+    }
+
+    @Then("the project is incomplete")
+    public void theProjectIsIncomplete() {
+        assertFalse(isComplete);
     }
 
     @Given("the project with name {string} does not exists")

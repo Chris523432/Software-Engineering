@@ -13,16 +13,17 @@ public class AssignProjectLeaderTest {
     @Before
     public void setUp() {
         application = new Application();
+        application.resetAllIds();
     }
 
     @Test
     public void inputSetA() throws OperationNotAllowedException, DoesNotExistErrorException {
         application.createProject("p");
         application.registerUser("barc");
-        Project p = application.getProject("p");
+        Project p = application.getProject("24001");
         Employee e1 = application.getEmployee("barc");
         try {
-            application.assignProjectLeader("p", "barc");
+            application.assignProjectLeader("24001", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -33,7 +34,7 @@ public class AssignProjectLeaderTest {
         application.registerUser("tcbc");
         Employee e2 = application.getEmployee("tcbc");
         try {
-            application.assignProjectLeader("p", "tcbc");
+            application.assignProjectLeader("24001", "tcbc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -46,19 +47,19 @@ public class AssignProjectLeaderTest {
     public void inputSetB() throws DoesNotExistErrorException, OperationNotAllowedException {
         application.createProject("p");
         try {
-            assertNull(application.getProject("p").getProjectLeader());
-            application.assignProjectLeader("p", "barc");
+            assertNull(application.getProject("24001").getProjectLeader());
+            application.assignProjectLeader("24001", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
         assertEquals("Employee does not exist", errorMessageHolder.getErrorMessage());
-        assertNull(application.getProject("p").getProjectLeader());
+        assertNull(application.getProject("24001").getProjectLeader());
     }
 
     @Test
     public void inputSetC() throws Exception {
         try {
-            application.assignProjectLeader("p", "barc");
+            application.assignProjectLeader("24001", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -66,7 +67,7 @@ public class AssignProjectLeaderTest {
         try {
             application.registerUser("barc");
             assertTrue(application.getEmployee("barc").getLeadingProjects().isEmpty());
-            application.assignProjectLeader("p", "barc");
+            application.assignProjectLeader("24001", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }

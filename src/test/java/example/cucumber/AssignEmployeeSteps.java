@@ -15,11 +15,11 @@ public class AssignEmployeeSteps {
     private ErrorMessageHolder errorMessageHolder;
     private String tempName;
     private MockDateHolder mockDateHolder;
-    private IdGenerator idGenerator = new IdGenerator();
+
     public AssignEmployeeSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
         mockDateHolder = new MockDateHolder(application);
         mockDateHolder.setYear2024();
     }

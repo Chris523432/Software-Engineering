@@ -11,16 +11,17 @@ public class CreateActivityTest {
     @Before
     public void setUp() {
         application = new Application();
+        application.resetAllIds();
     }
 
     @Test
     public void inputSetA() throws OperationNotAllowedException, DoesNotExistErrorException {
         String name = "test";
         application.createProject("p");
-        Project p = application.getProject("p");
+        Project p = application.getProject("24001");
         assertTrue(p.getActivities().isEmpty());
         try {
-            application.createActivity("p", name);
+            application.createActivity("24001", name);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -31,7 +32,7 @@ public class CreateActivityTest {
     public void inputSetB() {
         String name = "test";
         try {
-            application.createActivity("p", name);
+            application.createActivity("24001", name);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -48,16 +49,16 @@ public class CreateActivityTest {
     public void inputSetC() throws OperationNotAllowedException, DoesNotExistErrorException {
         String name = "   ";
         try {
-            application.createActivity("p", name);
+            application.createActivity("24001", name);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
         assertEquals("Activity can not be added without a name", errorMessageHolder.getErrorMessage());
         application.createProject("p");
-        Project p = application.getProject("p");
+        Project p = application.getProject("24001");
         assertTrue(p.getActivities().isEmpty());
         try {
-            application.createActivity("p", name);
+            application.createActivity("24001", name);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
