@@ -2,17 +2,16 @@ package dtu.example.ui;
 
 import java.io.IOException;
 
-import dtu.application.Activity;
-import dtu.application.Application;
+import dtu.application.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class PrimaryController {
     private View view;
-    private Application application;
-    public PrimaryController(View view, Application application) {
+    private Model model;
+    public PrimaryController(View view, Model model) {
         this.view = view;
-        this.application = application;
+        this.model = model;
     }
     @FXML
     private void switchToSecondary() throws IOException {
@@ -22,7 +21,7 @@ public class PrimaryController {
     public void login(ActionEvent event) {
         String initials = view.getLogin();
         try {
-            application.login(initials);
+            model.login(initials);
             view.showMainScreen();
         } catch(Exception e) {
             System.out.println("User is not registered in system");
@@ -37,7 +36,7 @@ public class PrimaryController {
     public void addProjectAddProject(ActionEvent event) {
         String projectName = view.getNewProjectName();
         try {
-            application.createProject(projectName);
+            model.createProject(projectName);
             System.out.println("Project \"" + view.getNewProjectName() + "\" is added!");
 
         } catch (Exception e) {
@@ -77,13 +76,13 @@ public class PrimaryController {
         String activityName = view.getNewActivityName();
         String projectIdentifier = view.getChooseProjectProjectID();
         int startWeek = Integer.parseInt(view.getNewActivityStartWeek());
-        int startYear = application.getCurrentYear();
+        int startYear = model.getCurrentYear();
         int endWeek = Integer.parseInt(view.getNewActivityEndWeek());
-        int endYear = application.getCurrentYear();
+        int endYear = model.getCurrentYear();
         try {
-            application.createActivity(projectIdentifier, activityName);
-            application.setStartWeekToActivity(activityName, startWeek, startYear);
-            application.setEndWeekToActivity(activityName, endWeek, endYear);
+            model.createActivity(projectIdentifier, activityName);
+            model.setStartWeekToActivity(activityName, startWeek, startYear);
+            model.setEndWeekToActivity(activityName, endWeek, endYear);
             System.out.println("Activity \"" + activityName + "\" has been added to Project \"" + projectIdentifier + "\"");
             System.out.println("Start Week: " + view.getNewActivityStartWeek());
             System.out.println("End Week: " + view.getNewActivityEndWeek());
@@ -102,7 +101,7 @@ public class PrimaryController {
     public void newEmployeeAdd(ActionEvent event) {
         String newEmployeeInitials = view.getNewEmployeeInitials();
         try {
-            application.addEmployee(newEmployeeInitials);
+            model.addEmployee(newEmployeeInitials);
             System.out.println("Employee " + newEmployeeInitials + " has been added to the system");
         } catch (Exception e) {
             //TODO: show error message
@@ -123,7 +122,7 @@ public class PrimaryController {
         String projectLeaderInitials = view.getAssignProjectLeaderInitials();
         String projectID = view.getChooseProjectProjectID();
         try {
-            application.assignProjectLeader(projectID, projectLeaderInitials);
+            model.assignProjectLeader(projectID, projectLeaderInitials);
             System.out.println("\"" + projectLeaderInitials + "\"" + " was assigned project leader of project: " + projectID);
         } catch (Exception e) {
             //TODO: show error message

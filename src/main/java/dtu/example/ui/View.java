@@ -1,17 +1,13 @@
 package dtu.example.ui;
 
-import dtu.application.Project;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class View extends Application {
     private Stage primaryStage;
     private InitiateScenes sceneMenu;
     private PrimaryController controller;
-    private dtu.application.Application application;
+    private dtu.application.Model model;
 
 
     public static void main(String[] args) {
@@ -20,24 +16,24 @@ public class View extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        this.application = new dtu.application.Application();
-        application.addEmployee("buba");
+        this.model = new dtu.application.Application();
+        model.addEmployee("buba");
         try {
-            application.createProject("Coffee break");
-            application.createActivity("24001","get coffee");
-            application.setStartWeekToActivity("get coffee", 1,2024);
-            application.setEndWeekToActivity("get coffee", 5, 2024);
-            application.createActivity("24001","drink coffee");
-            application.setStartWeekToActivity("drink coffee", 5, 2024);
-            application.setEndWeekToActivity("drink coffee", 11, 2024);
+            String projectId = model.createProject("Coffee break");
+            String actitiyId1 = model.createActivity(projectId,"get coffee");
+            model.setStartWeekToActivity(actitiyId1, 1,2024);
+            model.setEndWeekToActivity(actitiyId1, 5, 2024);
+            String actitiyId2 = model.createActivity(projectId,"drink coffee");
+            model.setStartWeekToActivity(actitiyId2, 5, 2024);
+            model.setEndWeekToActivity(actitiyId2, 11, 2024);
 
         } catch (Exception e) {
             System.out.println(e);
         }
         //application.createProject("Test Project");
-        this.controller = new PrimaryController(this,application);
+        this.controller = new PrimaryController(this, model);
         this.primaryStage = primaryStage;
-        sceneMenu = new InitiateScenes(this, application);
+        sceneMenu = new InitiateScenes(this, model);
         initiateButtons();
         showLoginScreen();
 

@@ -1,8 +1,6 @@
 package dtu.example.ui;
 
-import dtu.application.Activity;
-import dtu.application.Application;
-import dtu.application.Project;
+import dtu.application.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -77,13 +75,13 @@ public class InitiateScenes {
     private Button assignProjectLeaderAssignBTN;
 
     private View view;
-    private Application application;
+    private Model model;
     private int XDim = 500;
     private int YDim = 300;
 
-    public InitiateScenes(View view, Application application) {
+    public InitiateScenes(View view, Model model) {
         this.view = view;
-        this.application = application;
+        this.model = model;
         initiateLoginScreen();
         initiateMainScreen();
         initiateAddProjectScreen();
@@ -335,8 +333,8 @@ public class InitiateScenes {
 
     public void updateProjectNames() {
         projectNames.clear();
-        List<Project> projects = application.getProjects();
-        for (Project p : projects) {
+        List<ProjectInfo> projects = model.getProjectInfoList();
+        for (ProjectInfo p : projects) {
             String display = p.getName() + " - " + p.getId();
             projectNames.add(display);
         }
@@ -345,11 +343,11 @@ public class InitiateScenes {
     public void updateViewProjectActivities(String projectID) {
         //set viewProjectActivities to list of activity strings
         try {
-            Project project = application.getProject(projectID);
-            List<Activity> activities = project.getActivities();
+            ProjectInfo project = model.getProjectInfo(projectID);
+            List<ActivityInfo> activities = project.getActivities();
             viewProjectActivities.clear();
             String activityString;
-            for (Activity activity : activities) {
+            for (ActivityInfo activity : activities) {
                 activityString = "Activity Name: " + activity.getName() + "\n";
 
                 Calendar startDate = activity.getStartDate();
