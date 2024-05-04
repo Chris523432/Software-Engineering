@@ -8,48 +8,46 @@ public class Application {
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
     private DateServer dateServer = new DateServer();
-    //giver det mening, at employees har et isloggedIn, når det er denne vi bruger??
     private String currentUser;
     public void registerUser(String initials) {
         Employee employee = new Employee(initials);
         employees.add(employee);
     }
-    public void createProject(String name) throws OperationNotAllowedException {
+    public String createProject(String name) throws OperationNotAllowedException {
         if (name.trim().isEmpty()) {
             throw new OperationNotAllowedException("Project can not be created without a name");
         }
         int year = dateServer.getDate().get(Calendar.YEAR) % 100;
         Project project = new Project(name, year);
         projects.add(project);
+        return project.getId();
     }
-    public void createActivity(String projectIdentifier, String activityName) throws OperationNotAllowedException, DoesNotExistErrorException {
+    public String createActivity(String projectIdentifier, String activityName) throws OperationNotAllowedException, DoesNotExistErrorException {
         if (activityName.trim().isEmpty()) {
             throw new OperationNotAllowedException("Activity can not be added without a name");
         }
         Project p = getProject(projectIdentifier);
         assert activityName != null && !activityName.trim().isEmpty() && projectIdentifier != null
                 && !projectIdentifier.trim().isEmpty() && doesProjectExist(projectIdentifier): "Pre-condition createActivity";
-        p.addActivity(activityName);
-        //assert p.getActivities().contains(getActivity(activityName)): "Post condition createActivity";
+        String activityId = p.addActivity(activityName);
+        // TODO: er post assert korrekt?
+        assert p.getActivities().contains(getActivity(activityId)): "Post condition createActivity";
+        return activityId;
     }
-    //kan vi ikke bare tjekke om de er currentUser?
     public boolean isLoggedIn(String initials) throws Exception {
-        return getEmployee(initials).isLoggedIn();
+        return currentUser.equals(initials);
     }
 
     public void login(String initials) throws Exception {
         currentUser = initials;
-        getEmployee(initials).login();
     }
     public void logout(String initials) throws Exception {
         currentUser = null;
-        getEmployee(initials).logout();
     }
 
-    //tror vores testing liv bliver nemmere, hvis det kun er id. Men vi må lige se
     public Project getProject(String projectIdentifier) throws DoesNotExistErrorException {
         for (Project p : projects) {
-            if (p.getName().equals(projectIdentifier) || p.getId().equals(projectIdentifier)) {
+            if (p.getId().equals(projectIdentifier)) {
                 return p;
             }
         }
@@ -80,7 +78,7 @@ public class Application {
     public Activity getActivity(String activityIdentifier) throws DoesNotExistErrorException {
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
-                if (a.getId().equals(activityIdentifier) || a.getName().equals(activityIdentifier)) {
+                if (a.getId().equals(activityIdentifier)) {
                     return a;
                 }
             }
@@ -91,7 +89,7 @@ public class Application {
     public boolean doesActivityExist(String activityIdentifier) throws DoesNotExistErrorException {
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
-                if (a.getId().equals(activityIdentifier) || a.getName().equals(activityIdentifier)) {
+                if (a.getId().equals(activityIdentifier)) {
                     return true;
                 }
             }
@@ -137,7 +135,6 @@ public class Application {
         assert project != null && !project.trim().isEmpty() && doesProjectExist(project)
                 && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials): "Pre-condition assignProjectLeader";
         if (e1 != e2) {
-
             if (e2 != null) {
                 e2.removeProject(p);
             }
@@ -149,7 +146,7 @@ public class Application {
 
     public boolean doesProjectExist(String projectidentifier) {
         for (Project p : projects) {
-           if(p.getName().equals(projectidentifier) || p.getId().equals(projectidentifier)) {
+           if(p.getId().equals(projectidentifier)) {
                return true;
            }
         }

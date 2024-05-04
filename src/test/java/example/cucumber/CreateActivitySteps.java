@@ -14,6 +14,8 @@ public class CreateActivitySteps {
     private String tempName;
     private Activity tempActivity;
     private MockDateHolder mockDateHolder;
+    private String projectId;
+    private String activityId;
 
     public CreateActivitySteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
@@ -25,15 +27,15 @@ public class CreateActivitySteps {
     @Given("project with name {string} is in the system")
     public void projectWithNameIsInTheSystem(String name) {
         try {
-            application.createProject(name);
+            projectId = application.createProject(name);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
-    @When("an activity with name {string} is added to {string}")
-    public void anActivityWithNameIsAddedTo(String activityName, String projectName) {
+    @When("an activity with name {string} is added to the project")
+    public void anActivityWithNameIsAddedTo(String activityName) {
         try {
-            application.createActivity(projectName, activityName);
+            activityId = application.createActivity(projectId, activityName);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -41,12 +43,13 @@ public class CreateActivitySteps {
     }
     @When("the budgeted time is {int} hours")
     public void theBudgetedTimeIsHours(int hours) throws DoesNotExistErrorException, OperationNotAllowedException {
-        application.setAllocatedTime(tempName, hours);
+        application.setAllocatedTime(activityId, hours);
     }
-    @Then("the activity {string} with budgeted time {int} is in {string}")
-    public void theActivityWithBudgetedTimeIsIn(String activityName, int hours, String projectName) throws DoesNotExistErrorException {
-        Activity a = application.getActivity(activityName);
-        assertTrue(application.getProject(projectName).getActivities().contains(a));
+    @Then("the activity with budgeted time {int} is in the project")
+    public void theActivityWithBudgetedTimeIsIn(int hours) throws DoesNotExistErrorException {
+        Activity a = application.getActivity(activityId);
+        Project project = application.getProject(projectId);
+        assertTrue(project.getActivities().contains(a));
         assertEquals(hours, a.getBudgetedHours());
     }
     @Given("project with name {string} is not in the system")
@@ -54,17 +57,17 @@ public class CreateActivitySteps {
         assertFalse(application.getProjects().stream().anyMatch(proj -> proj.getName().equals(name)));
     }
 
-    @When("an activity with empty name \\(string is empty or only spaces) is added to {string}")
-    public void anActivityWithEmptyNameStringIsEmptyOrOnlySpacesIsAddedTo(String projectName) {
+    @When("an activity with empty name \\(string is empty or only spaces) is added to the project")
+    public void anActivityWithEmptyNameStringIsEmptyOrOnlySpacesIsAddedTo() {
         try {
-            application.createActivity(projectName, "  ");
+            application.createActivity(projectId, "  ");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
-    @Then("activity with empty name is not in {string}")
-    public void activityWithEmptyNameIsNotIn(String projectName) throws DoesNotExistErrorException {
-        Project p = application.getProject(projectName);
+    @Then("activity with empty name is not in the project")
+    public void activityWithEmptyNameIsNotIn() throws DoesNotExistErrorException {
+        Project p = application.getProject(projectId);
         assertFalse(p.getActivities().stream().anyMatch(a -> a.getName().trim().isEmpty()));
     }
 }

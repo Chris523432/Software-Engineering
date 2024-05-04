@@ -6,7 +6,7 @@ Feature: Set activity times
     Given employee "barc" is logged in
     And there exists an activity with id "1"
     When the allocated time 72 hours is set on activity with id "1"
-    Then the activity with id "1" has allocated time 72 hours
+    Then the activity has allocated time 72 hours
 
   Scenario: set allocated time to nonexistent activity
     Given employee "barc" is logged in

@@ -35,13 +35,14 @@ public class SetActivityTimesSteps {
     @Given("there exists an activity with id {string}")
     public void there_exists_an_activity_with_id(String activityIdentifier) throws DoesNotExistErrorException {
         try {
-            application.createProject("ProjectTest");
-            application.createActivity("ProjectTest", "ActivityTest");
+            String projectId = application.createProject("ProjectTest");
+            application.createActivity(projectId, "ActivityTest");
             a = application.getActivity(activityIdentifier);
+            parentProject = application.getProject(projectId);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
-        parentProject = application.getProject("ProjectTest");
+
         assertTrue(parentProject.getActivities().contains(a));
     }
     @When("the allocated time {int} hours is set on activity with id {string}")
@@ -52,8 +53,8 @@ public class SetActivityTimesSteps {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
-    @Then("the activity with id {string} has allocated time {int} hours")
-    public void the_activity_with_id_has_allocated_time_hours(String int1, Integer int2) {
+    @Then("the activity has allocated time {int} hours")
+    public void the_activity_with_id_has_allocated_time_hours(Integer int2) {
         assertEquals(a.getBudgetedHours(), (int) int2);
     }
 

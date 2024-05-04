@@ -18,11 +18,12 @@ public class CreateProjectTest {
     public void inputSetA() throws DoesNotExistErrorException {
         String name = "test";
         try {
-            application.createProject(name);
+            String projectId = application.createProject(name);
+            assertTrue(application.getProjects().contains(application.getProject(projectId)));
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
-        assertTrue(application.getProjects().contains(application.getProject(name)));
+
     }
 
     @Test

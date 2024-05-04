@@ -7,7 +7,6 @@ import java.util.List;
 public class Employee {
     private String initials;
     private List<Project> leadingProjects;
-    private boolean isLoggedIn;
 
     public Employee(String initials) {
         this.initials = initials;
@@ -18,17 +17,6 @@ public class Employee {
         return initials;
     }
 
-    public void login() {
-        isLoggedIn = true;
-    }
-
-    public void logout() {
-        isLoggedIn = false;
-    }
-
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
 
     public void removeProject(Project p) {
         leadingProjects.remove(p);

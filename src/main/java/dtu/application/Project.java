@@ -17,9 +17,10 @@ public class Project {
         this.id = idGenerator.generateId();
         this.activities = new ArrayList<>();
     }
-    public void addActivity(String name) {
+    public String addActivity(String name) {
         Activity a = new Activity(name);
         activities.add(a);
+        return a.getId();
     }
     public List<Activity> getActivities() {
         return activities;

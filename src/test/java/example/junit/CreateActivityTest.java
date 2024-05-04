@@ -21,11 +21,12 @@ public class CreateActivityTest {
         Project p = application.getProject("24001");
         assertTrue(p.getActivities().isEmpty());
         try {
-            application.createActivity("24001", name);
+            String activityId = application.createActivity("24001", name);
+            assertTrue(p.getActivities().contains(application.getActivity(activityId)));
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
-        assertTrue(p.getActivities().contains(application.getActivity(name)));
+
     }
 
     @Test
