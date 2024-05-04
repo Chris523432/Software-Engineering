@@ -42,11 +42,11 @@ public class CreateActivitySteps {
         tempName = activityName;
     }
     @When("the budgeted time is {int} hours")
-    public void theBudgetedTimeIsHours(int hours) throws DoesNotExistErrorException, OperationNotAllowedException {
+    public void theBudgetedTimeIsHours(int hours) throws DoesNotExistException, OperationNotAllowedException {
         application.setAllocatedTime(activityId, hours);
     }
     @Then("the activity with budgeted time {int} is in the project")
-    public void theActivityWithBudgetedTimeIsIn(int hours) throws DoesNotExistErrorException {
+    public void theActivityWithBudgetedTimeIsIn(int hours) throws DoesNotExistException {
         Activity a = application.getActivity(activityId);
         Project project = application.getProject(projectId);
         assertTrue(project.getActivities().contains(a));
@@ -66,7 +66,7 @@ public class CreateActivitySteps {
         }
     }
     @Then("activity with empty name is not in the project")
-    public void activityWithEmptyNameIsNotIn() throws DoesNotExistErrorException {
+    public void activityWithEmptyNameIsNotIn() throws DoesNotExistException {
         Project p = application.getProject(projectId);
         assertFalse(p.getActivities().stream().anyMatch(a -> a.getName().trim().isEmpty()));
     }

@@ -15,7 +15,7 @@ public class CreateProjectTest {
     }
 
     @Test
-    public void inputSetA() throws DoesNotExistErrorException {
+    public void inputSetA() throws DoesNotExistException {
         String name = "test";
         try {
             String projectId = application.createProject(name);

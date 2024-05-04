@@ -1,7 +1,7 @@
 package example.cucumber;
 
 import dtu.application.Application;
-import dtu.application.DoesNotExistErrorException;
+import dtu.application.DoesNotExistException;
 import dtu.application.OperationNotAllowedException;
 import dtu.application.Project;
 import io.cucumber.java.en.Given;
@@ -38,7 +38,7 @@ public class ShowBasicProjectInformationSteps {
     }
 
     @Given("the activity with id {string} has the earliest start week {int} in year {int}")
-    public void the_activity_with_id_has_the_earliest_start_week(String activityidentifier, int week, int year) throws DoesNotExistErrorException, OperationNotAllowedException {
+    public void the_activity_with_id_has_the_earliest_start_week(String activityidentifier, int week, int year) throws DoesNotExistException, OperationNotAllowedException {
         Project project = application.getProject(objectIdHolder.getId());
         project.addActivity("Test");
         application.setStartWeekToActivity(activityidentifier, week, year);
@@ -54,12 +54,12 @@ public class ShowBasicProjectInformationSteps {
     }
 
     @Then("the found start week is week {int}")
-    public void the_found_start_week_is_week(int week) throws DoesNotExistErrorException {
+    public void the_found_start_week_is_week(int week) throws DoesNotExistException {
         assertEquals(week, application.getStartDateForProject(objectIdHolder.getId()).get(Calendar.WEEK_OF_YEAR));
     }
 
     @Given("the activity with id {string} has the latest end week {int} in year {int}")
-    public void the_activity_with_id_has_the_latest_end_week_in_year(String string, int week, int year) throws DoesNotExistErrorException, OperationNotAllowedException {
+    public void the_activity_with_id_has_the_latest_end_week_in_year(String string, int week, int year) throws DoesNotExistException, OperationNotAllowedException {
         application.createActivity(objectIdHolder.getId(), "Test1");
         application.createActivity(objectIdHolder.getId(), "Test2");
         application.setEndWeekToActivity(string, week, year);
@@ -84,7 +84,7 @@ public class ShowBasicProjectInformationSteps {
     }
 
     @Then("the found end week is week {int}")
-    public void the_found_end_week_is_week(int week) throws DoesNotExistErrorException {
+    public void the_found_end_week_is_week(int week) throws DoesNotExistException {
         assertEquals(week, application.getEndDateForProject(objectIdHolder.getId()).get(Calendar.WEEK_OF_YEAR));
     }
 

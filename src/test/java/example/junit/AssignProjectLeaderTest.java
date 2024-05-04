@@ -17,7 +17,7 @@ public class AssignProjectLeaderTest {
     }
 
     @Test
-    public void inputSetA() throws OperationNotAllowedException, DoesNotExistErrorException {
+    public void inputSetA() throws OperationNotAllowedException, DoesNotExistException {
         application.createProject("p");
         application.registerUser("barc");
         Project p = application.getProject("24001");
@@ -44,7 +44,7 @@ public class AssignProjectLeaderTest {
     }
 
     @Test
-    public void inputSetB() throws DoesNotExistErrorException, OperationNotAllowedException {
+    public void inputSetB() throws DoesNotExistException, OperationNotAllowedException {
         application.createProject("p");
         try {
             assertNull(application.getProject("24001").getProjectLeader());

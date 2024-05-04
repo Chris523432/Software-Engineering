@@ -10,14 +10,20 @@ public class ProjectInfo {
     private List<ActivityInfo> activities;
     private EmployeeInfo projectLeader;
 
-    public ProjectInfo(Project project) {
+
+    //projectLeader argument protects from endless loop given circular reference
+    //to and from project and employee
+    public ProjectInfo(Project project, EmployeeInfo projectLeader) {
         this.name = project.getName();
         this.id = project.getId();
-        this.projectLeader = project.getProjectLeader() == null ? null : new EmployeeInfo(project.getProjectLeader());
+        this.projectLeader = (projectLeader == null && project.getProjectLeader() != null) ? new EmployeeInfo(project.getProjectLeader()) : projectLeader;
         this.activities = new ArrayList<>();
         for (Activity activity : project.getActivities()) {
             activities.add(new ActivityInfo(activity));
         }
+    }
+    public ProjectInfo(Project project) {
+        this(project,null);
     }
     public List<ActivityInfo> getActivities() {
         return activities;

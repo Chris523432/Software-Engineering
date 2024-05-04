@@ -17,7 +17,7 @@ public class AssignEmployeeTest {
         application.createProject("p");
     }
     @Test
-    public void inputSetA() throws DoesNotExistErrorException {
+    public void inputSetA() throws DoesNotExistException {
         try {
             application.createActivity("24001", "a");
             application.registerUser("barc");

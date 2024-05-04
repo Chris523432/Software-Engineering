@@ -15,7 +15,7 @@ public class CreateActivityTest {
     }
 
     @Test
-    public void inputSetA() throws OperationNotAllowedException, DoesNotExistErrorException {
+    public void inputSetA() throws OperationNotAllowedException, DoesNotExistException {
         String name = "test";
         application.createProject("p");
         Project p = application.getProject("24001");
@@ -47,7 +47,7 @@ public class CreateActivityTest {
     }
 
     @Test
-    public void inputSetC() throws OperationNotAllowedException, DoesNotExistErrorException {
+    public void inputSetC() throws OperationNotAllowedException, DoesNotExistException {
         String name = "   ";
         try {
             application.createActivity("24001", name);

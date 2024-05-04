@@ -11,9 +11,11 @@ public class EmployeeInfo {
         this.initials = employee.getInitials();
         this.leadingProjects = new ArrayList<>();
         for (Project p : employee.getLeadingProjects()) {
-            leadingProjects.add(new ProjectInfo(p));
+            leadingProjects.add(new ProjectInfo(p,this));
         }
     }
+
+
 
     public String getInitials() {
         return initials;

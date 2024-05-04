@@ -35,7 +35,7 @@ public class AssignProjectLeaderSteps {
     }
 
     @Then("the employee {string} is the project leader in the project")
-    public void theEmployeeIsTheProjectLeaderIn(String projectleader) throws DoesNotExistErrorException {
+    public void theEmployeeIsTheProjectLeaderIn(String projectleader) throws DoesNotExistException {
         assertEquals(application.getEmployee(projectleader),
                 application.getProject(projectIdHolder.getId()).getProjectLeader());
     }

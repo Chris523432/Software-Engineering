@@ -24,6 +24,7 @@ public class PrimaryController {
             model.login(initials);
             view.showMainScreen();
         } catch(Exception e) {
+            //TODO: show error message
             System.out.println("User is not registered in system");
         }
     }
@@ -38,8 +39,9 @@ public class PrimaryController {
         try {
             model.createProject(projectName);
             System.out.println("Project \"" + view.getNewProjectName() + "\" is added!");
-
+            view.showMainScreen();
         } catch (Exception e) {
+            System.out.println(e);
             //TODO: show error message
         }
     }
@@ -55,8 +57,10 @@ public class PrimaryController {
      */
     public void chooseProjectViewProject(ActionEvent event) {
         String projectID = view.getChooseProjectProjectID();
-        view.updateViewProjectActivities(projectID);
-        view.showViewProjectScreen();
+        if (projectID != null) {
+            view.updateViewProjectActivities(projectID);
+            view.showViewProjectScreen();
+        }
     }
     public void chooseProjectBack(ActionEvent event) {
         view.showMainScreen();
@@ -73,16 +77,27 @@ public class PrimaryController {
         view.showViewProjectScreen();
     }
     public void addActivityAddActivity(ActionEvent event) {
+        //sry jeg har fucked med den her metode.
+        //jeg anbefaler man ikke kan vælge andet end et navn, når den oprettes og måske budgetteret tid
+        //så bliver det her noget nemmere.
+        //TODO: fix this shit
         String activityName = view.getNewActivityName();
         String projectIdentifier = view.getChooseProjectProjectID();
-        int startWeek = Integer.parseInt(view.getNewActivityStartWeek());
-        int startYear = model.getCurrentYear();
-        int endWeek = Integer.parseInt(view.getNewActivityEndWeek());
-        int endYear = model.getCurrentYear();
+        int startWeek,endWeek;
         try {
+            String startWeekInput = view.getNewActivityStartWeek();
+            startWeek = Integer.parseInt(startWeekInput);
+            String endWeekInput = view.getNewActivityEndWeek();
+            endWeek = Integer.parseInt(endWeekInput);
+            int startYear = model.getCurrentYear();
+            int endYear = model.getCurrentYear();
             model.createActivity(projectIdentifier, activityName);
-            model.setStartWeekToActivity(activityName, startWeek, startYear);
-            model.setEndWeekToActivity(activityName, endWeek, endYear);
+            if (startWeekInput != null) {
+                model.setStartWeekToActivity(activityName, startWeek, startYear);
+            }
+            if (endWeekInput != null) {
+                model.setEndWeekToActivity(activityName, endWeek, endYear);
+            }
             System.out.println("Activity \"" + activityName + "\" has been added to Project \"" + projectIdentifier + "\"");
             System.out.println("Start Week: " + view.getNewActivityStartWeek());
             System.out.println("End Week: " + view.getNewActivityEndWeek());
@@ -90,6 +105,7 @@ public class PrimaryController {
             //TODO: show error message
             System.out.println(e);
         }
+
     }
 
     public void newEmployee(ActionEvent event) {
