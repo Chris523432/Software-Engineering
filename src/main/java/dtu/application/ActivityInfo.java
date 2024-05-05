@@ -9,7 +9,7 @@ public class ActivityInfo {
     private String name;
     private String id;
     private int budgetedHours;
-    private boolean complete = false;
+    private boolean complete;
     private List<EmployeeInfo> assignedEmployees;
     private Calendar startDate;
     private Calendar endDate;
@@ -23,6 +23,7 @@ public class ActivityInfo {
         this.budgetedHours = activity.getBudgetedHours();
         this.endDate = activity.getEndDate();
         this.startDate = activity.getStartDate();
+        this.complete = activity.isComplete();
     }
 
     public List<EmployeeInfo> getAssignedEmployees() {

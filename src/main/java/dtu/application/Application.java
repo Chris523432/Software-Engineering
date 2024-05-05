@@ -19,9 +19,11 @@ public class Application implements Model {
         if (name.trim().isEmpty()) {
             throw new OperationNotAllowedException("Project can not be created without a name");
         }
+        assert name != null && !name.trim().isEmpty(): "Pre-condition createProject";
         int year = dateServer.getDate().get(Calendar.YEAR) % 100;
         Project project = new Project(name, year);
         projects.add(project);
+        assert projects.contains(project): "Post condition createProject";
         return project.getId();
     }
     @Override
@@ -33,7 +35,6 @@ public class Application implements Model {
         assert activityName != null && !activityName.trim().isEmpty() && projectIdentifier != null
                 && !projectIdentifier.trim().isEmpty() && doesProjectExist(projectIdentifier): "Pre-condition createActivity";
         String activityId = p.addActivity(activityName);
-        // TODO: er post assert korrekt?
         assert p.getActivities().contains(getActivity(activityId)): "Post condition createActivity";
         return activityId;
     }

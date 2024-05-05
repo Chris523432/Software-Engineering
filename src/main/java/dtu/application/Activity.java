@@ -9,7 +9,7 @@ public class Activity {
     private String name;
     private String id;
     private int budgetedHours;
-    private boolean complete = false;
+    private boolean complete;
     private ActivityIdGenerator idGenerator = new ActivityIdGenerator();
     private List<Employee> assignedEmployees;
     private Calendar startDate;
@@ -19,6 +19,7 @@ public class Activity {
         this.name = name;
         this.id = idGenerator.generateId();
         this.assignedEmployees = new ArrayList<>();
+        this.complete = false;
     }
 
     public Activity(String name, int budgetedHours) throws OperationNotAllowedException {

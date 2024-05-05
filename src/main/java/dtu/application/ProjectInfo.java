@@ -9,6 +9,8 @@ public class ProjectInfo {
     private String id;
     private List<ActivityInfo> activities;
     private EmployeeInfo projectLeader;
+    private Calendar startDate;
+    private Calendar endDate;
 
 
     //projectLeader argument protects from endless loop given circular reference
@@ -18,6 +20,8 @@ public class ProjectInfo {
         this.id = project.getId();
         this.projectLeader = (projectLeader == null && project.getProjectLeader() != null) ? new EmployeeInfo(project.getProjectLeader()) : projectLeader;
         this.activities = new ArrayList<>();
+        this.startDate = project.getStartDate();
+        this.endDate = project.getEndDate();
         for (Activity activity : project.getActivities()) {
             activities.add(new ActivityInfo(activity));
         }
@@ -34,25 +38,12 @@ public class ProjectInfo {
     public String getId() {
         return id;
     }
-
     public Calendar getStartDate() {
-        Calendar date = null;
-        for (ActivityInfo a : activities) {
-            if (date == null || a.getStartDate().before(date)) {
-                date = a.getStartDate();
-            }
-        }
-        return date;
+        return startDate;
     }
 
     public Calendar getEndDate() {
-        Calendar date = null;
-        for (ActivityInfo a : activities) {
-            if (date == null || a.getEndDate().after(date)) {
-                date = a.getEndDate();
-            }
-        }
-        return date;
+        return endDate;
     }
 
     public boolean isComplete() {
