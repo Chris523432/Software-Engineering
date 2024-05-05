@@ -1,6 +1,5 @@
 package example.junit;
 import dtu.application.Application;
-import dtu.application.IdGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,11 +8,10 @@ import static org.junit.Assert.*;
 public class TestIdGeneration {
     private MockDateHolder mockDateHolder;
     private Application application;
-    IdGenerator idGenerator1 = new IdGenerator();
     @Before
     public void setUp() {
         application = new Application();
-        idGenerator1.resetIds();
+        application.resetAllIds();
         mockDateHolder = new MockDateHolder(application);
         mockDateHolder.setYear2024();
     }

@@ -1,8 +1,7 @@
 package example.cucumber;
 
 import dtu.application.Application;
-import dtu.application.DoesNotExistErrorException;
-import dtu.application.IdGenerator;
+import dtu.application.DoesNotExistException;
 import example.junit.MockDateHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,11 +14,11 @@ public class AssignEmployeeSteps {
     private ErrorMessageHolder errorMessageHolder;
     private String tempName;
     private MockDateHolder mockDateHolder;
-    private IdGenerator idGenerator = new IdGenerator();
+
     public AssignEmployeeSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
         mockDateHolder = new MockDateHolder(application);
         mockDateHolder.setYear2024();
     }
@@ -39,7 +38,7 @@ public class AssignEmployeeSteps {
     }
 
     @Then("the activity with id {string} has employee with initials {string} assigned")
-    public void theActivityWithIdHasEmployeeWithInitialsAssigned(String id, String initials) throws DoesNotExistErrorException {
+    public void theActivityWithIdHasEmployeeWithInitialsAssigned(String id, String initials) throws DoesNotExistException {
         assertTrue(application.isAssignedSearch(id, initials));
     }
 

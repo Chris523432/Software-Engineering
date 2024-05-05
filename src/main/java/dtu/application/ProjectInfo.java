@@ -4,25 +4,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Project {
+public class ProjectInfo {
     private String name;
     private String id;
-    private List<Activity> activities;
-    private ProjectIdGenerator idGenerator = new ProjectIdGenerator();
-    private Employee projectLeader;
+    private List<ActivityInfo> activities;
+    private EmployeeInfo projectLeader;
 
-    public Project(String name, int year) {
-        this.name = name;
-        idGenerator.setYear(year);
-        this.id = idGenerator.generateId();
+
+    //projectLeader argument protects from endless loop given circular reference
+    //to and from project and employee
+    public ProjectInfo(Project project, EmployeeInfo projectLeader) {
+        this.name = project.getName();
+        this.id = project.getId();
+        this.projectLeader = (projectLeader == null && project.getProjectLeader() != null) ? new EmployeeInfo(project.getProjectLeader()) : projectLeader;
         this.activities = new ArrayList<>();
+        for (Activity activity : project.getActivities()) {
+            activities.add(new ActivityInfo(activity));
+        }
     }
-    public String addActivity(String name) {
-        Activity a = new Activity(name);
-        activities.add(a);
-        return a.getId();
+    public ProjectInfo(Project project) {
+        this(project,null);
     }
-    public List<Activity> getActivities() {
+    public List<ActivityInfo> getActivities() {
         return activities;
     }
     public String getName() {
@@ -34,7 +37,7 @@ public class Project {
 
     public Calendar getStartDate() {
         Calendar date = null;
-        for (Activity a : activities) {
+        for (ActivityInfo a : activities) {
             if (date == null || a.getStartDate().before(date)) {
                 date = a.getStartDate();
             }
@@ -44,7 +47,7 @@ public class Project {
 
     public Calendar getEndDate() {
         Calendar date = null;
-        for (Activity a : activities) {
+        for (ActivityInfo a : activities) {
             if (date == null || a.getEndDate().after(date)) {
                 date = a.getEndDate();
             }
@@ -56,7 +59,7 @@ public class Project {
         if (activities.isEmpty()) {
             return false;
         }
-        for (Activity a : activities) {
+        for (ActivityInfo a : activities) {
             if (!a.isComplete()) {
                 return false;
             }
@@ -64,10 +67,7 @@ public class Project {
         return true;
     }
 
-    public void assignProjectLeader(Employee projectLeader) {
-        this.projectLeader = projectLeader;
-    }
-    public Employee getProjectLeader() {
+    public EmployeeInfo getProjectLeader() {
         return projectLeader;
     }
 

@@ -2,7 +2,6 @@ package example.cucumber;
 
 import dtu.application.*;
 import example.junit.MockDateHolder;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -14,28 +13,30 @@ public class AssignProjectLeaderSteps {
     private ErrorMessageHolder errorMessageHolder;
 
     private Project parentProject;
-    private IdGenerator idGenerator = new IdGenerator();
     private MockDateHolder mockDateHolder;
+    private ObjectIdHolder projectIdHolder;
     private Activity a;
-    public AssignProjectLeaderSteps(Application application, ErrorMessageHolder errorMessageHolder) {
+    public AssignProjectLeaderSteps(Application application, ErrorMessageHolder errorMessageHolder,ObjectIdHolder objectIdHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
-        idGenerator.resetIds();
+        application.resetAllIds();
         mockDateHolder = new MockDateHolder(application);
         mockDateHolder.setYear2024();
+        this.projectIdHolder = objectIdHolder;
     }
 
-    @When("the employee assigns {string} as project leader in {string}")
-    public void the_employee_assigns_as_project_leader_in(String string, String string2) {
+    @When("the employee assigns {string} as project leader in the project")
+    public void the_employee_assigns_as_project_leader_in(String string) {
         try {
-            application.assignProjectLeader(string2, string);
+            application.assignProjectLeader(projectIdHolder.getId(), string);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
-    @Then("the employee {string} is the project leader in {string}")
-    public void theEmployeeIsTheProjectLeaderIn(String projectleader, String project) throws DoesNotExistErrorException {
-        assertEquals(application.getEmployee(projectleader), application.getProject(project).getProjectLeader());
+    @Then("the employee {string} is the project leader in the project")
+    public void theEmployeeIsTheProjectLeaderIn(String projectleader) throws DoesNotExistException {
+        assertEquals(application.getEmployee(projectleader),
+                application.getProject(projectIdHolder.getId()).getProjectLeader());
     }
 }

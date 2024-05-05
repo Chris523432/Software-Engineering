@@ -4,178 +4,254 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Application {
+public class Application implements Model {
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
     private DateServer dateServer = new DateServer();
-    //giver det mening, at employees har et isloggedIn, når det er denne vi bruger??
     private String currentUser;
+    @Override
     public void registerUser(String initials) {
         Employee employee = new Employee(initials);
         employees.add(employee);
     }
-    public void createProject(String name) throws OperationNotAllowedException {
+    @Override
+    public String createProject(String name) throws OperationNotAllowedException {
         if (name.trim().isEmpty()) {
             throw new OperationNotAllowedException("Project can not be created without a name");
         }
         int year = dateServer.getDate().get(Calendar.YEAR) % 100;
         Project project = new Project(name, year);
         projects.add(project);
+        return project.getId();
     }
-    public void createActivity(String projectIdentifier, String activityName) throws OperationNotAllowedException, DoesNotExistErrorException {
+    @Override
+    public String createActivity(String projectIdentifier, String activityName) throws OperationNotAllowedException, DoesNotExistException {
         if (activityName.trim().isEmpty()) {
             throw new OperationNotAllowedException("Activity can not be added without a name");
         }
         Project p = getProject(projectIdentifier);
-        p.addActivity(activityName);
+        assert activityName != null && !activityName.trim().isEmpty() && projectIdentifier != null
+                && !projectIdentifier.trim().isEmpty() && doesProjectExist(projectIdentifier): "Pre-condition createActivity";
+        String activityId = p.addActivity(activityName);
+        // TODO: er post assert korrekt?
+        assert p.getActivities().contains(getActivity(activityId)): "Post condition createActivity";
+        return activityId;
     }
-    //kan vi ikke bare tjekke om de er currentUser?
+    @Override
     public boolean isLoggedIn(String initials) throws Exception {
-        return getEmployee(initials).isLoggedIn();
+        return currentUser.equals(initials);
     }
 
+    @Override
     public void login(String initials) throws Exception {
+        getEmployee(initials);
         currentUser = initials;
-        getEmployee(initials).login();
     }
+    @Override
     public void logout(String initials) throws Exception {
         currentUser = null;
-        getEmployee(initials).logout();
     }
 
-    //tror vores testing liv bliver nemmere, hvis det kun er id. Men vi må lige se
-    public Project getProject(String projectIdentifier) throws DoesNotExistErrorException {
+    public Project getProject(String projectIdentifier) throws DoesNotExistException {
         for (Project p : projects) {
-            if (p.getName().equals(projectIdentifier) || p.getId().equals(projectIdentifier)) {
+            if (p.getId().equals(projectIdentifier)) {
                 return p;
             }
         }
-        throw new DoesNotExistErrorException("Project is not in the system");
+        throw new DoesNotExistException("Project is not in the system");
     }
 
-    //Der skal returneres EmployeeInfo, hvis den er public.
-    //for en privat metode er dette fint.
-    //det samme gælder med getActivity osv.
-    public Employee getEmployee(String initials) throws DoesNotExistErrorException {
+    @Override
+    public ProjectInfo getProjectInfo(String projectIdentifier) throws DoesNotExistException {
+        return new ProjectInfo(getProject(projectIdentifier));
+    }
+
+    public Employee getEmployee(String initials) throws DoesNotExistException {
         for (Employee e : employees) {
             if (e.getInitials().equals(initials)) {
                 return e;
             }
         }
-        throw new DoesNotExistErrorException("Employee does not exist");
+        throw new DoesNotExistException("Employee does not exist");
     }
-    public Activity getActivity(String activityIdentifier) throws DoesNotExistErrorException {
+
+    @Override
+    public EmployeeInfo getEmployeeInfo(String initials) throws DoesNotExistException {
+        return new EmployeeInfo(getEmployee(initials));
+    }
+
+    @Override
+    public Boolean doesEmployeeExist(String initials) {
+        for (Employee e : employees) {
+            if (e.getInitials().equals(initials)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Activity getActivity(String activityIdentifier) throws DoesNotExistException {
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
-                if (a.getId().equals(activityIdentifier) || a.getName().equals(activityIdentifier)) {
+                if (a.getId().equals(activityIdentifier)) {
                     return a;
                 }
             }
         }
-        throw new DoesNotExistErrorException("Activity does not exist");
+        throw new DoesNotExistException("Activity does not exist");
     }
-    public void assignEmployee(String aIdentifier, String initials) throws OperationNotAllowedException, DoesNotExistErrorException {
+
+    @Override
+    public ActivityInfo getActivityInfo(String activityId) throws DoesNotExistException {
+        return new ActivityInfo(getActivity(activityId));
+    }
+
+    @Override
+    public boolean doesActivityExist(String activityIdentifier) throws DoesNotExistException {
+        for (Project p : projects) {
+            for (Activity a : p.getActivities()) {
+                if (a.getId().equals(activityIdentifier)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    @Override
+    public void assignEmployee(String aIdentifier, String initials) throws OperationNotAllowedException, DoesNotExistException {
         Activity a = getActivity(aIdentifier);
         Employee e = getEmployee(initials);
         if (isAssigned(a, e)) {
             throw new OperationNotAllowedException("Employee is already assigned to activity");
         }
+        assert aIdentifier != null && !aIdentifier.trim().isEmpty() && doesActivityExist(aIdentifier)
+                && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials)
+                && !isAssignedSearch(aIdentifier, initials): "Pre-condition assignEmployee";
         a.assignEmployee(e);
+        assert a.isAssigned(e): "Post condition assignEmployee";
     }
     public boolean isAssigned(Activity activity, Employee employee) {
         return activity.isAssigned(employee);
     }
-    public boolean isAssignedSearch(String activityIdentifier, String initials) throws DoesNotExistErrorException { //easier for tests
+    public boolean isAssignedSearch(String activityIdentifier, String initials) throws DoesNotExistException { //easier for tests
         return getActivity(activityIdentifier).isAssigned(getEmployee(initials));
     }
-    public void registerIllness(String initials) throws OperationNotAllowedException, DoesNotExistErrorException {
-        Employee e = getEmployee(initials);
-        Calendar c = dateServer.getDate();
-        if (e.isIll(c)) {
-            throw new OperationNotAllowedException("Can't add absence to already existing absence");
-        }
-        e.registerIllness(dateServer.getDate());
-    }
-    public void registerIllnessSelf() throws Exception {
-        registerIllness(currentUser);
-    }
-    public void registerVacation(String initials, Calendar startDate, Calendar endDate) throws OperationNotAllowedException, DoesNotExistErrorException {
-        Employee e = getEmployee(initials);
-        Calendar c = dateServer.getDate();
-        if (startDate.before(c) || endDate.before(startDate)) {
-            throw new OperationNotAllowedException("Invalid dates");
-        }
-        if (e.isAbsent(c, startDate, endDate)) {
-            throw new OperationNotAllowedException("Can't add absence to already existing absence");
-        }
-        e.registerVacation(startDate, endDate);
-    }
-    public void registerVacationSelf(Calendar startDate, Calendar endDate) throws Exception {
-        registerVacation(currentUser, startDate, endDate);
-    }
+
     public List<Employee> getEmployees() {
         return employees;
     }
+    @Override
+    public List<EmployeeInfo> getEmployeeInfoList() {
+        List<EmployeeInfo> infoList = new ArrayList<>(projects.size());
+        for (Employee employee : employees) {
+            infoList.add(new EmployeeInfo(employee));
+        }
+        return infoList;
+    }
+
     public List<Project> getProjects() {
         return projects;
     }
-    public void setAllocatedTime(String activityIdentifier, int hours) throws OperationNotAllowedException, DoesNotExistErrorException {
+
+    @Override
+    public List<ProjectInfo> getProjectInfoList() {
+        List<ProjectInfo> infoList = new ArrayList<>(projects.size());
+        for (Project project : projects) {
+            infoList.add(new ProjectInfo(project));
+        }
+        return infoList;
+    }
+    @Override
+    public void setAllocatedTime(String activityIdentifier, int hours) throws OperationNotAllowedException, DoesNotExistException {
         getActivity(activityIdentifier).setAllocatedTime(hours);
     }
     public void setDateServer(DateServer dateServer) {
         this.dateServer = dateServer;
     }
 
-    public void assignProjectLeader (String project, String employee) throws Exception {
-        getProject(project).assignProjectLeader(getEmployee(employee));
-    }
-
-    public List<Employee> getProjectLeaders() {
-        List<Employee> projectleaders = new ArrayList<>();
-        for (Project p : projects) {
-            if (p.getProjectLeader() != null && !projectleaders.contains(p.getProjectLeader())) {
-                projectleaders.add(p.getProjectLeader());
+    @Override
+    public void assignProjectLeader(String project, String initials) throws DoesNotExistException {
+        Project p = getProject(project);
+        Employee e1 = getEmployee(initials);
+        Employee e2 = p.getProjectLeader();
+        assert project != null && !project.trim().isEmpty() && doesProjectExist(project)
+                && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials): "Pre-condition assignProjectLeader";
+        if (e1 != e2) {
+            if (e2 != null) {
+                e2.removeProject(p);
             }
+            e1.addProject(p);
         }
-        return projectleaders;
+        p.assignProjectLeader(e1);
+        assert p.getProjectLeader().equals(e1): "Post condition assignProjectLeader";
     }
 
+    @Override
+    public boolean doesProjectExist(String projectidentifier) {
+        for (Project p : projects) {
+           if(p.getId().equals(projectidentifier)) {
+               return true;
+           }
+        }
+        return false;
+    }
+
+    @Override
     public void addEmployee(String initials) {
         employees.add(new Employee(initials));
     }
 
 
-    public void setStartWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistErrorException {
+    @Override
+    public void setStartWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistException {
         getActivity(activity).setStartWeek(week, year);
     }
 
-    public void setEndWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistErrorException {
+    @Override
+    public void setEndWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistException {
         getActivity(activity).setEndWeek(week, year);
     }
 
 
-    public Calendar getStartDateForActivity(String activity) throws DoesNotExistErrorException {
+    @Override
+    public Calendar getStartDateForActivity(String activity) throws DoesNotExistException {
         return getActivity(activity).getStartDate();
     }
 
-    public Calendar getEndDateForActivity(String activity) throws DoesNotExistErrorException {
+    @Override
+    public Calendar getEndDateForActivity(String activity) throws DoesNotExistException {
         return getActivity(activity).getEndDate();
     }
 
 
-    public Calendar getStartDateForProject(String project) throws DoesNotExistErrorException {
+    @Override
+    public Calendar getStartDateForProject(String project) throws DoesNotExistException {
         return getProject(project).getStartDate();
     }
 
-    public Calendar getEndDateForProject(String project) throws DoesNotExistErrorException {
+    @Override
+    public Calendar getEndDateForProject(String project) throws DoesNotExistException {
         return getProject(project).getEndDate();
     }
 
-    public String getProjectStatus(String project) throws DoesNotExistErrorException {
-        return getProject(project).getProjectStatus();
+    @Override
+    public boolean getProjectStatus(String project) throws DoesNotExistException {
+        return getProject(project).isComplete();
     }
 
+    public void resetAllIds() {
+        new ActivityIdGenerator().resetId();
+        new ProjectIdGenerator().resetId();
+    }
+
+    @Override
     public String getCurrentUser() {
         return currentUser;
     }
+    @Override
+    public int getCurrentYear() {
+        return dateServer.getYear();
+    }
+
+
 }

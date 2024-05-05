@@ -1,18 +1,13 @@
 package dtu.example.ui;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class View extends Application {
     private Stage primaryStage;
     private InitiateScenes sceneMenu;
     private PrimaryController controller;
-    private dtu.application.Application application;
+    private dtu.application.Model model;
 
 
     public static void main(String[] args) {
@@ -21,11 +16,24 @@ public class View extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        this.application = new dtu.application.Application();
-        application.addEmployee("buba");
-        this.controller = new PrimaryController(this,application);
+        this.model = new dtu.application.Application();
+        model.addEmployee("buba");
+        try {
+            String projectId = model.createProject("Coffee break");
+            String actitiyId1 = model.createActivity(projectId,"get coffee");
+            model.setStartWeekToActivity(actitiyId1, 1,2024);
+            model.setEndWeekToActivity(actitiyId1, 5, 2024);
+            String actitiyId2 = model.createActivity(projectId,"drink coffee");
+            model.setStartWeekToActivity(actitiyId2, 5, 2024);
+            model.setEndWeekToActivity(actitiyId2, 11, 2024);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        //application.createProject("Test Project");
+        this.controller = new PrimaryController(this, model);
         this.primaryStage = primaryStage;
-        sceneMenu = new InitiateScenes(this, application);
+        sceneMenu = new InitiateScenes(this, model);
         initiateButtons();
         showLoginScreen();
 
@@ -45,52 +53,79 @@ public class View extends Application {
         primaryStage.show();
     }
 
-    public void showViewProjectsScreen() {
-        primaryStage.setScene(sceneMenu.getViewProjectsScreen());
+    public void showChooseProjectsScreen() {
+        primaryStage.setScene(sceneMenu.getChooseProjectScreen());
+        primaryStage.show();
+    }
+    public void showViewProjectScreen() {
+        primaryStage.setScene(sceneMenu.getViewProjectScreen());
+        primaryStage.show();
+    }
+    public void showAddActivityScreen() {
+        primaryStage.setScene(sceneMenu.getAddActivityScreen());
+        primaryStage.show();
+    }
+    public void showNewEmployeeScreen() {
+        primaryStage.setScene(sceneMenu.getNewEmployeeScreen());
+        primaryStage.show();
+    }
+    public void showAssignProjectLeaderScreen() {
+        primaryStage.setScene(sceneMenu.getAssignProjectLeaderScreen());
         primaryStage.show();
     }
 
     public void initiateButtons() {
         sceneMenu.getLogInBTN().setOnAction(controller::login);
-        //sceneMenu.getAddProjectBTN().setOnAction(controller::);
-        sceneMenu.getMainAddProject().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                showAddProjectScreen();
-            }
-        });
-        sceneMenu.getViewProjectsBTN().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                sceneMenu.updateProjectNames();
-                showViewProjectsScreen();
-            }
-        });
-        sceneMenu.getViewProjectsBackBTN().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                showMainScreen();
-            }
-        });
-        sceneMenu.getLogOutBTN().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                showLoginScreen();
-            }
-        });
-        sceneMenu.getAddProjectBackBTN().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                showMainScreen();
-            }
-        });
-        sceneMenu.getAddProjectAddProject().setOnAction(controller::addProject);
+        sceneMenu.getLogOutBTN().setOnAction(controller::logout);
+        sceneMenu.getMainAddProjectBTN().setOnAction(controller::mainAddProject);
+        sceneMenu.getAddProjectAddProjectBTN().setOnAction(controller::addProjectAddProject);
+        sceneMenu.getAddProjectBackBTN().setOnAction(controller::addProjectBack);
+        sceneMenu.getMainViewProjectBTN().setOnAction(controller::mainViewProject);
+        sceneMenu.getChooseProjectViewProjectBTN().setOnAction(controller::chooseProjectViewProject);
+        sceneMenu.getChooseProjectBackBTN().setOnAction(controller::chooseProjectBack);
+        sceneMenu.getViewProjectBackBTN().setOnAction(controller::viewProjectBack);
+        sceneMenu.getViewProjectAddActivityBTN().setOnAction(controller::viewProjectAddActivity);
+        //sceneMenu.getViewProjectDeleteActivityBTN().setOnAction(controller::viewProjectDeleteActivity);
+        sceneMenu.getAddActivityAddActivityBTN().setOnAction(controller::addActivityAddActivity);
+        sceneMenu.getAddActivityBackBTN().setOnAction(controller::addActivityBack);
+        sceneMenu.getMainRegisterNewEmployeeBTN().setOnAction(controller::newEmployee);
+        sceneMenu.getNewEmployeeBackBTN().setOnAction(controller::newEmployeeBack);
+        sceneMenu.getNewEmployeeAddBTN().setOnAction(controller::newEmployeeAdd);
+        sceneMenu.getViewProjectAssignProjectLeaderBTN().setOnAction(controller::viewProjectAssignProjectLeader);
+        sceneMenu.getAssignProjectLeaderBackBTN().setOnAction(controller::assignProjectLeaderBack);
+        sceneMenu.getAssignProjectLeaderAssignBTN().setOnAction(controller::assignProjectLeader);
+
     }
     public String getLogin() {
         return sceneMenu.getLogin();
     }
-
     public String getNewProjectName() {
         return sceneMenu.getProjectName();
+    }
+
+    public String getNewActivityName() {
+        return sceneMenu.getNewActivityName();
+    }
+    public String getChooseProjectProjectID() {
+        return sceneMenu.getChooseProjectProjectID();
+    }
+    public void updateViewProjectActivities(String projectID) {
+        sceneMenu.updateViewProjectActivities(projectID);
+    }
+
+    public String getNewEmployeeInitials() {
+        return sceneMenu.getNewEmployeeInitials();
+    }
+    public void updateProjectNames() {
+        sceneMenu.updateProjectNames();
+    }
+    public String getAssignProjectLeaderInitials() {
+        return sceneMenu.getAssignProjectLeaderInitials();
+    }
+    public String getNewActivityStartWeek() {
+        return sceneMenu.getNewActivityStartWeek();
+    }
+    public String getNewActivityEndWeek() {
+        return sceneMenu.getNewActivityEndWeek();
     }
 }
