@@ -108,7 +108,7 @@ public class Application implements Model {
     }
 
     @Override
-    public boolean doesActivityExist(String activityIdentifier) throws DoesNotExistException {
+    public boolean doesActivityExist(String activityIdentifier) {
         for (Project p : projects) {
             for (Activity a : p.getActivities()) {
                 if (a.getId().equals(activityIdentifier)) {

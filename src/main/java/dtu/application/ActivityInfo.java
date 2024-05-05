@@ -29,9 +29,6 @@ public class ActivityInfo {
     public List<EmployeeInfo> getAssignedEmployees() {
         return assignedEmployees;
     }
-    public boolean isAssigned(EmployeeInfo employee) {
-        return assignedEmployees.contains(employee);
-    }
     public boolean isComplete() {
         return complete;
     }

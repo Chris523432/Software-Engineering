@@ -1,13 +1,10 @@
 package example.junit;
 import dtu.application.*;
-import example.cucumber.ErrorMessageHolder;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ProjectinfoTest {
@@ -35,13 +32,13 @@ public class ProjectinfoTest {
         application.getActivity(activityId1).setEndWeek(15, 2024);
         application.getActivity(activityId2).setStartWeek(20, 2024);
         application.getActivity(activityId2).setEndWeek(30, 2024);
-        projectInfo = new ProjectInfo(project);
+        projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
     }
     @Test
     public void inputsetB() throws DoesNotExistException {
         application.assignProjectLeader(projectId, "Barc");
-        projectInfo = new ProjectInfo(project);
+        projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
     }
 
@@ -56,7 +53,7 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).setEndWeek(20, 2024);
         application.getActivity(activityId1).complete();
         application.getActivity(activityId2).complete();
-        projectInfo = new ProjectInfo(project);
+        projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
     }
     @Test
@@ -69,7 +66,7 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).setEndWeek(10, 2024);
         application.getActivity(activityId1).complete();
         application.getActivity(activityId2).complete();
-        projectInfo = new ProjectInfo(project);
+        projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
     }
     @Test
@@ -80,12 +77,12 @@ public class ProjectinfoTest {
         application.getActivity(activityId1).setEndWeek(30, 2024);
         application.getActivity(activityId2).setStartWeek(50, 2024);
         application.getActivity(activityId2).setEndWeek(52, 2024);
-        projectInfo = new ProjectInfo(project);
+        projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
     }
     @Test
-    public void inputsetF() {
-        projectInfo = new ProjectInfo(project);
+    public void inputsetF() throws DoesNotExistException {
+        projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
     }
     @Test
@@ -99,7 +96,7 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).setEndWeek(30, 2024);
         application.getActivity(activityId1).complete();
         application.getActivity(activityId2).inComplete();
-        projectInfo = new ProjectInfo(project);
+        projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
     }
     public Boolean equals(Employee employee, EmployeeInfo employeeinfo) {

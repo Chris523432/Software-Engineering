@@ -22,10 +22,6 @@ public class Activity {
         this.complete = false;
     }
 
-    public Activity(String name, int budgetedHours) throws OperationNotAllowedException {
-        new Activity(name);
-        setAllocatedTime(budgetedHours);
-    }
     public void setAllocatedTime(int budgetedHours) throws OperationNotAllowedException {
         if (budgetedHours < 0) {
             throw new OperationNotAllowedException("Invalid value");
