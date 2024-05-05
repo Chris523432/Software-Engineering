@@ -60,11 +60,7 @@ public class SetActivityTimesSteps {
 
     @Given("there does not exist an activity with id {string}")
     public void thereDoesNotExistAnActivityWithId(String activityIdentifier) {
-        try {
-            application.getActivity(activityIdentifier);
-        } catch (Exception e) {
-            assertFalse(false);
-        }
+        assertFalse(application.doesActivityExist(activityIdentifier));
     }
 
     @When("the start week is set to Week {int} and start year {int} on activity with id {string}")

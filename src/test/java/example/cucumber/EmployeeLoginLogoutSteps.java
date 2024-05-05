@@ -50,6 +50,7 @@ public class EmployeeLoginLogoutSteps {
 
     @Given("the employee with initials {string} is not registered in the system")
     public void theEmployeeWithInitialsIsNotRegisteredInTheSystem(String initials) {
+        assertFalse(application.doesEmployeeExist(initials));
         assertFalse(application.getEmployees().stream().anyMatch((emp) -> emp.getInitials().equals(initials)));
     }
     @When("the employee logs in")

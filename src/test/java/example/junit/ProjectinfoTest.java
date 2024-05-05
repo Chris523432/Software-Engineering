@@ -34,12 +34,14 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).setEndWeek(30, 2024);
         projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
+        assertTrue(equalsProjects(application.getProjects(), application.getProjectInfoList()));
     }
     @Test
     public void inputsetB() throws DoesNotExistException {
         application.assignProjectLeader(projectId, "Barc");
         projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
+        assertTrue(equalsProjects(application.getProjects(), application.getProjectInfoList()));
     }
 
     @Test
@@ -55,6 +57,7 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).complete();
         projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
+        assertTrue(equalsProjects(application.getProjects(), application.getProjectInfoList()));
     }
     @Test
     public void inputsetD() throws DoesNotExistException, OperationNotAllowedException {
@@ -68,6 +71,7 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).complete();
         projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
+        assertTrue(equalsProjects(application.getProjects(), application.getProjectInfoList()));
     }
     @Test
     public void inputsetE() throws DoesNotExistException, OperationNotAllowedException {
@@ -79,11 +83,13 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).setEndWeek(52, 2024);
         projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
+        assertTrue(equalsProjects(application.getProjects(), application.getProjectInfoList()));
     }
     @Test
     public void inputsetF() throws DoesNotExistException {
         projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
+        assertTrue(equalsProjects(application.getProjects(), application.getProjectInfoList()));
     }
     @Test
     public void inputsetG() throws DoesNotExistException, OperationNotAllowedException {
@@ -98,6 +104,7 @@ public class ProjectinfoTest {
         application.getActivity(activityId2).inComplete();
         projectInfo = application.getProjectInfo(projectId);
         assertTrue(equalsProject(project, projectInfo));
+        assertTrue(equalsProjects(application.getProjects(), application.getProjectInfoList()));
     }
     public Boolean equals(Employee employee, EmployeeInfo employeeinfo) {
         if (employee == null && employeeinfo == null) {
@@ -130,6 +137,14 @@ public class ProjectinfoTest {
                 && project.isComplete() == projectinfo.isComplete()
                 && equals(project.getProjectLeader(), projectinfo.getProjectLeader())
                 && equalsActivityList(project.getActivities(), projectinfo.getActivities());
+        return result;
+    }
+
+    public Boolean equalsProjects(List<Project> projects, List<ProjectInfo> projectInfoList) {
+        boolean result = projects.size() == projectInfoList.size();
+        for (int i = 0; i < projects.size(); i++) {
+            result = result && equalsProject(projects.get(i), projectInfoList.get(i));
+        }
         return result;
     }
 }

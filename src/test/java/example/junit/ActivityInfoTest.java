@@ -1,16 +1,7 @@
 package example.junit;
 import dtu.application.*;
-import dtu.example.ui.App;
-import example.cucumber.ErrorMessageHolder;
-import io.cucumber.java.bs.A;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Calendar;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 public class ActivityInfoTest {
     private Application application;

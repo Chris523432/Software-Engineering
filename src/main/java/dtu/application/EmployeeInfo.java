@@ -15,8 +15,6 @@ public class EmployeeInfo {
         }
     }
 
-
-
     public String getInitials() {
         return initials;
     }

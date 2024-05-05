@@ -67,11 +67,13 @@ public class ShowBasicProjectInformationSteps {
     }
     @Given("the project with name {string} does not exist")
     public void the_project_with_name_does_not_exist(String string) {
-        try {
-            application.getProject(string);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
+        boolean matched = false;
+        for (Project project : application.getProjects()) {
+            if (project.getName().equals(string)) {
+                matched = true;
+            }
         }
+        assertFalse(matched);
     }
 
     @When("the employee requests the end week of project with name {string}")
