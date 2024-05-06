@@ -79,6 +79,8 @@ public class PrimaryController {
         } catch (Exception e) {
             showError(e.getMessage());
         }
+        view.updateViewProjectActivities(projectIdentifier);
+        view.showViewProjectScreen();
     }
 
 

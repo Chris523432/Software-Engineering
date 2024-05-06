@@ -18,6 +18,7 @@ public class View extends Application {
     public void start(Stage primaryStage) {
         this.model = new dtu.application.Application();
         model.registerUser("buba");
+        model.registerUser("dani");
         try {
             String projectId = model.createProject("Coffee break");
             String actitiyId1 = model.createActivity(projectId,"get coffee");
