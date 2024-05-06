@@ -60,6 +60,4 @@ public interface Model {
 
 
     String getCurrentUser();
-
-    int getCurrentYear();
 }

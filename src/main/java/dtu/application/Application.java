@@ -253,8 +253,4 @@ public class Application implements Model {
     public String getCurrentUser() {
         return currentUser;
     }
-    @Override
-    public int getCurrentYear() {
-        return dateServer.getYear();
-    }
 }
