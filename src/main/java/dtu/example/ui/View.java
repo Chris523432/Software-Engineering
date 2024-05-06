@@ -157,4 +157,7 @@ public class View extends Application {
     public void updateErrorMessage(String message) {
         sceneMenu.updateErrorMessage(message);
     }
+    public void updateLoginError(String message) {
+        sceneMenu.updateLoginError(message);
+    }
 }
