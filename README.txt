@@ -4,7 +4,7 @@ To run the tests associated with the program, the project must be opened with Ma
 opened with maven rightclick the Software-Engineering directory and find the tab "Run". Hover it and press "All Tests".
 This if done correctly should run all features and tests associated with the program.
 
-To run the program itself, go to the directories Software-Engineering/src/main/dtu/example.ui/View
+To run the program itself, go to the directories Software-Engineering/src/main/java/dtu/example.ui/View
 Then run the View class, which will then open the GUI. From there the program can be run and tried out.
 
 There is a login screen in the program, and there has been made 2 possible login initials. Either one works.
