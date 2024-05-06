@@ -472,6 +472,7 @@ public class InitiateScenes {
                 viewProjectActivities.add(activityString);
             }
         } catch (Exception e) {
+            System.out.println(111);
             System.out.println(e);
             //TODO: Show error
         }

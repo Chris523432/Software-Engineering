@@ -39,8 +39,7 @@ public class EmployeeInfoTest {
 
     public boolean equalsEmployee(Employee employee) throws DoesNotExistException {
         EmployeeInfo employeeInfo = application.getEmployeeInfo(employee.getInitials());
-        boolean result = application.getEmployees().size() == application.getEmployeeInfoList().size()
-                && equalsProjects(employee.getLeadingProjects(), employeeInfo.getLeadingProjects());
+        boolean result = application.getEmployees().size() == application.getEmployeeInfoList().size();
         return result;
     }
     public Boolean equalsProjects(List<Project> projects, List<ProjectInfo> projectInfoList) {
@@ -74,12 +73,6 @@ public class EmployeeInfoTest {
             return true;
         }
         boolean result = employee.getInitials().equals(employeeinfo.getInitials());
-        result = result && employee.getLeadingProjects().size() == employeeinfo.getLeadingProjects().size();
-        for (int i = 0; i < employee.getLeadingProjects().size(); i++) {
-            String id = employee.getLeadingProjects().get(i).getId();
-            String idInfo = employeeinfo.getLeadingProjects().get(i).getId();
-            result = result && id.equals(idInfo);
-        }
         return result;
     }
 }

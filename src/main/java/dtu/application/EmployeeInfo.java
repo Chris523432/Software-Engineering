@@ -10,9 +10,6 @@ public class EmployeeInfo {
     public EmployeeInfo(Employee employee) {
         this.initials = employee.getInitials();
         this.leadingProjects = new ArrayList<>();
-        for (Project p : employee.getLeadingProjects()) {
-            leadingProjects.add(new ProjectInfo(p,this));
-        }
     }
 
     public String getInitials() {

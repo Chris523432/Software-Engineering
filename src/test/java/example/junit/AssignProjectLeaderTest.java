@@ -30,7 +30,6 @@ public class AssignProjectLeaderTest {
         //shows this that if a new leader is assigned to the same project
         //then the previous leader is overwritten
         assertEquals(e1, p.getProjectLeader());
-        assertTrue(e1.getLeadingProjects().contains(p));
         application.registerUser("tcbc");
         Employee e2 = application.getEmployee("tcbc");
         try {
@@ -39,8 +38,6 @@ public class AssignProjectLeaderTest {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
         assertEquals(e2, p.getProjectLeader());
-        assertTrue(e2.getLeadingProjects().contains(p));
-        assertFalse(e1.getLeadingProjects().contains(p));
     }
 
     @Test
@@ -66,12 +63,14 @@ public class AssignProjectLeaderTest {
         assertEquals("Project is not in the system", errorMessageHolder.getErrorMessage());
         try {
             application.registerUser("barc");
-            assertTrue(application.getEmployee("barc").getLeadingProjects().isEmpty());
+            Employee e = application.getEmployee("barc");
+            assertFalse(application.getProjects().stream().anyMatch(p -> p.getProjectLeader().equals(e)));
             application.assignProjectLeader("24001", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
         assertEquals("Project is not in the system", errorMessageHolder.getErrorMessage());
-        assertTrue(application.getEmployee("barc").getLeadingProjects().isEmpty());
+        Employee e = application.getEmployee("barc");
+        assertFalse(application.getProjects().stream().anyMatch(p -> p.getProjectLeader().equals(e)));
     }
 }

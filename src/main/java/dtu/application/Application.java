@@ -177,12 +177,7 @@ public class Application implements Model {
         Employee e2 = p.getProjectLeader();
         assert project != null && !project.trim().isEmpty() && doesProjectExist(project)
                 && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials): "Pre-condition assignProjectLeader";
-        if (e1 != e2) {
-            if (e2 != null) {
-                e2.removeProject(p);
-            }
-            e1.addProject(p);
-        }
+
         p.assignProjectLeader(e1);
         assert p.getProjectLeader().equals(e1): "Post condition assignProjectLeader";
     }
