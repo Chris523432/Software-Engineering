@@ -32,8 +32,8 @@ public class Application implements Model {
             throw new OperationNotAllowedException("Activity can not be added without a name");
         }
         Project p = getProject(projectIdentifier);
-        assert activityName != null && !activityName.trim().isEmpty() && projectIdentifier != null
-                && !projectIdentifier.trim().isEmpty() && doesProjectExist(projectIdentifier): "Pre-condition createActivity";
+        assert activityName != null && !activityName.trim().isEmpty()
+                && doesProjectExist(projectIdentifier): "Pre-condition createActivity";
         String activityId = p.addActivity(activityName);
         assert p.getActivities().contains(getActivity(activityId)): "Post condition createActivity";
         return activityId;
