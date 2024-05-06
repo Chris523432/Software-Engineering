@@ -230,13 +230,13 @@ public class Application implements Model {
     }
 
     @Override
-    public void completeActivity(String actitivtyId) throws DoesNotExistException {
-        getActivity(actitivtyId).complete();
+    public void completeActivity(String activityId) throws DoesNotExistException {
+        getActivity(activityId).complete();
     }
 
     @Override
-    public void unCompleteActivity(String actitivtyId) throws DoesNotExistException {
-        getActivity(actitivtyId).inComplete();
+    public void unCompleteActivity(String activityId) throws DoesNotExistException {
+        getActivity(activityId).inComplete();
     }
 
     @Override

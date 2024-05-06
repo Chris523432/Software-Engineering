@@ -132,8 +132,8 @@ public class ShowBasicProjectInformationSteps {
     public void the_project_with_name_does_not_exists(String string) {
         try {
             application.getProject(string);
+            assertFalse(true);
         } catch (Exception e) {
-            assertFalse(false);
             assertFalse(application.doesProjectExist("24001"));
         }
     }

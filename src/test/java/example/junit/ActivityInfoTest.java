@@ -12,6 +12,7 @@ public class ActivityInfoTest {
         application = new Application();
         projectId = application.createProject("Test");
         activityId = application.createActivity(projectId, "Test");
+        application.unCompleteActivity(activityId);
         application.registerUser("Barc");
         application.registerUser("Dodo");
     }
@@ -44,7 +45,7 @@ public class ActivityInfoTest {
     }
     @Test
     public void inputSetE() throws DoesNotExistException {
-        application.getActivity(activityId).complete();
+        application.completeActivity(activityId);
         assertTrue(equalActivity(application.getActivity(activityId), application.getActivityInfo(activityId)));
     }
 
@@ -60,13 +61,14 @@ public class ActivityInfoTest {
         return result;
     }
 
-    public boolean equalActivity(Activity activity, ActivityInfo activityInfo) {
+    public boolean equalActivity(Activity activity, ActivityInfo activityInfo) throws DoesNotExistException {
         boolean result = equalActivityEmployeeList(activity, activityInfo)
                 && activity.getName().equals(activityInfo.getName())
                 && activity.getId().equals(activityInfo.getId())
                 && activity.getBudgetedHours() == activityInfo.getBudgetedHours()
                 && activity.getEndDate() == activityInfo.getEndDate()
-                && activity.getStartDate() == activityInfo.getStartDate();
+                && activity.getStartDate() == activityInfo.getStartDate()
+                && application.isActivityComplete(activityId) == activityInfo.isComplete();
         return result;
     }
 
