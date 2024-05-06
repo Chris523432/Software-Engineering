@@ -108,6 +108,7 @@ public class View extends Application {
         sceneMenu.getAssignEmployeeBackBTN().setOnAction(controller::assignEmployeeBack);
         sceneMenu.getViewProjectAssignEmployeeBTN().setOnAction(controller::viewProjectAssignEmployee);
         sceneMenu.getAssignEmployeeAssignBTN().setOnAction(controller::assignEmployeeAssignEmployee);
+        sceneMenu.getViewProjectChangeCompletionStatusBTN().setOnAction(controller::viewProjectChangeCompletionStatus);
 
 
     }

@@ -1,6 +1,7 @@
 package dtu.example.ui;
 
 import java.io.IOException;
+import java.lang.reflect.Executable;
 
 import dtu.application.Model;
 import javafx.event.ActionEvent;
@@ -181,5 +182,21 @@ public class PrimaryController {
             System.out.println(e);
             //TODO: show error message
         }
+    }
+    public void viewProjectChangeCompletionStatus(ActionEvent event) {
+        String id = view.getViewProjectChosenActivityID();
+        try {
+            if (model.isActivityComplete(id)) {
+                model.unCompleteActivity(id);
+            } else {
+                model.completeActivity(id);
+            }
+        } catch (Exception e) {
+            //TODO: show error message
+            System.out.println(e);
+        }
+        view.updateViewProjectActivities(view.getChooseProjectProjectID());
+        view.showViewProjectScreen();
+
     }
 }
