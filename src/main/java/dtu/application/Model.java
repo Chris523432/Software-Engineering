@@ -2,7 +2,7 @@ package dtu.application;
 
 import java.util.Calendar;
 import java.util.List;
-//Thomas & Christian
+//Thomas
 public interface Model {
     void registerUser(String initials);
 
@@ -50,11 +50,13 @@ public interface Model {
 
     Calendar getEndDateForProject(String project) throws DoesNotExistException;
 
+    //Christian
     boolean getProjectStatus(String project) throws DoesNotExistException;
-
+    //Christian
     void completeActivity(String activityId) throws DoesNotExistException;
+    //Christian
     void unCompleteActivity(String activityId) throws DoesNotExistException;
-
+    //Christian
     boolean isActivityComplete(String activityId) throws DoesNotExistException;
 
 

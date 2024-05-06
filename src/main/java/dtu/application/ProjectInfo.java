@@ -14,7 +14,9 @@ public class ProjectInfo {
 
 
     //projectLeader argument protects from endless loop given circular reference
-    //to and from project and employee
+    //to and from project and employee. This is no longer needed since
+    //the reference from Employee to Project was removed, but this comment is
+    //kept to explain the constructor.
     public ProjectInfo(Project project, EmployeeInfo projectLeader) {
         this.name = project.getName();
         this.id = project.getId();

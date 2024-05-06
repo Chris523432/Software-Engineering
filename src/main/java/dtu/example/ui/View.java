@@ -1,6 +1,6 @@
+//Christian except where otherwise stated
 package dtu.example.ui;
 
-import dtu.application.ProjectInfo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -32,7 +32,6 @@ public class View extends Application {
         } catch (Exception e) {
             System.out.println(e);
         }
-        //application.createProject("Test Project");
         this.controller = new PrimaryController(this, model);
         this.primaryStage = primaryStage;
         sceneMenu = new InitiateScenes(this, model);
@@ -40,12 +39,10 @@ public class View extends Application {
         showLoginScreen();
 
     }
-
     public void showLoginScreen() {
         primaryStage.setScene(sceneMenu.getLoginScreen());
         primaryStage.show();
     }
-
     public void showMainScreen() {
         primaryStage.setScene(sceneMenu.getMainScreen());
         primaryStage.show();
@@ -54,7 +51,6 @@ public class View extends Application {
         primaryStage.setScene(sceneMenu.getAddProjectScreen());
         primaryStage.show();
     }
-
     public void showChooseProjectsScreen() {
         primaryStage.setScene(sceneMenu.getChooseProjectScreen());
         primaryStage.show();
@@ -67,7 +63,6 @@ public class View extends Application {
         primaryStage.setScene(sceneMenu.getAddActivityScreen());
         primaryStage.show();
     }
-
     public void showAssignProjectLeaderScreen() {
         primaryStage.setScene(sceneMenu.getAssignProjectLeaderScreen());
         primaryStage.show();
@@ -84,7 +79,6 @@ public class View extends Application {
         primaryStage.setScene(sceneMenu.getErrorScreen());
         primaryStage.show();
     }
-
     public void initiateButtons() {
         sceneMenu.getLogInBTN().setOnAction(controller::login);
         sceneMenu.getLogOutBTN().setOnAction(controller::logout);
@@ -109,8 +103,6 @@ public class View extends Application {
         sceneMenu.getAssignEmployeeAssignBTN().setOnAction(controller::assignEmployeeAssignEmployee);
         sceneMenu.getViewProjectChangeCompletionStatusBTN().setOnAction(controller::viewProjectToggleCompletion);
         sceneMenu.getErrorBackToMain().setOnAction(controller::errorBackToMain);
-
-
     }
     public String getLogin() {
         return sceneMenu.getLogin();
@@ -161,7 +153,7 @@ public class View extends Application {
     public void updateLoginError(String message) {
         sceneMenu.updateLoginError(message);
     }
-    public void updateBasicProjectInfor(String projectId) {
+    public void updateBasicProjectInfo(String projectId) {
         sceneMenu.updateBasicProjectInfo(projectId);
     }
 }

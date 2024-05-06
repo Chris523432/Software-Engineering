@@ -1,11 +1,8 @@
+//Christian except where otherwise stated
 package dtu.example.ui;
 
-import java.io.IOException;
-
 import dtu.application.Model;
-import dtu.application.ProjectInfo;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 
 public class PrimaryController {
     private View view;
@@ -44,13 +41,13 @@ public class PrimaryController {
     public void addProjectBack(ActionEvent event) {
         view.showMainScreen();
     }
-
+    //Thomas
     public void chooseProjectViewProject(ActionEvent event) {
         view.updateViewProjectTitle();
         String projectID = view.getChooseProjectProjectID();
         if (projectID != null) {
             view.updateViewProjectActivities(projectID);
-            view.updateBasicProjectInfor(projectID);
+            view.updateBasicProjectInfo(projectID);
             view.showViewProjectScreen();
         }
     }
@@ -78,12 +75,9 @@ public class PrimaryController {
             showError(e.getMessage());
         }
         view.updateViewProjectActivities(projectIdentifier);
-        view.updateBasicProjectInfor(projectIdentifier);
+        view.updateBasicProjectInfo(projectIdentifier);
         view.showViewProjectScreen();
     }
-
-
-
     public void mainViewProject(ActionEvent event) {
         view.updateProjectNames();
         view.showChooseProjectsScreen();
@@ -95,7 +89,6 @@ public class PrimaryController {
         view.updateViewProjectTitle();
         view.showViewProjectScreen();
     }
-
     public void assignProjectLeaderAssign(ActionEvent event) {
         view.updateViewProjectTitle();
         String projectLeaderInitials = view.getAssignProjectLeaderInitials();
@@ -107,18 +100,19 @@ public class PrimaryController {
             showError(e.getMessage());
         }
     }
-
     public void viewProjectEditActivity(ActionEvent event) {
         if (view.getViewProjectChosenActivityID() != null) {
             view.showEditActivityScreen();
         }
     }
+    //Thomas
     public void editActivityBack(ActionEvent event) {
         String projectId = view.getChooseProjectProjectID();
         view.updateViewProjectActivities(projectId);
-        view.updateBasicProjectInfor(projectId);
+        view.updateBasicProjectInfo(projectId);
         view.showViewProjectScreen();
     }
+    //Thomas
     public void editActivitySaveChanges(ActionEvent event) {
         String id = view.getViewProjectChosenActivityID();
         String weekInput = view.getEditActivityWeek();
@@ -174,7 +168,6 @@ public class PrimaryController {
         } catch (Exception e) {
             System.out.println(e);
             showError(e.getMessage());
-            //TODO: show error message
         }
     }
     public void viewProjectToggleCompletion(ActionEvent event) {
@@ -186,12 +179,11 @@ public class PrimaryController {
                 model.completeActivity(id);
             }
         } catch (Exception e) {
-            //TODO: show error message
             System.out.println(e);
         }
         String projectId = view.getChooseProjectProjectID();
         view.updateViewProjectActivities(projectId);
-        view.updateBasicProjectInfor(projectId);
+        view.updateBasicProjectInfo(projectId);
         view.showViewProjectScreen();
     }
     public void errorBackToMain(ActionEvent event) {

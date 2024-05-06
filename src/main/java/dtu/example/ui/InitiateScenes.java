@@ -1,3 +1,4 @@
+//Christian except where otherwise stated
 package dtu.example.ui;
 
 import dtu.application.*;
@@ -412,6 +413,7 @@ public class InitiateScenes {
 
         errorScreen = new Scene(BP, XDim, YDim);
     }
+    //Thomas
     public void updateProjectNames() {
         projectNames.clear();
         List<ProjectInfo> projects = model.getProjectInfoList();
@@ -421,7 +423,7 @@ public class InitiateScenes {
         }
         //projectNames.add("Test Project");
     }
-
+    //Thomas
     public void updateViewProjectTitle() {
         String projectID = view.getChooseProjectProjectID();
         try {
@@ -433,6 +435,7 @@ public class InitiateScenes {
             System.out.println(e);
         }
     }
+    //Thomas
     public void updateBasicProjectInfo(String projectId) {
         try {
             ProjectInfo project = model.getProjectInfo(projectId);
@@ -446,11 +449,11 @@ public class InitiateScenes {
             view.showErrorScreen();
 
         }
-
     }
     public void updateLoginError(String message) {
         loginError.setText(message);
     }
+    //Thomas
     public void updateViewProjectActivities(String projectID) {
         //set viewProjectActivities to list of activity strings
         try {
@@ -488,7 +491,6 @@ public class InitiateScenes {
             //TODO: Show error
         }
     }
-
     public String getViewProjectChosenActivityID() {
         String activityString = projectInfo.getSelectionModel().getSelectedItem();
         if (activityString == null) {
@@ -505,28 +507,23 @@ public class InitiateScenes {
         String displayValue = chooseProjectActiveProjects.getValue().toString();
         String[] values = displayValue.split(" - ");
         String id = values[values.length-1];
-        //System.out.println(id);
         return id;
     }
     public void updateErrorMessage(String message) {
         errorMessage.setText(message);
     }
-
     public Scene getLoginScreen() {
         return loginScreen;
     }
     public Scene getMainScreen() {
         return mainScreen;
     }
-
     public Scene getAddProjectScreen() {
         return addProjectScreen;
     }
-
     public Scene getChooseProjectScreen() {
         return chooseProjectScreen;
     }
-
     public Scene getViewProjectScreen() {
         return viewProjectScreen;
     }
@@ -539,18 +536,15 @@ public class InitiateScenes {
     public Scene getAssignEmployeeScreen() {
         return assignEmployeeScreen;
     }
-
     public Button getLogInBTN() {
         return logInBTN;
     }
     public Button getLogOutBTN() {
         return logOutBTN;
     }
-
     public Button getMainAddProjectBTN() {
         return mainAddProjectBTN;
     }
-
     public Button getAddProjectAddProjectBTN() {
         return addProjectAddProjectBTN;
     }
@@ -593,7 +587,6 @@ public class InitiateScenes {
     public Button getAddActivityBackBTN() {
         return addActivityBackBTN;
     }
-
     public String getNewActivityName() {
         return newActivityNameTF.getText();
     }
