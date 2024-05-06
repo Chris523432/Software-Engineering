@@ -146,17 +146,20 @@ public class PrimaryController {
         String dateField = view.getSelectedDateField();
         String allocatedTimeInput = view.getEditActivityAllocatedTime();
         try {
-            int week = Integer.parseInt(weekInput);
-            int year = Integer.parseInt(yearInput);
-            int allocatedTime = Integer.parseInt(allocatedTimeInput);
             if (dateField == null) {
                 throw new Exception("Please select start what to edit");
-            } else if (dateField.equals("End Date")) {
-                model.setEndWeekToActivity(id, week, year);
-            } else if (dateField.equals("Start Date")){
-                model.setStartWeekToActivity(id, week, year);
-            } else {
+            } else if (dateField.equals("Allocated Time")) {
+                int allocatedTime = Integer.parseInt(allocatedTimeInput);
                 model.setAllocatedTime(id, allocatedTime);
+            } else {
+                int week = Integer.parseInt(weekInput);
+                int year = Integer.parseInt(yearInput);
+                if (dateField.equals("Start Date")) {
+                    model.setStartWeekToActivity(id, week, year);
+                } else {
+                    model.setEndWeekToActivity(id, week, year);
+                }
+
             }
         } catch (Exception e) {
             System.out.println(e);

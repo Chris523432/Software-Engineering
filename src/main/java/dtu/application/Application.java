@@ -257,6 +257,4 @@ public class Application implements Model {
     public int getCurrentYear() {
         return dateServer.getYear();
     }
-
-
 }
