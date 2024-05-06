@@ -52,6 +52,7 @@ public class InitiateScenes {
     private Button viewProjectAssignProjectLeaderBTN;
     private Button viewProjectEditActivityBTN;
     private Button viewProjectAssignEmployeeBTN;
+    private Button viewProjectChangeCompletionStatusBTN;
     private ListView<String> projectInfo;
     private Text sceneTitle;
 
@@ -238,14 +239,16 @@ public class InitiateScenes {
         bpTitle.setTop(sceneTitle);
 
         viewProjectBackBTN = new Button("Back");
-        viewProjectAssignProjectLeaderBTN = new Button("Assign project leader");
-        viewProjectAddActivityBTN = new Button("Add activity");
-        viewProjectEditActivityBTN = new Button("Edit activity");
-        viewProjectAssignEmployeeBTN = new Button("Assign employee");
-        viewProjectDeleteActivityBTN = new Button("Delete activity");
+        viewProjectAssignProjectLeaderBTN = new Button("Assign Project Leader");
+        viewProjectAddActivityBTN = new Button("Add Activity");
+        viewProjectEditActivityBTN = new Button("Edit Activity");
+        viewProjectAssignEmployeeBTN = new Button("Assign Employee");
+        viewProjectDeleteActivityBTN = new Button("Delete Activity");
+        viewProjectChangeCompletionStatusBTN = new Button("Toggle Completion");
 
         VBox vbManageProject = new VBox(10);
-        vbManageProject.getChildren().addAll(viewProjectAssignProjectLeaderBTN, viewProjectAddActivityBTN, viewProjectEditActivityBTN, viewProjectAssignEmployeeBTN, viewProjectDeleteActivityBTN);
+        vbManageProject.getChildren().addAll(viewProjectAssignProjectLeaderBTN, viewProjectAddActivityBTN, viewProjectEditActivityBTN,
+                viewProjectAssignEmployeeBTN, viewProjectDeleteActivityBTN, viewProjectChangeCompletionStatusBTN);
 
         viewProjectActivities = FXCollections.observableArrayList();
         projectInfo = new ListView<>(viewProjectActivities);
@@ -644,5 +647,9 @@ public class InitiateScenes {
     }
     public String getEditActivityAllocatedTime() {
         return editActivityAllocatedTimeTF.getText();
+    }
+
+    public Button getViewProjectChangeCompletionStatusBTN() {
+        return viewProjectChangeCompletionStatusBTN;
     }
 }

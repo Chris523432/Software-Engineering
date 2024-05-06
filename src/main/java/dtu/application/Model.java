@@ -52,6 +52,13 @@ public interface Model {
 
     boolean getProjectStatus(String project) throws DoesNotExistException;
 
+    void completeActivity(String activityId) throws DoesNotExistException;
+    void unCompleteActivity(String activityId) throws DoesNotExistException;
+
+    boolean isActivityComplete(String activityId) throws DoesNotExistException;
+
+
+
     String getCurrentUser();
 
     int getCurrentYear();

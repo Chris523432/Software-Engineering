@@ -229,6 +229,21 @@ public class Application implements Model {
         return getProject(project).isComplete();
     }
 
+    @Override
+    public void completeActivity(String actitivtyId) throws DoesNotExistException {
+        getActivity(actitivtyId).complete();
+    }
+
+    @Override
+    public void unCompleteActivity(String actitivtyId) throws DoesNotExistException {
+        getActivity(actitivtyId).inComplete();
+    }
+
+    @Override
+    public boolean isActivityComplete(String activityId) throws DoesNotExistException {
+        return getActivity(activityId).isComplete();
+    }
+
     public void resetAllIds() {
         new ActivityIdGenerator().resetId();
         new ProjectIdGenerator().resetId();
