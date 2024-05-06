@@ -10,7 +10,7 @@ public class Activity {
     private String id;
     private int budgetedHours;
     private boolean complete;
-    private ActivityIdGenerator idGenerator = new ActivityIdGenerator();
+    private IdGenerator idGenerator = new ActivityIdGenerator();
     private List<Employee> assignedEmployees;
     private Calendar startDate;
     private Calendar endDate;
