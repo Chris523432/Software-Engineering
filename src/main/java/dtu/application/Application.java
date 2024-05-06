@@ -173,7 +173,6 @@ public class Application implements Model {
     public void assignProjectLeader(String project, String initials) throws DoesNotExistException {
         Project p = getProject(project);
         Employee e1 = getEmployee(initials);
-        Employee e2 = p.getProjectLeader();
         assert doesProjectExist(project) && doesEmployeeExist(initials): "Pre-condition assignProjectLeader";
         p.assignProjectLeader(e1);
         assert p.getProjectLeader().equals(e1): "Post condition assignProjectLeader";
