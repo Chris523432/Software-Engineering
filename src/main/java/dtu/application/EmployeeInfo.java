@@ -5,18 +5,13 @@ import java.util.List;
 
 public class EmployeeInfo {
     private String initials;
-    private List<ProjectInfo> leadingProjects;
 
     public EmployeeInfo(Employee employee) {
         this.initials = employee.getInitials();
-        this.leadingProjects = new ArrayList<>();
     }
 
     public String getInitials() {
         return initials;
     }
 
-    public List<ProjectInfo> getLeadingProjects() {
-        return leadingProjects;
-    }
 }

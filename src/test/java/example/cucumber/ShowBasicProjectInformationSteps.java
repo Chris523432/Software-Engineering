@@ -134,6 +134,7 @@ public class ShowBasicProjectInformationSteps {
             application.getProject(string);
         } catch (Exception e) {
             assertFalse(false);
+            assertFalse(application.doesProjectExist("24001"));
         }
     }
     @Then("no date is given")

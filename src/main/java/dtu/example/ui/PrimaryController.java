@@ -98,7 +98,7 @@ public class PrimaryController {
     public void newEmployeeAdd(ActionEvent event) {
         String newEmployeeInitials = view.getNewEmployeeInitials();
         try {
-            model.addEmployee(newEmployeeInitials);
+            model.registerUser(newEmployeeInitials);
             System.out.println("Employee " + newEmployeeInitials + " has been added to the system");
         } catch (Exception e) {
             //TODO: show error message

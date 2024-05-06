@@ -38,8 +38,6 @@ public interface Model {
 
     boolean doesProjectExist(String projectidentifier);
 
-    void addEmployee(String initials);
-
     void setStartWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistException;
 
     void setEndWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistException;

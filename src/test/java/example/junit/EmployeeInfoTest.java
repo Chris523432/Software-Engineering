@@ -39,40 +39,8 @@ public class EmployeeInfoTest {
 
     public boolean equalsEmployee(Employee employee) throws DoesNotExistException {
         EmployeeInfo employeeInfo = application.getEmployeeInfo(employee.getInitials());
-        boolean result = application.getEmployees().size() == application.getEmployeeInfoList().size();
-        return result;
-    }
-    public Boolean equalsProjects(List<Project> projects, List<ProjectInfo> projectInfoList) {
-        boolean result = projects.size() == projectInfoList.size();
-        for (int i = 0; i < projects.size(); i++) {
-            result = result && equalsProject(projects.get(i), projectInfoList.get(i));
-        }
-        return result;
-    }
-    public Boolean equalsProject(Project project, ProjectInfo projectinfo) {
-        boolean result = project.getName().equals(projectinfo.getName())
-                && project.getId().equals(projectinfo.getId())
-                && project.getEndDate() == projectinfo.getEndDate()
-                && project.getStartDate() == projectinfo.getStartDate()
-                && project.isComplete() == projectinfo.isComplete()
-                && equals(project.getProjectLeader(), projectinfo.getProjectLeader())
-                && equalsActivityList(project.getActivities(), projectinfo.getActivities());
-        return result;
-    }
-    public Boolean equalsActivityList(List<Activity> activityList, List<ActivityInfo> activityInfoList) {
-        boolean result = activityList.size() == activityInfoList.size();
-        for (int i = 0; i < activityList.size(); i++) {
-            String id = activityList.get(i).getId();
-            String idInfo = activityInfoList.get(i).getId();
-            result = result && id.equals(idInfo);
-        }
-        return result;
-    }
-    public Boolean equals(Employee employee, EmployeeInfo employeeinfo) {
-        if (employee == null && employeeinfo == null) {
-            return true;
-        }
-        boolean result = employee.getInitials().equals(employeeinfo.getInitials());
+        boolean result = application.getEmployees().size() == application.getEmployeeInfoList().size()
+                && employee.getInitials().equals(employeeInfo.getInitials());
         return result;
     }
 }

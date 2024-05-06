@@ -17,7 +17,7 @@ public class View extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.model = new dtu.application.Application();
-        model.addEmployee("buba");
+        model.registerUser("buba");
         try {
             String projectId = model.createProject("Coffee break");
             String actitiyId1 = model.createActivity(projectId,"get coffee");

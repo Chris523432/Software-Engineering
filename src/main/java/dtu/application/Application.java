@@ -40,7 +40,7 @@ public class Application implements Model {
     }
     @Override
     public boolean isLoggedIn(String initials) throws Exception {
-        return currentUser.equals(initials);
+        return getCurrentUser().equals(initials);
     }
 
     @Override
@@ -191,12 +191,6 @@ public class Application implements Model {
         }
         return false;
     }
-
-    @Override
-    public void addEmployee(String initials) {
-        employees.add(new Employee(initials));
-    }
-
 
     @Override
     public void setStartWeekToActivity(String activity, int week, int year) throws OperationNotAllowedException, DoesNotExistException {
