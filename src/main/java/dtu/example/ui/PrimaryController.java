@@ -14,10 +14,6 @@ public class PrimaryController {
         this.view = view;
         this.model = model;
     }
-    @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
 
     public void login(ActionEvent event) {
         String initials = view.getLogin();
