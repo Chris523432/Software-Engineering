@@ -18,8 +18,8 @@ When viewing a project the activities can be marked as complete or incomplete by
 and pressing toggle completetion.
 
 When assigning the projectleader, there won't be feedback from the frontend unless assigning an invalid employee.
-But the projectleader will show when going back from the assign projectleader tab. There are 2 available employees
-that can be assigned in the program (buba and dani).
+But the assigned project leader will show when going back from the assign project leader scene.
+There are 2 available employees that can be assigned in the program (buba and dani).
 
 When assigning a date there must be a week and a year associated with the date.
 
