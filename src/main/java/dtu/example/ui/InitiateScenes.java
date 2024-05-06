@@ -91,11 +91,15 @@ public class InitiateScenes {
     private TextField assignEmployeeTF;
     private Button assignEmployeeAssignBTN;
 
+    // Everything on ErrorScreen
+    private Scene errorScreen;
+    private Button errorBackToMain;
+    private Text errorMessage;
+
     private View view;
     private Model model;
     private int XDim = 500;
     private int YDim = 300;
-
 
 
     public InitiateScenes(View view, Model model) {
@@ -111,6 +115,7 @@ public class InitiateScenes {
         initiateAssignProjectLeaderScreen();
         initiateEditActivityScreen();
         initiateAssignEmployeeScreen();
+        initiateErrorScreen();
     }
 
     public void initiateLoginScreen() {
@@ -421,6 +426,24 @@ public class InitiateScenes {
         assignEmployeeScreen = new Scene(new StackPane(bpTitle, BP), XDim, YDim);
     }
 
+    public void initiateErrorScreen() {
+        BorderPane BP = new BorderPane();
+        BP.setPadding(new Insets(25, 25, 25, 25));
+        Text sceneTitle = new Text("ERROR");
+        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        BorderPane.setAlignment(sceneTitle, Pos.CENTER);
+
+        errorBackToMain = new Button("Back To Main");
+        errorMessage = new Text("");
+        VBox errorVB = new VBox(10);
+
+        errorVB.setAlignment(Pos.CENTER);
+        errorVB.getChildren().addAll(sceneTitle,errorMessage, errorBackToMain);
+
+        BP.setCenter(errorVB);
+
+        errorScreen = new Scene(BP, XDim, YDim);
+    }
     public void updateProjectNames() {
         projectNames.clear();
         List<ProjectInfo> projects = model.getProjectInfoList();
@@ -436,7 +459,7 @@ public class InitiateScenes {
         try {
             ProjectInfo project = model.getProjectInfo(projectID);
             String leader = project.getProjectLeader() == null ? "No leader" : project.getProjectLeader().getInitials();
-            String title = "Project: " + project.getName() + "Project Leader: " + leader;
+            String title = "Project: " + project.getName() + " Project Leader: " + leader;
             sceneTitle.setText(title);
         } catch (Exception e) {
             System.out.println(e);
@@ -500,6 +523,9 @@ public class InitiateScenes {
         String id = values[values.length-1];
         //System.out.println(id);
         return id;
+    }
+    public void updateErrorMessage(String message) {
+        errorMessage.setText(message);
     }
 
     public Scene getLoginScreen() {
@@ -651,5 +677,11 @@ public class InitiateScenes {
 
     public Button getViewProjectChangeCompletionStatusBTN() {
         return viewProjectChangeCompletionStatusBTN;
+    }
+    public Button getErrorBackToMain() {
+        return errorBackToMain;
+    }
+    public Scene getErrorScreen() {
+        return errorScreen;
     }
 }

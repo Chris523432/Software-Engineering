@@ -3,6 +3,7 @@ package dtu.example.ui;
 import java.io.IOException;
 import java.lang.reflect.Executable;
 
+import dtu.application.Activity;
 import dtu.application.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,8 +43,7 @@ public class PrimaryController {
             System.out.println("Project \"" + view.getNewProjectName() + "\" is added!");
             view.showMainScreen();
         } catch (Exception e) {
-            System.out.println(e);
-            //TODO: show error message
+            showError(e.getMessage());
         }
     }
     public void addProjectBack(ActionEvent event) {
@@ -73,19 +73,13 @@ public class PrimaryController {
         view.showViewProjectScreen();
     }
     public void addActivityAddActivity(ActionEvent event) {
-        //sry jeg har fucked med den her metode.
-        //jeg anbefaler man ikke kan vælge andet end et navn, når den oprettes og måske budgetteret tid
-        //så bliver det her noget nemmere.
-        //TODO: fix this shit
         String activityName = view.getNewActivityName();
         String projectIdentifier = view.getChooseProjectProjectID();
-        //int startWeek,endWeek;
         try {
             model.createActivity(projectIdentifier, activityName);
             System.out.println("Activity \"" + activityName + "\" has been added to Project \"" + projectIdentifier + "\"");
         } catch (Exception e) {
-            //TODO: show error message
-            System.out.println(e);
+            showError(e.getMessage());
         }
     }
 
@@ -125,8 +119,7 @@ public class PrimaryController {
             model.assignProjectLeader(projectID, projectLeaderInitials);
             System.out.println("\"" + projectLeaderInitials + "\"" + " was assigned project leader of project: " + projectID);
         } catch (Exception e) {
-            System.out.println(e);
-            //TODO: show error message
+            showError(e.getMessage());
         }
     }
 
@@ -162,8 +155,7 @@ public class PrimaryController {
 
             }
         } catch (Exception e) {
-            System.out.println(e);
-            //TODO: show error message
+            showError(e.getMessage());
         }
     }
     public void assignEmployeeBack(ActionEvent event) {
@@ -183,6 +175,7 @@ public class PrimaryController {
             System.out.println("Employee \"" + userID + "\" was assigned activity \"" + id + "\"");
         } catch (Exception e) {
             System.out.println(e);
+            showError(e.getMessage());
             //TODO: show error message
         }
     }
@@ -200,6 +193,12 @@ public class PrimaryController {
         }
         view.updateViewProjectActivities(view.getChooseProjectProjectID());
         view.showViewProjectScreen();
-
+    }
+    public void errorBackToMain(ActionEvent event) {
+        view.showMainScreen();
+    }
+    public void showError(String message) {
+        view.updateErrorMessage(message);
+        view.showErrorScreen();
     }
 }

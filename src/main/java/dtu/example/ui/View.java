@@ -81,6 +81,10 @@ public class View extends Application {
         primaryStage.setScene(sceneMenu.getAssignEmployeeScreen());
         primaryStage.show();
     }
+    public void showErrorScreen() {
+        primaryStage.setScene(sceneMenu.getErrorScreen());
+        primaryStage.show();
+    }
 
     public void initiateButtons() {
         sceneMenu.getLogInBTN().setOnAction(controller::login);
@@ -109,6 +113,7 @@ public class View extends Application {
         sceneMenu.getViewProjectAssignEmployeeBTN().setOnAction(controller::viewProjectAssignEmployee);
         sceneMenu.getAssignEmployeeAssignBTN().setOnAction(controller::assignEmployeeAssignEmployee);
         sceneMenu.getViewProjectChangeCompletionStatusBTN().setOnAction(controller::viewProjectChangeCompletionStatus);
+        sceneMenu.getErrorBackToMain().setOnAction(controller::errorBackToMain);
 
 
     }
@@ -158,5 +163,8 @@ public class View extends Application {
     }
     public void updateViewProjectTitle() {
         sceneMenu.updateViewProjectTitle();
+    }
+    public void updateErrorMessage(String message) {
+        sceneMenu.updateErrorMessage(message);
     }
 }
