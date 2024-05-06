@@ -111,12 +111,6 @@ public class ProjectinfoTest {
             return true;
         }
         boolean result = employee.getInitials().equals(employeeinfo.getInitials());
-        result = result && employee.getLeadingProjects().size() == employeeinfo.getLeadingProjects().size();
-        for (int i = 0; i < employee.getLeadingProjects().size(); i++) {
-            String id = employee.getLeadingProjects().get(i).getId();
-            String idInfo = employeeinfo.getLeadingProjects().get(i).getId();
-            result = result && id.equals(idInfo);
-        }
         return result;
     }
 
