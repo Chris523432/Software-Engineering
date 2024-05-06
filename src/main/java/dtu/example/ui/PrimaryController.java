@@ -23,9 +23,9 @@ public class PrimaryController {
         try {
             model.login(initials);
             view.showMainScreen();
+            view.updateLoginError("");
         } catch(Exception e) {
-            //TODO: show error message
-            System.out.println(e);
+            view.updateLoginError(e.getMessage());
         }
     }
     public void logout(ActionEvent event) {

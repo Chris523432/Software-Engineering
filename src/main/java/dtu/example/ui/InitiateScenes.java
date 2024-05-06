@@ -20,6 +20,7 @@ public class InitiateScenes {
     private Scene loginScreen;
     private TextField userLoginField;
     private Button logInBTN;
+    private Text loginError;
 
     // Everything on mainScreen
     private Scene mainScreen;
@@ -91,6 +92,7 @@ public class InitiateScenes {
     private int YDim = 300;
 
 
+
     public InitiateScenes(View view, Model model) {
         this.view = view;
         this.model = model;
@@ -128,6 +130,10 @@ public class InitiateScenes {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(logInBTN);
         grid.add(hbBtn, 1, 2);
+
+        loginError = new Text("");
+
+        grid.add(loginError,1,3);
 
         grid.setGridLinesVisible(false);
 
@@ -424,6 +430,9 @@ public class InitiateScenes {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    public void updateLoginError(String message) {
+        loginError.setText(message);
     }
     public void updateViewProjectActivities(String projectID) {
         //set viewProjectActivities to list of activity strings
