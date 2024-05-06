@@ -52,6 +52,8 @@ public class InitiateScenes {
     private Button viewProjectChangeCompletionStatusBTN;
     private ListView<String> projectInfo;
     private Text sceneTitle;
+    private Text basicProjectInfo;
+
 
     // Everything on addActivityScreen
     private Scene addActivityScreen;
@@ -90,7 +92,6 @@ public class InitiateScenes {
     private Model model;
     private int XDim = 500;
     private int YDim = 300;
-
 
 
     public InitiateScenes(View view, Model model) {
@@ -241,10 +242,11 @@ public class InitiateScenes {
         viewProjectEditActivityBTN = new Button("Edit Activity");
         viewProjectAssignEmployeeBTN = new Button("Assign Employee");
         viewProjectChangeCompletionStatusBTN = new Button("Toggle Completion");
+        basicProjectInfo = new Text("");
 
         VBox vbManageProject = new VBox(10);
         vbManageProject.getChildren().addAll(viewProjectAssignProjectLeaderBTN, viewProjectAddActivityBTN, viewProjectEditActivityBTN,
-                viewProjectAssignEmployeeBTN, viewProjectChangeCompletionStatusBTN);
+                viewProjectAssignEmployeeBTN, viewProjectChangeCompletionStatusBTN, basicProjectInfo);
 
         viewProjectActivities = FXCollections.observableArrayList();
         projectInfo = new ListView<>(viewProjectActivities);
@@ -257,7 +259,7 @@ public class InitiateScenes {
         BP.setTop(viewProjectBackBTN);
         //BP.setRight(vbManageProject);
 
-        viewProjectScreen = new Scene(new StackPane(bpTitle, BP), XDim, YDim);
+        viewProjectScreen = new Scene(new StackPane(bpTitle, BP), XDim * 1.5, YDim * 1.5);
     }
 
     public void initiateAddActivityScreen() {
@@ -430,6 +432,21 @@ public class InitiateScenes {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    public void updateBasicProjectInfo(String projectId) {
+        try {
+            ProjectInfo project = model.getProjectInfo(projectId);
+            String startDate = project.getStartDate() == null ? "No start date" : "Week: " + project.getStartDate().get(Calendar.WEEK_OF_YEAR) + " - " + project.getStartDate().get(Calendar.YEAR);
+            String endDate = project.getEndDate() == null ? "No end date" : "Week: " + project.getEndDate().get(Calendar.WEEK_OF_YEAR) + " - " + project.getEndDate().get(Calendar.YEAR);
+            String projectStatus = project.isComplete() ? "Complete" : "Incomplete";
+            String info = "Start Date: " + startDate + "\nEnd Date :" + endDate + "\nStatus: " + projectStatus;
+            basicProjectInfo.setText(info);
+        } catch (Exception e) {
+            view.updateLoginError(e.getMessage());
+            view.showErrorScreen();
+
+        }
+
     }
     public void updateLoginError(String message) {
         loginError.setText(message);

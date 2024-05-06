@@ -3,6 +3,7 @@ package dtu.example.ui;
 import java.io.IOException;
 
 import dtu.application.Model;
+import dtu.application.ProjectInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -53,6 +54,7 @@ public class PrimaryController {
         String projectID = view.getChooseProjectProjectID();
         if (projectID != null) {
             view.updateViewProjectActivities(projectID);
+            view.updateBasicProjectInfor(projectID);
             view.showViewProjectScreen();
         }
     }
@@ -80,6 +82,7 @@ public class PrimaryController {
             showError(e.getMessage());
         }
         view.updateViewProjectActivities(projectIdentifier);
+        view.updateBasicProjectInfor(projectIdentifier);
         view.showViewProjectScreen();
     }
 
@@ -115,7 +118,9 @@ public class PrimaryController {
         }
     }
     public void editActivityBack(ActionEvent event) {
-        view.updateViewProjectActivities(view.getChooseProjectProjectID());
+        String projectId = view.getChooseProjectProjectID();
+        view.updateViewProjectActivities(projectId);
+        view.updateBasicProjectInfor(projectId);
         view.showViewProjectScreen();
     }
     public void editActivitySaveChanges(ActionEvent event) {
@@ -188,7 +193,9 @@ public class PrimaryController {
             //TODO: show error message
             System.out.println(e);
         }
-        view.updateViewProjectActivities(view.getChooseProjectProjectID());
+        String projectId = view.getChooseProjectProjectID();
+        view.updateViewProjectActivities(projectId);
+        view.updateBasicProjectInfor(projectId);
         view.showViewProjectScreen();
     }
     public void errorBackToMain(ActionEvent event) {
