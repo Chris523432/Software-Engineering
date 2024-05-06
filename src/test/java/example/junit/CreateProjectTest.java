@@ -15,15 +15,9 @@ public class CreateProjectTest {
     }
 
     @Test
-    public void inputSetA() {
+    public void inputSetA() throws OperationNotAllowedException, DoesNotExistException {
         String name = "test";
-        try {
-            String projectId = application.createProject(name);
-            assertTrue(application.getProjects().contains(application.getProject(projectId)));
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
-
+        String projectId = application.createProject(name);assertTrue(application.getProjects().contains(application.getProject(projectId)));
     }
 
     @Test

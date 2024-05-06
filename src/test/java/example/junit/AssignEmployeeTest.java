@@ -53,6 +53,7 @@ public class AssignEmployeeTest {
     @Test
     public void inputSetD() {
         try {
+            assertFalse(application.doesActivityExist("1"));
             application.assignEmployee("1", "barc");
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());

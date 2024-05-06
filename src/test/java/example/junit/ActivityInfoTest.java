@@ -22,7 +22,7 @@ public class ActivityInfoTest {
         application.getActivity(activityId).setEndWeek(24,2024);
         application.assignEmployee(activityId,"Barc");
         application.assignEmployee(activityId, "Dodo");
-        application.getActivity(activityId).setAllocatedTime(72);
+        application.setAllocatedTime(activityId, 72);
         assertTrue(equalActivity(application.getActivity(activityId), application.getActivityInfo(activityId)));
     }
     @Test

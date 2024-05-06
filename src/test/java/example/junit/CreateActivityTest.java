@@ -20,13 +20,8 @@ public class CreateActivityTest {
         application.createProject("p");
         Project p = application.getProject("24001");
         assertTrue(p.getActivities().isEmpty());
-        try {
-            String activityId = application.createActivity("24001", name);
-            assertTrue(p.getActivities().contains(application.getActivity(activityId)));
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
-
+        String activityId = application.createActivity("24001", name);
+        assertTrue(p.getActivities().contains(application.getActivity(activityId)));
     }
 
     @Test
