@@ -35,7 +35,7 @@ public class Project {
     public Calendar getStartDate() {
         Calendar date = null;
         for (Activity a : activities) {
-            if (date == null || a.getStartDate().before(date)) {
+            if (a.getStartDate() != null && (date == null || a.getStartDate().before(date))) {
                 date = a.getStartDate();
             }
         }
@@ -45,7 +45,7 @@ public class Project {
     public Calendar getEndDate() {
         Calendar date = null;
         for (Activity a : activities) {
-            if (date == null || a.getEndDate().after(date)) {
+            if (a.getEndDate() != null && (date == null || a.getEndDate().after(date))) {
                 date = a.getEndDate();
             }
         }
