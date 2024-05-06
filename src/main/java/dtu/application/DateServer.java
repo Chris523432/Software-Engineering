@@ -2,7 +2,7 @@ package dtu.application;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+//Bastian
 public class DateServer {
 
     public Calendar getDate() {

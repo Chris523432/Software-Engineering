@@ -2,7 +2,7 @@ package dtu.application;
 
 import java.util.Calendar;
 import java.util.List;
-
+//Thomas & Christian
 public interface Model {
     void registerUser(String initials);
 

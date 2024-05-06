@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
+//Thomas
 public class ActivityInfo {
     private String name;
     private String id;

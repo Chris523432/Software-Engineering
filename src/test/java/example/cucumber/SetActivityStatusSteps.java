@@ -8,7 +8,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
+//Bastian
 public class SetActivityStatusSteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;

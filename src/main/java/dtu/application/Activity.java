@@ -15,47 +15,47 @@ public class Activity {
     private Calendar startDate;
     private Calendar endDate;
     private DateServer dateServer = new DateServer();
-    public Activity(String name) {
+    public Activity(String name) { //Bastian
         this.name = name;
         this.id = idGenerator.generateId();
         this.assignedEmployees = new ArrayList<>();
         this.complete = false;
     }
 
-    public void setAllocatedTime(int budgetedHours) throws OperationNotAllowedException {
+    public void setAllocatedTime(int budgetedHours) throws OperationNotAllowedException { //Bastian
         if (budgetedHours < 0) {
             throw new OperationNotAllowedException("Invalid value");
         }
         this.budgetedHours = budgetedHours;
     }
-    public void assignEmployee(Employee employee) {
+    public void assignEmployee(Employee employee) { //Chris
         assignedEmployees.add(employee);
     }
-    public List<Employee> getAssignedEmployees() {
+    public List<Employee> getAssignedEmployees() { //Chris
         return assignedEmployees;
     }
-    public boolean isAssigned(Employee employee) {
+    public boolean isAssigned(Employee employee) { //Chris
         return assignedEmployees.contains(employee);
     }
-    public void inComplete() {
+    public void inComplete() { //Bastian
         complete = false;
     }
-    public void complete() {
+    public void complete() { //Bastian
         complete = true;
     }
-    public boolean isComplete() {
+    public boolean isComplete() { //Bastian
         return complete;
     }
-    public String getName() {
+    public String getName() { //Bastian
         return name;
     }
-    public String getId() {
+    public String getId() { //Bastian
         return id;
     }
-    public int getBudgetedHours() {
+    public int getBudgetedHours() { //Bastian
         return budgetedHours;
     }
-    public void setStartWeek(int startWeek, int startYear) throws OperationNotAllowedException {
+    public void setStartWeek(int startWeek, int startYear) throws OperationNotAllowedException { //Chris
         if (startWeek <= 0 || startWeek > 52 || startYear <= 0) {
             throw new OperationNotAllowedException("Please enter a valid week");
         }
@@ -69,7 +69,7 @@ public class Activity {
         this.startDate = date;
     }
 
-    public void setEndWeek(int endWeek, int endYear) throws OperationNotAllowedException {
+    public void setEndWeek(int endWeek, int endYear) throws OperationNotAllowedException { //Chris
         if (endWeek <= 0 || endWeek > 52 || endYear <= 0) {
             throw new OperationNotAllowedException("Please enter a valid week");
         }
@@ -82,11 +82,11 @@ public class Activity {
         this.endDate = date;
     }
 
-    public Calendar getStartDate() {
+    public Calendar getStartDate() { //Chris
         return startDate;
     }
 
-    public Calendar getEndDate() {
+    public Calendar getEndDate() { //Chris
         return endDate;
     }
 }

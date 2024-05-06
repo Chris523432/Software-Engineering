@@ -2,7 +2,7 @@ package dtu.application;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Thomas
 public class EmployeeInfo {
     private String initials;
 

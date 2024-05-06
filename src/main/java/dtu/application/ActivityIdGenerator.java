@@ -1,5 +1,5 @@
 package dtu.application;
-
+//Bastian
 public class ActivityIdGenerator implements IdGenerator {
     private static int previousActivityId = 0;
 

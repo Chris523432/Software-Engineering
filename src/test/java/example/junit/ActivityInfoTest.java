@@ -3,6 +3,7 @@ import dtu.application.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+//Chris
 public class ActivityInfoTest {
     private Application application;
     private String projectId;

@@ -3,7 +3,7 @@ package dtu.application;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
+//Christian
 public class Employee {
     private String initials;
 

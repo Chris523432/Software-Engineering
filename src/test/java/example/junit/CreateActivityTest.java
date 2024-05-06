@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+//Bastian
 public class CreateActivityTest {
     private Application application;
     private ErrorMessageHolder errorMessageHolder = new ErrorMessageHolder();
