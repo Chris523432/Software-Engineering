@@ -11,8 +11,6 @@ import static org.junit.Assert.*;
 public class CreateActivitySteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-    private String tempName;
-    private Activity tempActivity;
     private MockDateHolder mockDateHolder;
     private String projectId;
     private String activityId;
@@ -39,7 +37,6 @@ public class CreateActivitySteps {
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
-        tempName = activityName;
     }
     @When("the budgeted time is {int} hours")
     public void theBudgetedTimeIsHours(int hours) throws DoesNotExistException, OperationNotAllowedException {

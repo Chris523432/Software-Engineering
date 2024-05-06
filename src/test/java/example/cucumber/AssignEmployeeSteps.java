@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 public class AssignEmployeeSteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-    private String tempName;
     private MockDateHolder mockDateHolder;
 
     public AssignEmployeeSteps(Application application, ErrorMessageHolder errorMessageHolder) {

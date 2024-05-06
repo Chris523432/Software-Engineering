@@ -11,11 +11,9 @@ public class AssignProjectLeaderSteps {
 
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-
-    private Project parentProject;
     private MockDateHolder mockDateHolder;
     private ObjectIdHolder projectIdHolder;
-    private Activity a;
+
     public AssignProjectLeaderSteps(Application application, ErrorMessageHolder errorMessageHolder,ObjectIdHolder objectIdHolder) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;

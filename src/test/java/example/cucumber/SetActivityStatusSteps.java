@@ -2,7 +2,6 @@ package example.cucumber;
 
 import dtu.application.Activity;
 import dtu.application.Application;
-import dtu.application.Project;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 public class SetActivityStatusSteps {
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-    private Project parentProject;
     private Activity a;
     public SetActivityStatusSteps(Application application, ErrorMessageHolder errorMessageHolder) {
         this.application = application;

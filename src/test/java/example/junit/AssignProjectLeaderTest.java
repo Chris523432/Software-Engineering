@@ -27,13 +27,11 @@ public class AssignProjectLeaderTest {
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
-        //shows this that if a new leader is assigned to the same project
-        //then the previous leader is overwritten
         assertEquals(e1, p.getProjectLeader());
         application.registerUser("tcbc");
         Employee e2 = application.getEmployee("tcbc");
         try {
-            application.assignProjectLeader("24001", "tcbc");
+            application.assignProjectLeader("24001", "tcbc"); //The previous leader is overwritten
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -54,7 +52,7 @@ public class AssignProjectLeaderTest {
     }
 
     @Test
-    public void inputSetC() throws Exception {
+    public void inputSetC() throws DoesNotExistException {
         try {
             application.assignProjectLeader("24001", "barc");
         } catch (Exception e) {

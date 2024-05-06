@@ -1,6 +1,5 @@
 package example.junit;
 import dtu.application.*;
-import example.cucumber.ErrorMessageHolder;
 import org.junit.Before;
 import org.junit.Test;
 

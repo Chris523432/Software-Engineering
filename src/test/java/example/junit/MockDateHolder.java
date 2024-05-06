@@ -1,7 +1,5 @@
 package example.junit;
 
-
-
 import dtu.application.Application;
 import dtu.application.DateServer;
 
@@ -37,8 +35,5 @@ public class MockDateHolder {
 	public void setYear2024() {
 		Calendar c = new GregorianCalendar(2024, Calendar.JANUARY, 1);
 		when(this.dateServer.getDate()).thenReturn(c);
-	}
-	public DateServer getDateserver() {
-		return dateServer;
 	}
 }

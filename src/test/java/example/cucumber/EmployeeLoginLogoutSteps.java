@@ -1,6 +1,5 @@
 package example.cucumber;
 import dtu.application.Application;
-import dtu.application.Employee;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,7 +9,6 @@ import static org.junit.Assert.*;
 public class EmployeeLoginLogoutSteps {
 
     private Application application;
-    private Employee employee;
     private String initials;
     private ErrorMessageHolder errorMessageHolder;
 
