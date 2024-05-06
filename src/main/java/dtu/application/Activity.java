@@ -60,7 +60,8 @@ public class Activity {
             throw new OperationNotAllowedException("Please enter a valid week");
         }
         Calendar date = dateServer.createDate(startWeek, startYear);
-        if (endDate != null) {
+
+        if (endDate != null && (endDate.get(Calendar.WEEK_OF_YEAR) != startWeek || endDate.get(Calendar.YEAR) != startYear)){
             if (date.after(endDate)) {
                 throw new OperationNotAllowedException("start week cannot be after end week");
             }
