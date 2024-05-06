@@ -39,8 +39,8 @@ public class Application implements Model {
         return activityId;
     }
     @Override
-    public boolean isLoggedIn(String initials) throws Exception {
-        return getCurrentUser().equals(initials);
+    public boolean isLoggedIn(String initials) {
+        return getCurrentUser() != null && getCurrentUser().equals(initials);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Application implements Model {
         currentUser = initials;
     }
     @Override
-    public void logout(String initials) throws Exception {
+    public void logout(String initials) {
         currentUser = null;
     }
 

@@ -23,11 +23,7 @@ public class EmployeeLoginLogoutSteps {
     }
     @Given("the employee is not logged in")
     public void the_employee_is_not_logged_in() {
-        try {
-            assertFalse(application.isLoggedIn(initials));
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
+        assertFalse(application.isLoggedIn(initials));
      }
     @Then("the employee login succeeds")
     public void the_employee_login_succeeds() {
@@ -35,15 +31,12 @@ public class EmployeeLoginLogoutSteps {
             application.login(initials);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
+            fail();
         }
     }
     @Then("the employee is logged in")
     public void the_employee_is_logged_in() {
-        try {
-            assertTrue(application.isLoggedIn(initials));
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
+        assertTrue(application.isLoggedIn(initials));
     }
 
     @Given("the employee with initials {string} is not registered in the system")
@@ -66,10 +59,6 @@ public class EmployeeLoginLogoutSteps {
 
     @When("the employee logs out")
     public void theEmployeeLogsOut() {
-        try {
-            application.logout(initials);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
+        application.logout(initials);
     }
 }
