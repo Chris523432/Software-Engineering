@@ -125,8 +125,7 @@ public class Application implements Model {
         if (isAssigned(a, e)) {
             throw new OperationNotAllowedException("Employee is already assigned to activity");
         }
-        assert aIdentifier != null && !aIdentifier.trim().isEmpty() && doesActivityExist(aIdentifier)
-                && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials)
+        assert  doesActivityExist(aIdentifier) && doesEmployeeExist(initials)
                 && !isAssignedSearch(aIdentifier, initials): "Pre-condition assignEmployee";
         a.assignEmployee(e);
         assert a.isAssigned(e): "Post condition assignEmployee";
@@ -175,9 +174,7 @@ public class Application implements Model {
         Project p = getProject(project);
         Employee e1 = getEmployee(initials);
         Employee e2 = p.getProjectLeader();
-        assert project != null && !project.trim().isEmpty() && doesProjectExist(project)
-                && initials != null && !initials.trim().isEmpty() && doesEmployeeExist(initials): "Pre-condition assignProjectLeader";
-
+        assert doesProjectExist(project) && doesEmployeeExist(initials): "Pre-condition assignProjectLeader";
         p.assignProjectLeader(e1);
         assert p.getProjectLeader().equals(e1): "Post condition assignProjectLeader";
     }
