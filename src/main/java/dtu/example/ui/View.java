@@ -1,5 +1,6 @@
 package dtu.example.ui;
 
+import dtu.application.ProjectInfo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -159,5 +160,8 @@ public class View extends Application {
     }
     public void updateLoginError(String message) {
         sceneMenu.updateLoginError(message);
+    }
+    public void updateBasicProjectInfor(String projectId) {
+        sceneMenu.updateBasicProjectInfo(projectId);
     }
 }
