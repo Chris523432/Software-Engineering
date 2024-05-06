@@ -14,9 +14,9 @@ public class CreateProjectSteps {
 
     private Application application;
     private ErrorMessageHolder errorMessageHolder;
-    private MockDateHolder mockDateHolder; //lidt i tvivl om den hr SKAL bruges til at få datoen
+    private MockDateHolder mockDateHolder;
     private DateServer dateServer;
-    private String tempName;
+    private String projectId;
     public CreateProjectSteps(Application application, ErrorMessageHolder errorMessageHolder, DateServer dateServer) {
         this.application = application;
         this.errorMessageHolder = errorMessageHolder;
@@ -35,7 +35,7 @@ public class CreateProjectSteps {
     @When("a project with name {string} is created")
     public void a_project_with_name_is_created(String name) {
         try {
-            application.createProject(name);
+            projectId = application.createProject(name);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -43,9 +43,10 @@ public class CreateProjectSteps {
     @Then("the project is in the system")
     public void the_project_is_in_the_system() {
         try {
-            assertTrue(application.getProjects().contains(application.getProject(tempName)));
+            assertTrue(application.getProjects().contains(application.getProject(projectId)));
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
+            fail();
         }
     }
     @Then("the project with number {string} is in the system")
