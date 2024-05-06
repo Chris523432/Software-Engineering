@@ -26,14 +26,11 @@ public class InitiateScenes {
     private Button logOutBTN;
     private Button mainAddProjectBTN;
     private Button mainViewProjectBTN;
-    private Button mainRegisterNewEmployeeBTN;
 
     // Everything on addProjectScreen
     private Scene addProjectScreen;
     private Button addProjectBackBTN;
     private TextField newProjectName;
-    private String selectedProjectName;
-    private Project selectedProject;
     private Button addProjectAddProjectBTN;
 
     // Everything on chooseProjectScreen
@@ -48,7 +45,6 @@ public class InitiateScenes {
     private Button viewProjectBackBTN;
     private ObservableList<String> viewProjectActivities;
     private Button viewProjectAddActivityBTN;
-    private Button viewProjectDeleteActivityBTN;
     private Button viewProjectAssignProjectLeaderBTN;
     private Button viewProjectEditActivityBTN;
     private Button viewProjectAssignEmployeeBTN;
@@ -60,15 +56,8 @@ public class InitiateScenes {
     private Scene addActivityScreen;
     private Button addActivityBackBTN;
     private TextField newActivityNameTF;
-    private TextField newActivityStartWeekTF;
-    private TextField newActivityEndWeekTF;
     private Button addActivityAddActivityBTN;
 
-    // Everything on newEmployeeScreen
-    private Scene newEmployeeScreen;
-    private Button newEmployeeBackBTN;
-    private TextField newEmployeeInitialsTF;
-    private Button newEmployeeAddBTN;
 
     // Everything on assignProjectLeaderScreen
     private Scene assignProjectLeaderScreen;
@@ -111,7 +100,6 @@ public class InitiateScenes {
         initiateChooseProjectScreen();
         initiateViewProjectScreen();
         initiateAddActivityScreen();
-        initiateNewEmployeeScreen();
         initiateAssignProjectLeaderScreen();
         initiateEditActivityScreen();
         initiateAssignEmployeeScreen();
@@ -160,13 +148,11 @@ public class InitiateScenes {
         mainAddProjectBTN.setMinWidth(200);
         mainViewProjectBTN = new Button("View your current projects");
         mainViewProjectBTN.setMinWidth(200);
-        mainRegisterNewEmployeeBTN = new Button("Register new user");
-        mainRegisterNewEmployeeBTN.setMinWidth(200);
         logOutBTN = new Button("Log out");
 
         VBox vbBtn = new VBox(10);
         vbBtn.setAlignment(Pos.CENTER);
-        vbBtn.getChildren().addAll(mainAddProjectBTN, mainViewProjectBTN, mainRegisterNewEmployeeBTN);
+        vbBtn.getChildren().addAll(mainAddProjectBTN, mainViewProjectBTN);
         BP.setCenter(vbBtn);
         BP.setTop(logOutBTN);
         bpTitle.setTop(sceneTitle);
@@ -248,12 +234,11 @@ public class InitiateScenes {
         viewProjectAddActivityBTN = new Button("Add Activity");
         viewProjectEditActivityBTN = new Button("Edit Activity");
         viewProjectAssignEmployeeBTN = new Button("Assign Employee");
-        viewProjectDeleteActivityBTN = new Button("Delete Activity");
         viewProjectChangeCompletionStatusBTN = new Button("Toggle Completion");
 
         VBox vbManageProject = new VBox(10);
         vbManageProject.getChildren().addAll(viewProjectAssignProjectLeaderBTN, viewProjectAddActivityBTN, viewProjectEditActivityBTN,
-                viewProjectAssignEmployeeBTN, viewProjectDeleteActivityBTN, viewProjectChangeCompletionStatusBTN);
+                viewProjectAssignEmployeeBTN, viewProjectChangeCompletionStatusBTN);
 
         viewProjectActivities = FXCollections.observableArrayList();
         projectInfo = new ListView<>(viewProjectActivities);
@@ -295,31 +280,6 @@ public class InitiateScenes {
         BP.setBottom(addActivityAddActivityBTN);
 
         addActivityScreen = new Scene(new StackPane(bpTitle, BP), XDim, YDim);
-
-    }
-    public void initiateNewEmployeeScreen() {
-        BorderPane BP = new BorderPane();
-        BP.setPadding(new Insets(25, 25, 25, 25));
-
-        BorderPane bpTitle = new BorderPane();
-        bpTitle.setPadding(new Insets(25, 25, 25, 25));
-        Text sceneTitle = new Text("New Employee");
-        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        BorderPane.setAlignment(sceneTitle, Pos.CENTER);
-        bpTitle.setTop(sceneTitle);
-
-        newEmployeeInitialsTF = new TextField();
-        newEmployeeAddBTN = new Button("Add");
-        newEmployeeBackBTN = new Button("Back");
-
-        HBox newEmployeeHB = new HBox(10);
-        newEmployeeHB.setAlignment(Pos.CENTER);
-        newEmployeeHB.getChildren().addAll(newEmployeeInitialsTF, newEmployeeAddBTN);
-
-        BP.setCenter(newEmployeeHB);
-        BP.setTop(newEmployeeBackBTN);
-
-        newEmployeeScreen = new Scene(new StackPane(bpTitle, BP), XDim, YDim);
 
     }
     public void initiateAssignProjectLeaderScreen() {
@@ -459,7 +419,7 @@ public class InitiateScenes {
         try {
             ProjectInfo project = model.getProjectInfo(projectID);
             String leader = project.getProjectLeader() == null ? "No leader" : project.getProjectLeader().getInitials();
-            String title = "Project: " + project.getName() + " Project Leader: " + leader;
+            String title = project.getName() + " | Project Leader: " + leader;
             sceneTitle.setText(title);
         } catch (Exception e) {
             System.out.println(e);
@@ -498,7 +458,6 @@ public class InitiateScenes {
                 viewProjectActivities.add(activityString);
             }
         } catch (Exception e) {
-            System.out.println(111);
             System.out.println(e);
             //TODO: Show error
         }
@@ -511,7 +470,6 @@ public class InitiateScenes {
         }
         String[] lines = activityString.split("\\R");
         String id = lines[1].split(": ")[1];
-        System.out.println(id);
         return id;
     }
     public String getChooseProjectProjectID() {
@@ -548,9 +506,6 @@ public class InitiateScenes {
     }
     public Scene getAddActivityScreen() {
         return addActivityScreen;
-    }
-    public Scene getNewEmployeeScreen() {
-        return newEmployeeScreen;
     }
     public Scene getEditActivityScreen() {
         return editActivityScreen;
@@ -591,9 +546,6 @@ public class InitiateScenes {
     public Button getViewProjectAddActivityBTN() {
         return viewProjectAddActivityBTN;
     }
-    public Button getViewProjectDeleteActivityBTN() {
-        return  viewProjectDeleteActivityBTN;
-    }
     public Button getViewProjectEditActivityBTN() {
         return viewProjectEditActivityBTN;
     }
@@ -618,22 +570,6 @@ public class InitiateScenes {
 
     public String getNewActivityName() {
         return newActivityNameTF.getText();
-    }
-    public Button getMainRegisterNewEmployeeBTN() {
-        return mainRegisterNewEmployeeBTN;
-    }
-
-    public Button getNewEmployeeAddBTN() {
-        return newEmployeeAddBTN;
-    }
-    public Button getNewEmployeeBackBTN() {
-        return newEmployeeBackBTN;
-    }
-    public String getNewEmployeeInitials() {
-        return newEmployeeInitialsTF.getText();
-    }
-    public Project getSelectedProject() {
-        return selectedProject;
     }
     public Scene getAssignProjectLeaderScreen() {
         return assignProjectLeaderScreen;

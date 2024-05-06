@@ -65,10 +65,7 @@ public class View extends Application {
         primaryStage.setScene(sceneMenu.getAddActivityScreen());
         primaryStage.show();
     }
-    public void showNewEmployeeScreen() {
-        primaryStage.setScene(sceneMenu.getNewEmployeeScreen());
-        primaryStage.show();
-    }
+
     public void showAssignProjectLeaderScreen() {
         primaryStage.setScene(sceneMenu.getAssignProjectLeaderScreen());
         primaryStage.show();
@@ -97,12 +94,8 @@ public class View extends Application {
         sceneMenu.getChooseProjectBackBTN().setOnAction(controller::chooseProjectBack);
         sceneMenu.getViewProjectBackBTN().setOnAction(controller::viewProjectBack);
         sceneMenu.getViewProjectAddActivityBTN().setOnAction(controller::viewProjectAddActivity);
-        //sceneMenu.getViewProjectDeleteActivityBTN().setOnAction(controller::viewProjectDeleteActivity);
         sceneMenu.getAddActivityAddActivityBTN().setOnAction(controller::addActivityAddActivity);
         sceneMenu.getAddActivityBackBTN().setOnAction(controller::addActivityBack);
-        sceneMenu.getMainRegisterNewEmployeeBTN().setOnAction(controller::newEmployee);
-        sceneMenu.getNewEmployeeBackBTN().setOnAction(controller::newEmployeeBack);
-        sceneMenu.getNewEmployeeAddBTN().setOnAction(controller::newEmployeeAdd);
         sceneMenu.getViewProjectAssignProjectLeaderBTN().setOnAction(controller::viewProjectAssignProjectLeader);
         sceneMenu.getAssignProjectLeaderBackBTN().setOnAction(controller::assignProjectLeaderBack);
         sceneMenu.getAssignProjectLeaderAssignBTN().setOnAction(controller::assignProjectLeaderAssign);
@@ -112,7 +105,7 @@ public class View extends Application {
         sceneMenu.getAssignEmployeeBackBTN().setOnAction(controller::assignEmployeeBack);
         sceneMenu.getViewProjectAssignEmployeeBTN().setOnAction(controller::viewProjectAssignEmployee);
         sceneMenu.getAssignEmployeeAssignBTN().setOnAction(controller::assignEmployeeAssignEmployee);
-        sceneMenu.getViewProjectChangeCompletionStatusBTN().setOnAction(controller::viewProjectChangeCompletionStatus);
+        sceneMenu.getViewProjectChangeCompletionStatusBTN().setOnAction(controller::viewProjectToggleCompletion);
         sceneMenu.getErrorBackToMain().setOnAction(controller::errorBackToMain);
 
 
@@ -132,10 +125,6 @@ public class View extends Application {
     }
     public void updateViewProjectActivities(String projectID) {
         sceneMenu.updateViewProjectActivities(projectID);
-    }
-
-    public String getNewEmployeeInitials() {
-        return sceneMenu.getNewEmployeeInitials();
     }
     public void updateProjectNames() {
         sceneMenu.updateProjectNames();

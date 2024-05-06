@@ -1,9 +1,7 @@
 package dtu.example.ui;
 
 import java.io.IOException;
-import java.lang.reflect.Executable;
 
-import dtu.application.Activity;
 import dtu.application.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -84,21 +82,7 @@ public class PrimaryController {
     }
 
 
-    public void newEmployee(ActionEvent event) {
-        view.showNewEmployeeScreen();
-    }
-    public void newEmployeeBack(ActionEvent event) {
-        view.showMainScreen();
-    }
-    public void newEmployeeAdd(ActionEvent event) {
-        String newEmployeeInitials = view.getNewEmployeeInitials();
-        try {
-            model.registerUser(newEmployeeInitials);
-            System.out.println("Employee " + newEmployeeInitials + " has been added to the system");
-        } catch (Exception e) {
-            //TODO: show error message
-        }
-    }
+
     public void mainViewProject(ActionEvent event) {
         view.updateProjectNames();
         view.showChooseProjectsScreen();
@@ -140,13 +124,24 @@ public class PrimaryController {
         String allocatedTimeInput = view.getEditActivityAllocatedTime();
         try {
             if (dateField == null) {
-                throw new Exception("Please select start what to edit");
+                throw new Exception("Please select what to edit");
             } else if (dateField.equals("Allocated Time")) {
-                int allocatedTime = Integer.parseInt(allocatedTimeInput);
+                int allocatedTime;
+                try {
+                    allocatedTime = Integer.parseInt(allocatedTimeInput);
+                } catch (Exception e) {
+                    throw new Exception("Allocated Time must be integer");
+                }
                 model.setAllocatedTime(id, allocatedTime);
             } else {
-                int week = Integer.parseInt(weekInput);
-                int year = Integer.parseInt(yearInput);
+                int week;
+                int year;
+                try {
+                    week = Integer.parseInt(weekInput);
+                    year = Integer.parseInt(yearInput);
+                } catch (Exception e) {
+                    throw new Exception("Week and year must be integers");
+                }
                 if (dateField.equals("Start Date")) {
                     model.setStartWeekToActivity(id, week, year);
                 } else {
@@ -179,7 +174,7 @@ public class PrimaryController {
             //TODO: show error message
         }
     }
-    public void viewProjectChangeCompletionStatus(ActionEvent event) {
+    public void viewProjectToggleCompletion(ActionEvent event) {
         String id = view.getViewProjectChosenActivityID();
         try {
             if (model.isActivityComplete(id)) {
