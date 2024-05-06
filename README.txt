@@ -27,8 +27,6 @@ the assign project leader, where you'll be able to see the change.
 
 In edit activity, only the chosen change with the corresponding input fields will be considered
 
-
-
 When assigning a date there must be a week and a year associated with the date.
 
 
